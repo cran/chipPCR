@@ -1,0 +1,13 @@
+importFrom(outliers, rm.outlier)
+importFrom(robustbase, lmrob)
+importFrom(signal, sgolayfilt)
+
+export(
+	"AmpSim",
+	"amptester",
+	"bg.max",
+	"smoother",
+	"fixNA",
+	"CPP",
+	"inder"
+)

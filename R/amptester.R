@@ -1,6 +1,6 @@
 amptester <-
 function (y, manual = FALSE, noiselevel = 0.08, background = NULL) {
-	tmp_warn <- getOption("warn")
+	tmp.warn <- getOption("warn")
   	options(warn = -1)
   	# Test if y exist.
   	if (is.null(y)) 
@@ -14,7 +14,7 @@ function (y, manual = FALSE, noiselevel = 0.08, background = NULL) {
     
 	background <- as.integer(sort(background))
 	
-	y <- fixNA(1:length(y), y)
+	y <- fixNA(1L:length(y), y)
 	
   if (manual) {
 	      noisebackground <- mean(y[background]) + 5 * sd(y[background])
@@ -28,6 +28,6 @@ function (y, manual = FALSE, noiselevel = 0.08, background = NULL) {
       print("negative")
       } else print("positive")
     )
-    options(warn = tmp_warn)
+    options(warn = tmp.warn)
     y
 }

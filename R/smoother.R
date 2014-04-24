@@ -1,6 +1,6 @@
 smoother <-
   function (x, y, trans = FALSE, bg.outliers = FALSE, spline = TRUE, method = "savgol", ...) { 
-    tmp_warn <- getOption("warn")
+    tmp.warn <- getOption("warn")
     options(warn = -1)
     # Test if x and y exist and have identical lengths.
     if (is.null(x)) 
@@ -12,7 +12,7 @@ smoother <-
       
     # Determine the time/cycle resolution of the data
     deltaCyc <- vector()
-    for (i in 1:(length(x) - 1)){
+    for (i in 1L:(length(x) - 1)){
       tmp <- abs(x[i] - x[i + 1])
       deltaCyc <- c(deltaCyc,tmp)
       }
@@ -73,7 +73,7 @@ smoother <-
     )
     
     tmp.CPP  <- CPP(x = x, y = y.tmp, trans = trans, bg.outliers = bg.outliers)
-    options(warn = tmp_warn)
+    options(warn = tmp.warn)
     y.norm <- tmp.CPP$y.norm
     attr(y.norm, "method") <- method
     y.norm

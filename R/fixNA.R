@@ -1,6 +1,6 @@
 fixNA <- function(x, y, spline = TRUE, verbose = FALSE) 
 {
-	      tmp_warn <- getOption("warn")
+	      tmp.warn <- getOption("warn")
 	      options(warn = -1)
 #	      Test if x and y exist and have identical lengths.
 	      if (is.null(x)) 
@@ -22,6 +22,6 @@ fixNA <- function(x, y, spline = TRUE, verbose = FALSE)
 		} else {
 		  y[which(is.na(y))] <- 0
 		  }
-		options(warn = tmp_warn)
+		options(warn = tmp.warn)
 		if (length(which(is.na(y) == TRUE)) == 0) y <- y
 }

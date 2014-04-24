@@ -1,18 +1,22 @@
 bg.max <-
 function (x, y, bg.corr = 1.3, bg.start = 3, verbose = FALSE) {
-	tmp_warn <- getOption("warn")
+	tmp.warn <- getOption("warn")
     	options(warn = -1)
   	# Test if x and y exist and have identical lengths.
 	if (is.null(x)) 
 	   stop("Enter abscissa value")
+	   
 	if (is.null(y)) 
 	   stop("Enter ordinate value")
+	   
 	if (length(x) != length(y)) 
 	   stop("Use abscissa and ordinate data with same number of elements")
+	   
 	# Test if bg.corr is within a meaningful range.
 	if (bg.corr < 1 || bg.corr > 8) 
 	    stop("bg.corr must be within 1 and 8.")
-		# Test if bg.corr is within a meaningful range.
+	    
+	# Test if bg.corr is within a meaningful range.
 	if (bg.start < 0 || bg.start > length(x)) 
 	    stop("bg.start must be within 0 and the number of x values.")
 	
@@ -21,15 +25,16 @@ function (x, y, bg.corr = 1.3, bg.start = 3, verbose = FALSE) {
 	yval.d <- supsmu(x, y, span = 0.09)$y
 	delta <- vector()
 	deltax <- vector()
-	for (i in 1:(length(yval.d) - 1)) {
+	for (i in 1L:(length(yval.d) - 1)) {
 	      delta.t <- yval.d[i+1] - yval.d[i]
 	      delta <- c(delta, delta.t)
 	      delta.tx <- (x[i+1] + x[i]) / 2
 	      deltax <- c(deltax, delta.tx)
 	      }
+	      
 	delta1 <- vector() 
 	deltax1 <- vector() 
-	for (i in 1:(length(delta) - 1)) { 
+	for (i in 1L:(length(delta) - 1)) { 
 	  delta.t <- delta[i + 1] - delta[i] 
 	  delta1 <- c(delta1, delta.t) 
 	  delta.tx <- (deltax[i + 1] + deltax[i]) / 2 
@@ -60,7 +65,7 @@ function (x, y, bg.corr = 1.3, bg.start = 3, verbose = FALSE) {
 	# Test if background range is meaningful.
 	if (bg.stop <= bg.start) 
 	    stop("Start of background must be less than maximal background value.")
-	options(warn = tmp_warn)
+	options(warn = tmp.warn)
 	if (verbose) {
 	  return(list(d = d, d1 = d1, delta = delta, delta1 = delta1, bg.start = bg.start, 
 		      bg.stop = bg.stop, bg.corr = bg.corr, fluo = fluo, amp.stop = amp.stop))

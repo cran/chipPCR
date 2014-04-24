@@ -2,7 +2,7 @@ AmpSim <- function(cyc = c(1:35), b.eff = -25, bl = 0.05, ampl = 1,
 		   Cq = 20, noise = FALSE, nnl = 0.025, 
 		   nnl.method = "constant")
 {
-  tmp_warn <- getOption("warn")
+  tmp.warn <- getOption("warn")
   options(warn = -1)
   # Test if x and y exist and have identical lengths.
   if (is.null(cyc)) 
@@ -11,6 +11,7 @@ AmpSim <- function(cyc = c(1:35), b.eff = -25, bl = 0.05, ampl = 1,
     stop("nnl must be within 0 and 0.1.")
    
   fluo <- bl + (ampl - bl)/(1 + exp(b.eff * (log(cyc) - log(Cq))))
+  
   if (noise) {
   mean.noise <- mean(fluo) * nnl
   sd.noise <- sd(fluo) * nnl
@@ -30,8 +31,8 @@ AmpSim <- function(cyc = c(1:35), b.eff = -25, bl = 0.05, ampl = 1,
 				sd = sd.noise)
 		}
   fluo <- fluo + NOISE
-  res <- cbind(cyc, fluo)
-  } else (res <- cbind(cyc, fluo))
-  options(warn = tmp_warn)
+  res <- data.frame(cyc, fluo)
+  } else (res <- data.frame(cyc, fluo))
+  options(warn = tmp.warn)
   res
 }

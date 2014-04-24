@@ -40,15 +40,23 @@ sec_endpoint0 <- function(y, h)
   sec_beginpoint0(rev(y), h)
 
 
-inder <- function(x, y, Nip = 4) {
+inder <- function(x, y, Nip = 4, logy = FALSE) {
   
   if (length(x) != length(y)) 
     stop("Use x and y vectors with same number of elements")
+  
+  if (Nip < 1) 
+     stop("Use Nip equal or larger to 1")
+  
+  if (Nip > 10) 
+     warning("Nip larger than 10 may case over-fitting")
   
   tmp.xy <- spline(x, y, n = Nip * length(x))
   
   x <- tmp.xy[["x"]]
   y <- tmp.xy[["y"]]
+  
+  if (logy == TRUE) y <- log10(tmp.xy[["y"]])
   
   #calculate h, naive approach
   h <- vapply(2L:length(x), function(i) x[i] - x[i - 1], 0)
@@ -75,6 +83,6 @@ inder <- function(x, y, Nip = 4) {
   SDC <- sqrt(SDM * SDm)
   
   list("x" = x, "y" = y, "1st_der" = first_der, "2nd_der" = sec_der, "SDM" = SDM, "SDm" = SDm, 
-       "SDC" = SDC, "FDM" = FDM)
+       "SDC" = SDC, "FDM" = FDM, "h" = h)
 }
 

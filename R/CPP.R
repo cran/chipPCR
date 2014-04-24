@@ -1,7 +1,7 @@
 CPP <-
 function(x, y, trans = TRUE, bg.outliers = FALSE, median = FALSE, minmax = FALSE, qnL = 0.1, 
 	 amptest = FALSE, manual = FALSE, nl = NULL) {
-	tmp_warn <- getOption("warn")
+	tmp.warn <- getOption("warn")
   	options(warn = -1)
   	# Test if x and y exist and have identical lengths.
 	if (is.null(x)) 
@@ -44,6 +44,6 @@ function(x, y, trans = TRUE, bg.outliers = FALSE, median = FALSE, minmax = FALSE
     if (amptest) {
       amptester(y.norm, manual = manual, background = BG, noiselevel = nl)
     }
-    options(warn = tmp_warn)
+    options(warn = tmp.warn)
     return(list(y.norm = y.norm, BG = BG))
 }

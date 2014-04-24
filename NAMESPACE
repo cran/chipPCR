@@ -1,6 +1,7 @@
 importFrom(outliers, rm.outlier)
 importFrom(robustbase, lmrob)
 importFrom(signal, sgolayfilt)
+importFrom(qpcR, Cy0)
 
 export(
 	"AmpSim",

@@ -1,6 +1,12 @@
 \name{fixNA}
 \alias{fixNA}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\alias{fixNA.numeric}
+\alias{fixNA.matrix}
+\alias{fixNA.data.frame}
+\alias{fixNA,numeric,numeric-method}
+\alias{fixNA,matrix,missing-method}
+\alias{fixNA,data.frame,missing-method}
+
 \title{
 Impute missing values into a column of amplification data
 }
@@ -10,15 +16,19 @@ column of data. The imputation is based on a linear approximation by default.
 However, the data can also be estimated from an approximation by splines.
 }
 \usage{
-fixNA(x, y, spline = TRUE, verbose = FALSE)
+\S4method{fixNA}{numeric,numeric}(x, y, spline = TRUE, verbose = FALSE)
+\S4method{fixNA}{matrix,missing}(x, y, spline = TRUE, verbose = FALSE)
+\S4method{fixNA}{data.frame,missing}(x, y, spline = TRUE, verbose = FALSE)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{x}{
-    \code{x} is a vector containing the time or cycle values.
+    \code{x} is a vector containing the time or cycle values or data frame/matrix where second
+    column contains missing data.
 }
   \item{y}{
-    \code{y} is a vector containing the fluorescence values.
+    \code{y} is a vector containing missing values. Used only if \code{x} is 
+    also a vector. 
 }
   \item{spline}{
 	\code{spline} is a logical operator which defines of missing values 
@@ -49,7 +59,7 @@ or plateau phases of an amplification reaction. The parameter
 \code{\link[stats]{spline}} on \code{\link[chipPCR]{fixNA}} enables a trend 
 estimation on splines and may be more appropriate in most scenarios. Other 
 smooting functions such as the Savitzky-Golay smoothing filter have the 
-intrinsic capability to remove missing values [Savitzk and Golay 1964, 
+intrinsic capability to remove missing values [Savitzky and Golay 1964, 
 Eilers 2003].
 }
 
@@ -99,8 +109,7 @@ plot(res.NA.spline, xlab = "Cycles", ylab = "Fluorescence", type = "b",
      abline(h = c(0.09, 0.14), col = "grey")     
 par(mfrow = c(1,1))
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
 \keyword{ spline }
 \keyword{ isothermal }
 \keyword{ linear }

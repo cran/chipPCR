@@ -12,7 +12,8 @@ temperatures in order to estimate temperature dependent effects.
 }
 \usage{data(CD74)}
 \format{
-  A data frame with 60 observations on the following 19 variables. refMFI, 
+  A data frame with 60 observations on the following 19 variables. refMFI 
+  (referenced Mean Fluorescence Intensity), 
   fluorescence. Dilution A, 1x; Dilution B, 1:10; Dilution B, 1:100.
   \describe{
       \item{\code{Cycle}}{PCR cycles}
@@ -50,9 +51,9 @@ The aim was to amplify MLC-2v in the VideoScan platform while the
 intercalating dye EvaGreen and a hydrolysis probe for MLC-2v were used 
 simultaneously. The primer sequences for MLC-2v were taken from Roediger et 
 al. (2013). The amplification was detected in solution of the 1 HCU (see 
-Roediger et al. 2013 for details). A 20 micro l PCR reaction was composed of 
+Roediger et al. 2013 for details). A 20 micro L PCR reaction was composed of 
 500 nM primer (forward and reverse), 1x Maxima Probe qPCR Master Mix 
-(Fermentas), 1 micro l template (MLC-2v amplification product in different 
+(Fermentas), 1 micro L template (MLC-2v amplification product in different 
 dilutions), 50 nM hydorlysis probe probe for MLC-2v, 0.5x EvaGreen and A. 
 bidest. During the amplification, fluorescence was measured at 3 different 
 temperatures, at 59.5 degree Celsius the annealing temperature, at 68.5 degree 
@@ -86,9 +87,9 @@ implication of its physicochemical properties for qPCR applications.
 # dye EvaGreen and hydrolsis probes.
 
 data(CD74)
-par(mfrow = c(2,1))
+par(mfrow = c(1,2))
 plot(NA, NA, xlim = c(1,30), ylim = c(0,2), xlab = "Cycle", 
-     ylab = "MFI", main = "VideoScan HCU - Raw Data")
+     ylab = "MFI", main = "VideoScan HCU\nRaw Data")
 lim <- 1:30
 for (j in c(2:4)) {
   for (i in seq(j,19,6)) {
@@ -101,8 +102,8 @@ for (j in c(5:7)) {
   }
 }
 
-plot(NA, NA, xlim = c(1,30), ylim = c(0,0.8), xlab = "Cycle", 
-     ylab = "MFI", main = "VideoScan HCU - Smoothed Data")
+plot(NA, NA, xlim = c(1,30), ylim = c(0,1.8), xlab = "Cycle", 
+     ylab = "MFI", main = "VideoScan HCU\nSmoothed Data")
 lim <- 1:30
 for (j in c(2:4)) {
   for (i in seq(j,19,6)) {

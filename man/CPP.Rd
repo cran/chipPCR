@@ -1,40 +1,88 @@
 \name{CPP}
 \alias{CPP}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\alias{CPP.numeric}
+\alias{CPP.matrix}
+\alias{CPP.data.frame}
+\alias{CPP,numeric,numeric-method}
+\alias{CPP,matrix,missing-method}
+\alias{CPP,data.frame,missing-method}
+
 \title{
-Curve Pre-Processor
+Curve Preprocessor
 }
+
 \description{
 The function \code{\link[chipPCR]{CPP}} encompasses a set of functions to 
-pre-process an amplification curve. The pre-processing includes options to 
+preprocess an amplification curve. The preprocessing includes options to 
 normalize curve data, to remove background, to remove outliers
 in the background range and to test if an amplification is significant.
 }
 \usage{
-CPP(x, y, trans = TRUE, bg.outliers = FALSE, median = FALSE, minmax = FALSE, 
-    qnL = 0.1, amptest = FALSE, manual = FALSE, nl = NULL)
+\S4method{CPP}{numeric,numeric}(x, y, smoother = TRUE, method = "savgol", 
+				trans = FALSE, rob.reg = "lmrob", 
+				bg.outliers = FALSE, median = FALSE, 
+				norm = "none", qnL = 0.03, amptest = FALSE, 
+				manual = FALSE, nl = 0.08, ...)
+
+\S4method{CPP}{matrix,missing}(x, y, smoother = TRUE, method = "savgol", 
+			       trans = FALSE, rob.reg = "lmrob", 
+			       bg.outliers = FALSE, median = FALSE, 
+			       norm = "none", qnL = 0.03, amptest = FALSE, 
+			       manual = FALSE, nl = 0.08, ...)
+
+\S4method{CPP}{data.frame,missing}(x, y, smoother = TRUE, 
+				   method = "savgol", trans = FALSE, 
+				   rob.reg = "lmrob", bg.outliers = FALSE, 
+				   median = FALSE, norm = "none", 
+				   qnL = 0.03, amptest = FALSE, 
+				   manual = FALSE, nl = 0.08, ...)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{x}{
-    is a vector containing the time or cycle values.
+    is a vector containing the time or cycle values or a matrix or data frame
+    containing both time or cycle values and fluorescence.
 }
   \item{y}{
-        is a vector containing the fluorescence values.
+        is a vector containing the fluorescence values. Omitted if 
+\code{x} 
+        is a data frame or matrix.
 }
+  \item{smoother}{
+	logical parameter which indicates if smoother should be used.
+}
+
+  \item{method}{
+		a vector of names defining which smoothing method 
+should be used. The Savitzky-Golay smoothing filter is the default 
+smoother. Use "lowess" for LOWESS smoother (locally-weighted polynomial 
+regression), "mova" for moving average, "savgol" for Savitzky-Golay 
+smoothing filter, "smooth" for cubic spline smooth, "spline" for standard 
+cubic spline smooth, "supsmu" for Friedman's SuperSmoother, "whit1" for 
+weighted Whittaker smoothing with a first order finite difference penalty, 
+"whit2" for weighted Whittaker smoothing with a second order finite 
+difference penalty or "all" for all implemented smoothing algorithms. 
+}
+
   \item{trans}{
 	defines if the slope of the background range in a curve should be 
 	corrected by a linear regression.
 }
+  \item{rob.reg}{
+	defines the method ("rfit", "lmrob", "rq") for the robust linear 
+regression.
+}
   \item{bg.outliers}{
-	is a logical argument which to remove outliers in the background range.
+	is a logical argument which to remove outliers in the background 
+range.
 }
   \item{median}{
-	If set to TRUE, median is used instead of mean in outlier replacement. 
-	The mean is used by default.
+	If set to TRUE, median is used instead of mean in outlier 
+replacement.  The mean is used by default.
 }
-  \item{minmax}{
-	is a logical argument to use a quantile normalization.
+  \item{norm}{
+	is a argument to use a "none", "minmax", "max", "lugn", or
+	"zscore" normalization.
 }
   \item{qnL}{
 	is the quantile to be used for the quantile normalization.
@@ -49,7 +97,12 @@ CPP(x, y, trans = TRUE, bg.outliers = FALSE, median = FALSE, minmax = FALSE,
   \item{nl}{
 	is a value used as fixed threshold value for the background.
 }
+    \item{...}{
+	dot operator for diverse arguments of 
+	\code{\link[chipPCR]{smoother}} for details).
+  }
 }
+
 \details{
 The function \code{\link[chipPCR]{CPP}} uses the function 
 \code{\link[chipPCR]{bg.max}} to estimate automatically the start of the 
@@ -58,24 +111,35 @@ makes it harder to determine a meaningful background value. Therefore
 \code{\link[chipPCR]{CPP}} can optionally remove outliers by finding the 
 value with largest difference from the mean as provided by the 
 \code{\link[outliers]{rm.outlier}} function. The functions also tries to 
-prevent calculations on non amplified signals. The parameter \code{qnL} is a 
-user defined quantile which is used for the quantile normalization. A quantile 
-normalization herein refers to an approach which is less prone to outliers 
-than a normalization based on the minimum and the maximum of an amplification 
-curve. The slope of the background range is often unequal to zero. By setting 
-the parameter \code{trans} it is possible to apply a simple correction of the 
-slope. Thereby either a robust linear regression by computing MM-type 
-regression estimators or a standard linear regression model. Care is needed 
-when using \code{trans} with time series (see \code{\link[stats]{lm}} for 
-details).
+prevent calculations of non amplified signals. The parameter \code{qnL} is 
+a user defined quantile which is used for the quantile normalization. A 
+quantile normalization herein refers to an approach which is less prone to 
+outliers than a normalization based on the minimum and the maximum of an 
+amplification curve. The slope of the background range is often unequal to 
+zero. By setting the parameter \code{trans} it is possible to apply a 
+simple correction of the slope. Thereby either a robust linear regression 
+by computing MM-type regression estimators, a nonparametric rank-based 
+estimator  or a standard linear regression model. Care is needed when 
+using 
+\code{trans} with time series (see \code{\link[stats]{lm}} for details).
+
+The dB (decibel) as measure of the ratio between the fluorescence of the 
+lowest and highest signal. The dB is defined as ten times the decadic 
+logarithm of the their ratio. An example application is shown below.
+
+\deqn{L_{dB} = 10 * \log_{10}(abs(\frac{quantile(RFU, 1 - p)}{quantile(RFU, p)}))}
 }
 
 \author{
 Stefan Roediger, Michal Burdukiewicz
 }
 
+\seealso{ 
+\code{\link[quantreg]{rq}}, \code{\link[Rfit]{rfit}}, 
+\code{\link[stats]{lm}}}
+
 \examples{
-# Function to pre-process an amplification curve.
+# Function to preprocess an amplification curve.
 # Take a subset of the C17 data frame.
 data(C17)
 par(mfrow = c(2,1))
@@ -93,10 +157,10 @@ legend(50, 0.5, c("55 deg Celsius", "60 deg Celsius", "65 deg Celsius"),
 # Use CPP to preprocess the data by removing the missing value and 
 # normalization of the data
 plot(NA, NA, xlab = "Time [sec]", ylab = "refMFI", 
-     main = "Curve Pre-Processor Applied to HDA Data", 
+     main = "Curve Preprocessor Applied to HDA Data", 
      xlim = c(0, 2500), ylim = c(0,1.1), pch = 20)
 for (i in 3:5) {
-  y.cpp <- CPP(C17[2:50, 1], C17[2:50, i], minmax = TRUE, 
+  y.cpp <- CPP(C17[2:50, 1], C17[2:50, i], norm = "minmax", 
 	      bg.outliers = TRUE)$y.norm
   lines(C17[2:50, 1], y.cpp, col = i - 2, 
 	type = "b", pch = 20)
@@ -104,11 +168,62 @@ for (i in 3:5) {
 legend(50, 1, c("55 deg Celsius", "60 deg Celsius", "65 deg Celsius"), 
 	col = c(1,2,3), pch = rep(20,3))
 par(mfrow = c(1,1))
+
+# Example for dB analysis
+# qPCR analysis using the VIMCFX96_60 and the VIMCFX96_69 data sets from a 
+# 96-well plate cycler (Bio-Rad CFX96, EvaGreen detection) experiment. 
+# The dB values during the annealing (60 Celsius) and elongation (69 Celsius) 
+# phase were determined by calling dB from CPP. The annealing phase values 
+# were plotted against the elongation phase values and analyzed by 
+# linear regression (lm, stats) and correlation test (cor.test, stats). Next, we 
+# computed the interquartile range using IQR (stats) with the default settings. 
+# The IQR at 60 Celsius was ~ 0.28 dB and ~ 0.21 dB at 69 Celsius.
+
+par(mfrow = c(1,2), las = 0, bty = "n", cex.axis = 1.5, cex.lab = 1.5, 
+     font = 2, cex.main = 1.1, oma = c(1,1,1,1))
+
+pointer <- function (x, pos = 1, w = 5){
+	    xx <- pos + rep(seq(-0.1, 0.1, length.out = w), 
+				  ceiling(length(x)/w))
+	    yy <- sort(x)
+	    points(xx[1:length(yy)], yy, pch = 19)
+	    points(pos, mean(x, na.rm = TRUE), col = 2, pch = 15, cex = 1.5)
+	  }
+	  
+T60 <- cbind(apply(VIMCFX96_60[, c(2L:97)], 2, 
+		    function(x) CPP(VIMCFX96_60[, 1], x, qnL = 0.03)$dB))
+T69 <- cbind(apply(VIMCFX96_69[, c(2L:97)], 2, 
+		    function(x) CPP(VIMCFX96_69[, 1], x, qnL = 0.03)$dB))
+		    
+res <- list(T60 = T60, T69 = T69)
+
+plot(T60, T69, xlab = "dB @ 60 deg. Celsius", 
+      ylab = "dB @ 69 deg. Celsius")
+mtext("A", cex = 2, side = 3, adj = 0, font = 2) 
+res.lm <- lm(T69 ~ T60)
+abline(res.lm)
+
+summary(res.lm)
+cor.test(T60, T69)
+
+boxplot(res, ylab = "dB", ylim = c(1.45, 3.5))
+  pointer(T60, 1, 6)
+  pointer(T69, 2, 6)
+  
+mtext("B", cex = 2, side = 3, adj = 0, font = 2) 
+
+wcx <- wilcox.test(T60, T69)
+lines(c(1,2), c(3.2,3.2))
+text(1.5, 3.3, paste("p :", wcx$p.value))
+
+IQR(T60)
+IQR(T69)
+par(mfrow = c(1,1))
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
 \keyword{ background }
 \keyword{ noise }
 \keyword{ outlier }
 \keyword{ normalize }
 \keyword{ amplification }
+\keyword{ methods }

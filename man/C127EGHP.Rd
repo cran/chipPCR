@@ -110,8 +110,6 @@ implication of its physicochemical properties for qPCR applications.
 \emph{BMC Biotechnol.} 7, 76.
 }
 \examples{
-require(qpcR)
-
 str(C127EGHP)
 data(C127EGHP)
 tmp <- C127EGHP
@@ -122,17 +120,12 @@ plot(NA, NA, xlim = c(1,40), ylim = c(0,10), xlab = "Cycle",
   for (i in 3:34) {
     points(tmp[, 2], tmp[, i], type = "l", col = i)
   }
-for (i in 3:34) {
-  abline(v = Cy0(pcrfit(data = tmp, cyc = 2, fluo = i)))
-}
+
 plot(NA, NA, xlim = c(1,40), ylim = c(0,10), xlab = "Cycle", 
       ylab = "Fluorescence", main = "MLC-2v qPCR - Hydrolysis probe")
   for (i in 35:66) {
     points(tmp[, 2], tmp[, i], type = "l", col = i)
   }
-for (i in 35:66) {
-  abline(v = Cy0(pcrfit(data = tmp, cyc = 2, fluo = i, model = l5)))
-}
 par(mfrow = c(1,1))
 }
 \keyword{ datasets }

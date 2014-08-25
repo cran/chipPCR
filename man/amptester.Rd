@@ -28,7 +28,8 @@ amplification signal.
   \item{background}{
 	is the range of the background signal in the amplification curve. 
 The values can be added by the user or taken from the 
-\code{\link[chipPCR]{bg.max}} function.
+\code{\link[chipPCR]{bg.max}} function. Ignored if \code{manual} is
+\code{TRUE}.
 }
 }
 \details{
@@ -47,6 +48,11 @@ to the references listed below. Instead of assigning a zero to negative
 amplification reaction uses the current implementation of 
 \code{\link[chipPCR]{amptester}} very small random values. This is because 
 some post function might fail in case all values are set to zero.
+}
+
+\value{
+An object of \code{\linkS4class{amptest}} class containing result of the test as well as
+the original data.
 }
 
 \references{

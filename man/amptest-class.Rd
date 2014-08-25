@@ -6,6 +6,8 @@
 \alias{summary,amptest-method}
 \alias{show.amptest}
 \alias{show,amptest-method}
+\alias{plot.amptest}
+\alias{plot,amptest-method}
 
 \title{Class \code{"amptest"}}
 \description{
@@ -25,14 +27,22 @@ function.
 			      significant amplification signal.}
     \item{\code{background}:}{range of the background signal in the 
 			      amplification curve.}
+    \item{\code{polygon}:}{The pco test determines if the points in an amplification curve 
+			  (like a polygon) are in a "clockwise" order. The sum over the edges 
+			  result in a positive value if the amplification curve is "clockwise" 
+			  and is negative if the curve is counter-clockwise.}
+    \item{\code{slope.ratio}:}{ratio of the slopes at the start and the end of 
+    exponential phase..}
 }
 }
 \section{Methods}{
   \describe{
     \item{summary}{\code{signature(object = "amptest")}: prints summary 
-		   of the object.}
+		   of the object. Silently returns \code{vector} of all calculated parameters.}
     \item{show}{\code{signature(object = "amptest")}: prints only 
 		\code{.Data} slot of the object.}
+    \item{plot}{\code{signature(object = "amptest")}: plots input data and graphical
+    interpretation of \code{link{amptester}} tests' results.}
    }
 }
 \author{
@@ -84,6 +94,8 @@ abline(h = 0.15, col = 3, lty = 2)
 text(5, 0.18, "Noise threshold")
 # Summary of amptester results
 summary(ampt.neg)
+#plot amptester results
+plot(ampt.neg)
 }
 
 \keyword{classes}

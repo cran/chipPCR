@@ -8,34 +8,34 @@
 \alias{CPP,data.frame,missing-method}
 
 \title{
-Curve Preprocessor
+Curve Pre-processor
 }
 
 \description{
 The function \code{\link[chipPCR]{CPP}} encompasses a set of functions to 
-preprocess an amplification curve. The preprocessing includes options to 
+pre-process an amplification curve. The pre-processing includes options to 
 normalize curve data, to remove background, to remove outliers
 in the background range and to test if an amplification is significant.
 }
 \usage{
 \S4method{CPP}{numeric,numeric}(x, y, smoother = TRUE, method = "savgol", 
-				trans = FALSE, rob.reg = "lmrob", 
+				trans = FALSE, method.reg = "lmrob", 
 				bg.outliers = FALSE, median = FALSE, 
-				norm = "none", qnL = 0.03, amptest = FALSE, 
-				manual = FALSE, nl = 0.08, ...)
+				method.norm = "none", qnL = 0.03, amptest = FALSE, 
+				manual = FALSE, nl = 0.08, bg.range = NULL, ...)
 
 \S4method{CPP}{matrix,missing}(x, y, smoother = TRUE, method = "savgol", 
-			       trans = FALSE, rob.reg = "lmrob", 
+			       trans = FALSE, method.reg = "lmrob", 
 			       bg.outliers = FALSE, median = FALSE, 
-			       norm = "none", qnL = 0.03, amptest = FALSE, 
-			       manual = FALSE, nl = 0.08, ...)
+			       method.norm = "none", qnL = 0.03, amptest = FALSE, 
+			       manual = FALSE, nl = 0.08, bg.range = NULL, ...)
 
 \S4method{CPP}{data.frame,missing}(x, y, smoother = TRUE, 
 				   method = "savgol", trans = FALSE, 
-				   rob.reg = "lmrob", bg.outliers = FALSE, 
-				   median = FALSE, norm = "none", 
+				   method.reg = "lmrob", bg.outliers = FALSE, 
+				   median = FALSE, method.norm = "none", 
 				   qnL = 0.03, amptest = FALSE, 
-				   manual = FALSE, nl = 0.08, ...)
+				   manual = FALSE, nl = 0.08, bg.range = NULL, ...)
 }
 
 \arguments{
@@ -68,9 +68,9 @@ difference penalty or "all" for all implemented smoothing algorithms.
 	defines if the slope of the background range in a curve should be 
 	corrected by a linear regression.
 }
-  \item{rob.reg}{
+  \item{method.reg}{
 	defines the method ("rfit", "lmrob", "rq") for the robust linear 
-regression.
+regression. If equal to "least", \code{CPP} uses linear regression.
 }
   \item{bg.outliers}{
 	is a logical argument which to remove outliers in the background 
@@ -80,7 +80,7 @@ range.
 	If set to TRUE, median is used instead of mean in outlier 
 replacement.  The mean is used by default.
 }
-  \item{norm}{
+  \item{method.norm}{
 	is a argument to use a "none", "minmax", "max", "lugn", or
 	"zscore" normalization.
 }
@@ -97,6 +97,10 @@ replacement.  The mean is used by default.
   \item{nl}{
 	is a value used as fixed threshold value for the background.
 }
+  \item{bg.range}{
+  is a \code{numeric} vector of length 2 pointing the background range.
+  If \code{NULL}, the background range is calculated by \code{\link{bg.max}} function.
+}
     \item{...}{
 	dot operator for diverse arguments of 
 	\code{\link[chipPCR]{smoother}} for details).
@@ -111,23 +115,16 @@ makes it harder to determine a meaningful background value. Therefore
 \code{\link[chipPCR]{CPP}} can optionally remove outliers by finding the 
 value with largest difference from the mean as provided by the 
 \code{\link[outliers]{rm.outlier}} function. The functions also tries to 
-prevent calculations of non amplified signals. The parameter \code{qnL} is 
-a user defined quantile which is used for the quantile normalization. A 
-quantile normalization herein refers to an approach which is less prone to 
-outliers than a normalization based on the minimum and the maximum of an 
-amplification curve. The slope of the background range is often unequal to 
+prevent calculations of non amplified signals. 
+
+The slope of the background range is often unequal to 
 zero. By setting the parameter \code{trans} it is possible to apply a 
 simple correction of the slope. Thereby either a robust linear regression 
 by computing MM-type regression estimators, a nonparametric rank-based 
-estimator  or a standard linear regression model. Care is needed when 
+estimator or a standard linear regression model. Care is needed when 
 using 
 \code{trans} with time series (see \code{\link[stats]{lm}} for details).
 
-The dB (decibel) as measure of the ratio between the fluorescence of the 
-lowest and highest signal. The dB is defined as ten times the decadic 
-logarithm of the their ratio. An example application is shown below.
-
-\deqn{L_{dB} = 10 * \log_{10}(abs(\frac{quantile(RFU, 1 - p)}{quantile(RFU, p)}))}
 }
 
 \author{
@@ -135,11 +132,15 @@ Stefan Roediger, Michal Burdukiewicz
 }
 
 \seealso{ 
-\code{\link[quantreg]{rq}}, \code{\link[Rfit]{rfit}}, 
-\code{\link[stats]{lm}}}
+Normalization: \code{\link{normalizer}}
+
+Smoothing: \code{\link{smoother}}
+
+Robut linear regression: \code{\link{lm.coefs}}
+}
 
 \examples{
-# Function to preprocess an amplification curve.
+# Function to pre-process an amplification curve.
 # Take a subset of the C17 data frame.
 data(C17)
 par(mfrow = c(2,1))
@@ -154,13 +155,13 @@ for (i in 3:5) {
 legend(50, 0.5, c("55 deg Celsius", "60 deg Celsius", "65 deg Celsius"), 
 	col = c(1,2,3), pch = rep(20,3))
 
-# Use CPP to preprocess the data by removing the missing value and 
+# Use CPP to pre-process the data by removing the missing value and 
 # normalization of the data
 plot(NA, NA, xlab = "Time [sec]", ylab = "refMFI", 
-     main = "Curve Preprocessor Applied to HDA Data", 
+     main = "Curve Pre-processor Applied to HDA Data", 
      xlim = c(0, 2500), ylim = c(0,1.1), pch = 20)
 for (i in 3:5) {
-  y.cpp <- CPP(C17[2:50, 1], C17[2:50, i], norm = "minmax", 
+  y.cpp <- CPP(C17[2:50, 1], C17[2:50, i], method.norm = "minmax", 
 	      bg.outliers = TRUE)$y.norm
   lines(C17[2:50, 1], y.cpp, col = i - 2, 
 	type = "b", pch = 20)

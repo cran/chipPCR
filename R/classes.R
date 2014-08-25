@@ -3,39 +3,176 @@ setGeneric("plot")
 
 #just for writing comfort, self explanatory
 setClassUnion("numericOrNULL",c("numeric","NULL"))
+setOldClass("summary.lm")
+setOldClass("htest")
 
 #amptest class, amptester function -------------------------------
 setClass("amptest", contains = "numeric", representation(.Data = "numeric", 
                                                          decisions = "logical",
                                                          noiselevel = "numeric",
-                                                         background = "numericOrNULL"))
+                                                         background = "numericOrNULL",
+                                                         polygon = "numeric",
+                                                         slope.ratio = "numeric"))
 
 setMethod("show", signature(object = "amptest"), function(object) {
   print(slot(object, ".Data"))
 })
 
-setMethod("summary", signature(object = "amptest"), function(object) {
-  print(slot(object, ".Data"))
-  cat(paste0("\nAmplification significance (threshold test): ", slot(object, "decisions")[["tht.dec"]]))
-  cat(paste0("\nAmplification significance (signal level test): ", slot(object, "decisions")[["slt.dec"]]))
-  cat(paste0("\nNoise detected: ", slot(object, "decisions")[["shap.noisy"]]))
-  cat(paste0("\nNoise level: ", slot(object, "noiselevel")))
-  cat(paste0("\nLinearity: ", slot(object, "decisions")[["lrt.test"]]))
-  bcg <- slot(object, "background")
-  if (is.null(bcg)) {
-    cat(paste0("\nBackground: not defined")) 
-  } else {
-    bcg <- paste0(bcg, collapse = ", ")
-    cat(paste0("\nBackground: (", bcg, ")"))
+setMethod("summary", signature(object = "amptest"), function(object, print = TRUE) {
+  #print(slot(object, ".Data")) I think it's too much and repeats show method
+  if(print) {
+    cat(paste0("\nAmplification significance (threshold test): ", 
+               slot(object, "decisions")[["tht.dec"]]))
+    cat(paste0("\nAmplification significance (signal level test): ", 
+               slot(object, "decisions")[["slt.dec"]]))
+    cat(paste0("\nAmplification significance (resids growth test): ", 
+               slot(object, "decisions")[["rgt.dec"]]))
+    cat(paste0("\nNoise detected: ", slot(object, "decisions")[["shap.noisy"]]))
+    cat(paste0("\nNoise level: ", slot(object, "noiselevel")))
+    cat(paste0("\nLinearity: ", slot(object, "decisions")[["lrt.test"]]))
+    cat(paste0("\nPolygon: ", slot(object, "polygon")))
+    bcg <- slot(object, "background")
+    if (is.null(bcg)) {
+      cat(paste0("\nBackground: not defined")) 
+    } else {
+      bcg <- paste0(bcg, collapse = ", ")
+      cat(paste0("\nBackground: (", bcg, ")"))
+    }
   }
+  invisible(c(tht.dec = slot(object, "decisions")[["tht.dec"]],
+              slt.dec = slot(object, "decisions")[["slt.dec"]],
+              rgt.dec = slot(object, "decisions")[["rgt.dec"]],
+              shap.noisy = slot(object, "decisions")[["shap.noisy"]],
+              noiselevel = slot(object, "noiselevel"),
+              lrt.test = slot(object, "decisions")[["lrt.test"]], 
+              polygon = slot(object, "polygon")))
 })
+
+
+setMethod("plot", signature(x = "amptest"), 
+          function(x, abscissa = 1L:length(slot(x, ".Data")), ...) {
+            y.pos <- slot(x, ".Data")
+            nh <- trunc(length(abscissa) * 0.20)
+            nt <- trunc(length(abscissa) * 0.15)
+            
+            y.pos.head <- head(y.pos, n = nh)
+            y.pos.tail <- tail(y.pos, n = nt)
+            
+            lb.pos <- median(y.pos.head) + 2 * mad(y.pos.head)
+            ub.pos <- median(y.pos.tail) - 2 * mad(y.pos.tail)
+            
+            res.shapiro.pos <- shapiro.test(y.pos)
+            
+            res.wt.pos <- wilcox.test(head(y.pos, n = nh), tail(y.pos, n = nt), 
+                                      alternative = "less")
+            
+            layout(matrix(c(1,1,1,2,3,4), ncol = 3, byrow = TRUE), respect = TRUE)
+            
+            y.lims <- range(y.pos)
+            y.lims[1] <- min(y.lims[1], lb.pos)
+            y.lims[2] <- max(y.lims[1], ub.pos)
+            
+            y.lims[1] <- y.lims[1] - 0.4*(lb.pos + abs(ub.pos))
+            y.lims[2] <- y.lims[2] + 0.4*(lb.pos + abs(ub.pos))
+            plot(abscissa, y.pos, xlim = c(abscissa[1], 
+                                           abscissa[length(abscissa)] * 1.3), 
+                 ylim = y.lims, xlab = "Cycle", ylab = "RFU", 
+                 main = "Input data", type = "b", pch = 19)
+            
+            abline(v = c(nh, length(abscissa) - nt), lty = 3)
+            
+            abline(h = lb.pos, lty = 2, col = "red")
+            text(abscissa[9], lb.pos * 1.2, "Noise\nmedian + 2 * mad", col = "red", 
+                 cex = 1.3)
+            
+            abline(h = ub.pos, lty = 2, col = "green")
+            text(abscissa[length(abscissa)] * 1.1, ub.pos * 0.90, 
+                 "Signal\nmedian - 2 * mad", col = "green", cex = 1.3)
+            
+            arrows(4.5, 12.5, 42.5, 12.5, length = 0.1, angle = 90, code = 3)
+            text(25, 14.5, paste("W = ", format(res.wt.pos[["statistic"]], digits = 4), 
+                                 "\np-value = ", 
+                                 format(res.wt.pos[["p.value"]], digits = 6)))
+            text(5,5, paste("Fold change: \n", round(ub.pos/lb.pos, 2)))
+            
+            res.pos <- rtg.test(y.pos)
+            plot(1L:ncol(res.pos), res.pos[nrow(res.pos), ], xaxt='n', 
+                 xlab = "Cycle interval", ylab = "", ylim = c(0, 1), main = "RGt", 
+                 pch = 19)
+            mtext("Correlation coeffcient", 2, 3)
+            mtext("(studentized residuals and RFU)", 2, 2)
+            nice.labs <- sapply(1L:ncol(res.pos), function(i) 
+              paste0(res.pos[c(1, nrow(res.pos) - 1), i], collapse = "-"))
+            axis(1, 1L:ncol(res.pos), labels = nice.labs)
+            abline(h = 0.8, lty = "66")
+            
+            qqnorm(y.pos, pch = 19, main = paste("W = ", 
+                                                 format(res.shapiro.pos[["statistic"]], 
+                                                        digits = 6), "\np-value = ", 
+                                                 format(res.shapiro.pos[["p.value"]], 
+                                                        digits = 6)))
+            qqline(y.pos, col = "orange", lwd = 2)
+            
+            plot(RGt(y.pos), xlab = "Cycle", ylab = expression(R^2), main = "LRt", 
+                 pch = 19, type = "b")
+            abline(h = 0.8, col = "black", lty = 2)
+          })
+
+###
+
+
+RGt <- function(y) {
+  ws <- ceiling((15 * length(y)) / 100)
+  if (ws < 5) 
+    ws <- 5
+  if (ws > 15) 
+    ws <- 15
+  y.tmp <- na.omit(y[-c(1:5)])
+  x <- 1:length(y.tmp)
+  suppressWarnings(
+    res.reg <- sapply(1L:(length(y.tmp)), function (i)  {
+      round(summary(lm(y.tmp[i:c(i + ws)] ~ x[i:c(i + ws)]))[["r.squared"]], 4)
+    }
+    )
+  )
+  
+  # Binarize R^2 values. Everything larger than 0.8 is positve
+  res.LRt <- res.reg
+  # Define the limits for the R^2 test
+  res.LRt[res.LRt < 0.8] <- 0
+  res.LRt[res.LRt >= 0.8] <- 1
+  # Seek for a sequence of at least six positve values (R^2 >= 0.8)
+  # The first five measure points of the amplification curve are skipped
+  # because most technologies and probe technologies tend to overshot
+  # in the start (background) region.
+  res.out <- sapply(5L:(length(res.LRt) - 6), function(i) {
+    ifelse(sum(res.LRt[i:(i + 4)]) == 5, TRUE, FALSE)
+  }
+  )
+  cbind(1L:(length(y.tmp)), res.reg)
+}
+
+
+rtg.test <- function(y) {
+  nh <- trunc(length(y) * 0.2)
+  if (nh < 5) nh <- 5
+  rgts <-sapply(0L:round(length(y)/8, 0), function (j) {
+    cyc <- 1:nh + j
+    reg <- lm(y[cyc] ~ cyc)
+    c(cyc, cor(rstudent(reg), y[cyc]))
+  })
+  rgts
+}
+
 
 #der class ----------------------
 setClass("der", contains = "matrix", representation(.Data = "matrix", 
                                                     method = "character"))
 
 
-setMethod("summary", signature(object = "der"), function(object, digits = 0, print = TRUE) {
+setMethod("summary", signature(object = "der"), function(object, 
+                                                         digits = getOption("digits") - 3, 
+                                                         print = TRUE) {
   data <- slot(object, ".Data")
   FDM <- data[data[, "d1y"] == max(data[, "d1y"]), "x"] 
   SDM <- data[data[, "d2y"] == max(data[, "d2y"]), "x"]
@@ -43,10 +180,10 @@ setMethod("summary", signature(object = "der"), function(object, digits = 0, pri
   SDC <- sqrt(SDM * SDm)
   if (print) {
     cat(paste0("Smoothing method: ", slot(object, "method")))
-    cat(paste0("\nFirst derivative maximum: ", round(FDM, digits = digits)))
-    cat(paste0("\nSecond derivative maximum: ", round(SDM, digits = digits)))
-    cat(paste0("\nSecond derivative minimum: ", round(SDm, digits = digits)))
-    cat(paste0("\nSecond derivative center: ", round(SDC, digits = digits)))
+    cat(paste0("\nFirst derivative maximum: ", format(FDM, digits = digits)))
+    cat(paste0("\nSecond derivative maximum: ", format(SDM, digits = digits)))
+    cat(paste0("\nSecond derivative minimum: ", format(SDm, digits = digits)))
+    cat(paste0("\nSecond derivative center: ", format(SDC, digits = digits)))
   }
   res <- c(FDM, SDM, SDm, SDC)
   names(res) <- c("FDM", "SDM", "SDm", "SDC")
@@ -102,10 +239,10 @@ setMethod("summary", signature(object = "bg"), function(object, print = TRUE) {
   if (print) {
     cat(paste0("Background start: ", slot(object, "bg.start")))
     cat(paste0("\nBackground stop: ", slot(object, "bg.stop")))
-    cat(paste0("\nBackground correlation: ", slot(object, "bg.corr")))
+    cat(paste0("\nBackground correction: ", slot(object, "bg.corr")))
     cat(paste0("\nEnd of the amplification reaction: ", slot(object, "amp.stop")))
     cat(paste0("\nFluorescence at the end of the amplification reaction: ", 
-               round(slot(object, "fluo"), options("digits")[["digits"]])))
+               format(slot(object, "fluo"), options("digits")[["digits"]])))
   }
   invisible(c(bg.start = slot(object, "bg.start"), 
               bg.stop = slot(object, "bg.stop"),
@@ -172,19 +309,23 @@ setMethod("qqline", signature(y = "refMFI"), function(y, datax = FALSE,
          probs = probs, qtype = qtype)
 })
 
-setMethod("summary", signature(object = "refMFI"), function(object, print = TRUE) {
-  stats <- slot(object, "stats")
-  if (print) {
-    cat(paste0("Mean: ", stats[1]))
-    cat(paste0("\nMedian: ", stats[2]))
-    cat(paste0("\nStandard deviation: ", stats[3]))
-    cat(paste0("\nMedian absolute deviation: ", stats[4]))
-  }
-  invisible(c(mean = stats[1], 
-              median = stats[2],
-              sd = stats[3],
-              mad = stats[4]))
-})
+
+setMethod("summary", signature(object = "refMFI"), 
+          function(object, digits = getOption("digits") - 3, print = TRUE) {
+            stats <- slot(object, "stats")
+            nice.names <- c("Mean", "Median", "Standard deviation", 
+                            "Median Absolute Deviation", "Interquartile Range", 
+                            "Medcouple", "Skewness", 
+                            "SNR", "VRM", "Number of NAs", "Intercept", "Slope", 
+                            "R squared", "Breusch-Pagan Test p-value"
+            )
+            if (print) {
+              for(i in 1L:length(stats))
+                cat(paste0(nice.names[i], ": ", 
+                           format(stats[i], digits = digits), "\n"))
+            }
+            invisible(stats)
+          })
 
 
 setMethod("plot", signature(x = "refMFI"), function(x, CV = FALSE, type = "p", 
@@ -198,19 +339,21 @@ setMethod("plot", signature(x = "refMFI"), function(x, CV = FALSE, type = "p",
   qqnorm.data <- unlist(slot(x, "qqnorm.data"))
   llul <- rownames(slot(x, "qqnorm.data"))
   stats <- slot(x, "stats")
-  ncol_y <- ncol(slot(x, "qqnorm.data"))
+  ncol.y <- ncol(slot(x, "qqnorm.data"))
   
   #Plot the Coefficient of Variance
   layout(matrix(c(1,2,1,3), 2, 2, byrow = TRUE))
   
+  main.title <- paste0("ROI samples: ", format(ncol.y, nsmall = 3), "\n",
+                       "ROI mean: ", format(stats[1], nsmall = 3), " +- ", 
+                       format(stats[4], nsmall = 2), "\n",
+                       "ROI median: ", format(stats[2], nsmall = 3), " +- ", 
+                       format(stats[4], nsmall = 2))
+  
   if (CV) {
     plot(res[, 1], res[, 4], xlab = "Cycle", ylab = "CV", 
          type = type, pch = pch, col = col,
-         main = paste0("ROI samples: ", ncol_y, "\n",
-                      "ROI mean: ", stats[1], " +- ", stats[3], "\n",
-                      "ROI median: ", stats[2], " +- ", stats[4]
-		)
-    )
+         main = main.title)
     
     # Add a range for the ROI
     abline(v = llul, col = "lightgrey", lwd = 1.25)
@@ -220,23 +363,20 @@ setMethod("plot", signature(x = "refMFI"), function(x, CV = FALSE, type = "p",
     # and plot the results
     
     plot(res.dens, xlab = "RFU", main = paste0("Cycle ", 
-                                              llul[1], " to ", llul[2], 
-                                              "\n", "bw ", 
-                                              round(res.dens$bw, 3), 
-                                              "\n", "N ", res.dens$n
-                                        )
+                                               llul[1], " to ", llul[2], 
+                                               "\n", "bw ", 
+                                               round(res.dens$bw, 3), 
+                                               "\n", "N ", res.dens$n
+    )
     )
     
   } else {
     plot(res[, 1], res[, 2], ylim = c(min(res[, 2] - res[, 3]), 
                                       max(res[, 2] + res[, 3])), 
-                                      xlab = "Cycle", ylab = "MFI", 
-                                      type = type, pch = pch, col = col,
-         main = paste0("ROI samples: ", ncol_y, "\n",
-                      "ROI mean: ", stats[1], " +- ", stats[3], "\n",
-                      "ROI median: ", stats[2], " +- ", stats[4]
-                      )
-    )
+         xlab = "Cycle", ylab = "MFI", 
+         type = type, pch = pch, col = col,
+         main = main.title)
+    
     abline(v = llul, col = "lightgrey")
     
     arrows(res[, 1], res[, 2] + res[, 3], res[, 1], 
@@ -252,14 +392,130 @@ setMethod("plot", signature(x = "refMFI"), function(x, CV = FALSE, type = "p",
                                               "\n", "bw ", 
                                               round(res.dens[["bw"]], 3), 
                                               "\n", "N ", res.dens[["n"]]
-                                        )
+    )
     )
     
   }
   # Analysis of the quantiles
   qqnorm(x)
+  mtext(paste0("\nBreusch-Pagan Test p-value: ", format(stats["heter.p"], digits = 4)),
+        cex = 0.75)
   qqline(x)
   
   # Restore default graphic parameters
   par(fig = default.par, new = FALSE)
+})
+
+
+
+#th class, th.cyc function -------------------------------
+setClass("th", contains = "matrix", representation(.Data = "matrix", 
+                                                   stats = "summary.lm", 
+                                                   input = "matrix"))
+
+setMethod("show", signature(object = "th"), function(object) {
+  print(slot(object, ".Data"))
+})
+
+setMethod("summary", signature(object = "th"), function(object) {
+  cat("Cycle threshold: ", slot(object, ".Data")[, "cyc.th"], "\n")
+  cat("Fluorescence threshold: ", slot(object, ".Data")[, "atFluo"], "\n")
+  print(slot(object, "stats"))
+})
+
+#eff class, effcalc function -------------------------------
+
+setClass("eff", contains = "matrix", representation(.Data = "matrix", 
+                                                    amplification.efficiency = "numeric", 
+                                                    regression = "lm",
+                                                    correlation.test = "htest"))
+
+setMethod("show", signature(object = "eff"), function(object) {
+  print(slot(object, ".Data"))
+})
+
+setMethod("summary", signature(object = "eff"), function(object) {
+  cat("Amplification efficiency: ", slot(object, "amplification.efficiency"), "\n")
+  summary(slot(object, "regression"))
+})
+
+setMethod("plot", signature(x = "eff"), function(x, xlab = "log10(Concentration)", 
+                                                 ylab = "Cq", 
+                                                 main = "Efficiency Plot", 
+                                                 trend = TRUE, res.fit = TRUE, CI = FALSE, 
+                                                 level = 0.95, type = "p", 
+                                                 pch = 19, er.length = 0.05, 
+                                                 col = "black") {
+  res <- slot(x, ".Data")
+  lm.res <- slot(x, "regression")
+  cortest <- slot(x, "correlation.test")
+  AE <- slot(x, "amplification.efficiency")
+  
+  #get significance level
+  if (cortest[["p.value"]] < 0.001) {
+    sign.out <- "; p < 0.001"
+  }
+  if (0.001 <= cortest[["p.value"]] && cortest[["p.value"]] < 0.01) {
+    sign.out <- "; p < 0.01"
+  }
+  if (0.01 <= cortest[["p.value"]] && cortest[["p.value"]] < 0.05) {
+    sign.out <- "; p < 0.05"
+  }
+  if (cortest[["p.value"]] >= 0.05) {
+    sign.out <- "; p > 0.05"
+  }
+  
+  # Extract coordinates from data matrix
+  coords <- c(range(res[, 1]), 
+              range(res[, 2]))
+  # Store default graphic parameters
+  #   default.par <- par()
+  
+  # Perform a linear regression based on the values of the 
+  # calculated mean/median
+  # Calculate goodness of fit
+  Rsquared <- round(summary(lm.res)[["r.squared"]], 3)
+  
+  
+  # Add "legend" with amplification efficiency, goodness of fit to plot
+  # ToDo: expression(italic(R)^2 == Rsquared) for ... "R^2 = ", Rsquared ...?
+  if (res.fit) {
+    main <- paste0("Efficiency = ", AE, " %", "\n",
+                   "R^2 = ", Rsquared, "\n",
+                   "r = ", round(cortest$estimate, 3), sign.out, "\n"
+    )
+  }
+  # Plot the Coefficient of Variance
+  plot(res[, 1], res[, 2], ylim = c(min(res[, 2] - res[, 3]), 
+                                    max(res[, 2] + res[, 3])), xlab = xlab, 
+       ylab = ylab, type = type, pch = pch, col = col,
+       main = main)
+  
+  if (CI) {
+    # add area and border lines of confidence interval
+    # fix, does not yet work properly
+    #polygon(c(rev(x.ci), x.ci),
+    #  c(predict.ci[, 3], rev(predict.ci[, 2])),
+    #  col = "lightgrey", border = NA)
+    # prediction and parameters for confidence interval
+    x.ci <- seq(coords[1], coords[2], length.out= nrow(res))
+    predict.ci <- predict.lm(lm.res, newdata = data.frame(x.ci), 
+                             interval = "confidence", level = level)
+    polygon(c(x.ci, rev(x.ci)), c(rev(predict.ci[, 3]), predict.ci[, 2]),
+            border = NA, col = adjustcolor("lightblue", alpha.f = 0.4))
+    #     lines(rev(x.ci), predict.ci[ ,2], col = "lightblue")
+    #     lines(rev(x.ci), predict.ci[ ,3], col = "lightblue")
+  }
+  # Add error bar to the location parameters
+  arrows(res[, 1], res[, 2] + res[, 3], res[, 1], 
+         res[, 2] - res[, 3], angle = 90, code = 3, length = er.length, 
+         col = col)
+  
+  # Add trend line of linear regression to plot
+  if (trend) {
+    abline(lm.res)
+  }
+  
+  #   # Restore default graphic parameters
+  #   par(default.par)
 })

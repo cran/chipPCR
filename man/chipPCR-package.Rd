@@ -3,10 +3,10 @@
 \alias{chipPCR}
 \docType{package}
 \title{
-Toolkit of functions to preprocess amplification data
+Toolkit of functions to pre-process amplification data
 }
 \description{
-The \code{chipPCR} package is a toolkit of functions to preprocess 
+The \code{chipPCR} package is a toolkit of functions to pre-process 
 amplification curve data. Amplification data can be obtained from 
 conventional PCR reactions or isothermal amplification reactions. The 
 package contains functions to normalize and baseline amplification curves, 
@@ -31,8 +31,8 @@ The latest source code is available via:
 \tabular{ll}{
 Package: \tab chipPCR\cr
 Type: \tab Package\cr
-Version: \tab 0.0.7\cr
-Date: \tab 2014-06-25\cr
+Version: \tab 0.0.8\cr
+Date: \tab 2014-08-25\cr
 License: \tab GPL-3\cr
 }
 The function \code{\link[chipPCR]{bg.max}} can be used to remove missing 

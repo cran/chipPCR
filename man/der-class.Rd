@@ -1,5 +1,6 @@
 \name{der}
 \docType{class}
+\alias{der}
 \alias{der-class}
 \alias{show.der}
 \alias{show,der-method}
@@ -26,9 +27,6 @@ An S4 class containing the output \code{\link[chipPCR]{inder}} function.
    }
 }
 
-\details{
-Blabla
-}
 \author{
 Stefan Roediger, Michal Burdukiewicz
 }

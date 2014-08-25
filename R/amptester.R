@@ -6,8 +6,6 @@ amptester <-
       stop("Use only two values (e.g., background = c(1,10)) \n\t to set the range for the background correction")
     if (is.null(background) && manual == TRUE)
       stop("Manual test requires specified background.")
-    if (!is.null(background) && manual == FALSE)
-      stop("Background is not empty. Manual test needs to be confirmed \n\t (manual = TRUE) to be performed.")
     #if background is NULL, sorting it is pointless and invokes warning
     if (!is.null(background))
       background <- as.integer(sort(background))
@@ -42,10 +40,18 @@ amptester <-
     
     # SECOND TEST
     # Resids growth test (RGt)
-    #test if function is monotonic and growing during first few cycles
-    cyc <- 1:nh
-    resids <- residuals(rlm(y[cyc] ~ cyc))
-    rgt.dec <- ifelse(cor(resids, y[cyc]) > 0.9, "positive", "negative")
+    # test if fluorescence values in linear phase are stable. Whenever no amplification 
+    # occurs, fluorescence values quickly deviate from linear model. Their standarized
+    # residuals will be strongly correlated with their value. For real amplification curves,
+    # situation is much more stable. Noise (that means deviations from linear model) 
+    # in  background do not correlate strongly with the changes in fluorescence. 
+    # The decision is based on the threshold value (here 0.5). 
+    rgts <-sapply(0L:round(length(y)/8, 0), function (j) {
+      cyc <- 1:nh + j
+      reg <- lm(y[cyc] ~ cyc)
+      cor(rstudent(reg), y[cyc])  
+    })
+    rgt.dec <- ifelse(sum(rgts < 0.8) > round(length(y)/16, 0), "positive", "negative")
     
     # THIRD TEST
     # Linear Regression test (LRt)
@@ -107,7 +113,7 @@ amptester <-
       # (nh) and tail (nt).
       
       res.wt <- suppressWarnings(wilcox.test(head(y, n = nh), tail(y, n = nt), 
-                      alternative = "less"))
+                                             alternative = "less"))
       
       if (res.wt$p.value > 0.01) {
         y <- abs(rnorm(length(y), 0, 0.1^30))
@@ -132,6 +138,30 @@ amptester <-
       slt.dec <- "positive"
     }
     
+    # SIXTH TEST
+    # The pco test determines if the points in an amplification curve (like a polygon)
+    # are in a "clockwise" order. The sum over the edges result in a positive value if the
+    # amplification curve is "clockwise" and is negative if the curve is counter-clockwise.
+    # From experience is noise positive and "true" amplification curves "highly" negative.
+    # This test depends on the definition of a threshold.
+    pco <- function(y) {
+      xy <- data.frame(predict(smooth.spline(1L:length(y), y)))
+      sum(sapply(1L:(nrow(xy) - 1), 
+                 function (i) {
+                   xy[i + 1, 1] - xy[i, 1] * xy[i + 1, 2] + xy[i, 2]
+                 })
+      )
+    }
+    
+    der.res <- summary(inder(1L:length(y), y), print = FALSE)
+    
+    lm.dat <- data.frame(x = c(round(der.res[["SDM"]], 0), round(der.res[["SDm"]], 0)))
+    lm.dat <- cbind(lm.dat, y = y[lm.dat[, 1]])      
+    lm.dat[["y"]] <- lm.dat[["y"]]/max(lm.dat[["y"]])
+    slope.ratio <- coef(lm(y ~ x, lm.dat))
+    res.pco <- pco(y)
+    
+    # Output of the different tests
     rgt.dec <- ifelse(rgt.dec == "positive", TRUE, FALSE)
     tht.dec <- ifelse(tht.dec == "positive", TRUE, FALSE)
     slt.dec <- ifelse(slt.dec == "positive", TRUE, FALSE)
@@ -143,5 +173,7 @@ amptester <-
                       tht.dec = tht.dec,
                       slt.dec = slt.dec), 
         noiselevel = noiselevel,
-        background = background)
+        background = background,
+        polygon = res.pco,
+        slope.ratio = slope.ratio[["x"]])
   }

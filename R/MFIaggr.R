@@ -5,6 +5,11 @@ MFIaggr <- function(x, y, cyc = 1, fluo = 2:ncol(x), RSD = FALSE,
   #Test if x and y exist.
   testxy(x, y, length = FALSE)
   
+  # Test if y has enough values
+  if (is.null(dim(y)))
+    warning("MFIaggr does not work properly with small number of fluorescence data columns.")
+  
+  
   # Test if llul has only two values
   if (!is.null(llul) && length(llul) != 2)
     stop("Use two cycle values (e.g., llul = c(1,10)) to set 
@@ -81,7 +86,8 @@ MFIaggr <- function(x, y, cyc = 1, fluo = 2:ncol(x), RSD = FALSE,
   fluo <- res[c(llul[1]:llul[2]), 2]
   cycles <- res[c(llul[1]:llul[2]), 1]
   
-  lm.roi <- summary(lm(fluo ~ cycles))
+  lm.roi <- lm(fluo ~ cycles)
+  summ.lm <- summary(lm.roi)
 
   # Calcuate robust und non-robust location and dispersion
   # parameters of the ROI and apply the results to stats
@@ -91,6 +97,9 @@ MFIaggr <- function(x, y, cyc = 1, fluo = 2:ncol(x), RSD = FALSE,
   mean.roi <- mean(y.roi)
   median.roi <- median(y.roi)
   sd.roi <- sd(y.roi)
+  
+  # test for heteroscedasticity
+  heter.p <- bptest(lm.roi)[["p.value"]][["BP"]]
   
   stats <- c(mean = mean.roi,
 	     median = median.roi, 
@@ -102,9 +111,10 @@ MFIaggr <- function(x, y, cyc = 1, fluo = 2:ncol(x), RSD = FALSE,
 	     SNR = mean.roi / sd.roi, 
 	     VRM = var(y.roi) / mean.roi,
 	     NAs = sum(is.na(y.roi)),
-	     intercept = lm.roi[["coefficients"]][1],
-	     slope = lm.roi[["coefficients"]][2],
-	     r.squared = lm.roi[["r.squared"]]
+	     intercept = summ.lm[["coefficients"]][1],
+	     slope = summ.lm[["coefficients"]][2],
+	     r.squared = summ.lm[["r.squared"]],
+	     heter.p = heter.p
   )
   
   res.dens <- density(y.roi)
@@ -112,7 +122,7 @@ MFIaggr <- function(x, y, cyc = 1, fluo = 2:ncol(x), RSD = FALSE,
   #res is the an object of the type data.frame containing the 
   #temperature, location, deviation and coefficient of variance.
   new("refMFI", .Data = res, density = res.dens, 
-      qqnorm.data = y[llul, ], stats = stats, lm.roi = lm.roi)  
+      qqnorm.data = y[llul, ], stats = stats, summ.lm = summ.lm)  
 }
 
 setGeneric("MFIaggr")

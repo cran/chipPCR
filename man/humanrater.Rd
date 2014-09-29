@@ -14,7 +14,7 @@ machine.
 \usage{
 humanrater(x, cyc = 1, repeats = 1, 
            designations = list(y = "yes", a = "ambiguous", n = "not"), 
-           shuffle = TRUE)
+           shuffle = TRUE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -29,10 +29,13 @@ is the index of column containing the cycle data.
 number of repeats to rate the samples.
 }
   \item{designations}{
-a list of length 3. See Details.
+a named list of length at least 2. See Details.
 }
   \item{shuffle}{
 logical, if \code{TRUE} sequence of curves is shuffled for purpose of rating.
+}
+  \item{...}{
+additional arguments to \code{\link[graphics]{plot}} function.
 }
 }
 

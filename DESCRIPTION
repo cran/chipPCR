@@ -1,12 +1,16 @@
 Package: chipPCR
 Type: Package
 Title: Toolkit of helper functions to pre-process amplification data
-Version: 0.0.8-1
+Version: 0.0.8-3
 LazyData: true
-Date: 2014-08-25
-Author: Stefan Roediger, Michal Burdukiewicz
-Maintainer: Stefan Roediger <stefan.roediger@hs-lausitz.de>
-Description: The chipPCR package is a toolkit of functions to preprocess
+Date: 2014-09-29
+Authors@R: c(
+    person("Stefan", "Roediger", 
+      email = "stefan.roediger@hs-lausitz.de", 
+      role = c("cre", "aut")),
+    person("Michal", "Burdukiewicz", 
+      email = "michalburdukiewicz@gmail.com", role = "aut"))
+Description: The chipPCR package is a toolkit of functions to pre-process
     amplification curve data. Amplification data can be obtained from
     conventional PCR reactions or isothermal amplification reactions. The
     package contains functions to normalize and baseline amplification curves,
@@ -28,11 +32,14 @@ Description: The chipPCR package is a toolkit of functions to preprocess
 License: GPL-3
 URL: https://github.com/michbur/chipPCR
 Depends: R (>= 3.0.0), methods
-Suggests: drc, knitr, markdown, MBmca (>= 0.0.3-4), qpcR, xtable
+Suggests: drc, knitr, markdown, MBmca (>= 0.0.3-4), qpcR, RDML, xtable
 VignetteBuilder: knitr
 Imports: lmtest, MASS, outliers, ptw, quantreg, Rfit, robustbase,
         shiny, signal
-Packaged: 2014-08-26 12:41:51 UTC; michal
+Packaged: 2014-09-28 21:15:43 UTC; tux
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2014-08-26 15:39:23
+Date/Publication: 2014-09-29 07:26:55
+Author: Stefan Roediger [cre, aut],
+  Michal Burdukiewicz [aut]
+Maintainer: Stefan Roediger <stefan.roediger@hs-lausitz.de>

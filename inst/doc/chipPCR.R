@@ -19,8 +19,8 @@ are use."
 fig2_scap <- "Working principle of \\textsl{th}.\\textsl{cyc}."
 
 fig3_cap <- "Application of \\textsl{th}.\\textsl{cyc} for the analysis of 
-ccPCR data.
-Data from a ccPCR were analyzed using the \\textsl{th}.\\textsl{cyc} function 
+ccPCR data. The \\textsl{CPP} function was used to pre-process the data. 
+Susequently, the data were analyzed using the \\textsl{th}.\\textsl{cyc} function 
 using the linear regression mode. The threshold level ($r = 50$) was 
 identical for all data. The Cq (Ct) are given in minutes. The range used 
 for the calculation of the Cq is indicated in red. Negative curves are 
@@ -35,8 +35,8 @@ fig4_cap <- "Application of the \\textsl{CPP} and
 plotted without pre-processing. \\textbf{B)} All amplification curve data 
 were pre-processed with the CPP function. The parameter $trans$ was set to 
 $TRUE$, which lead to a linear trend correction and base-lining. By 
-default a Savitsky-Golay filter was used to smooth the data. The data were 
-normalized between 0 and 1 ($method.norm = 'minmax'$). \\textbf{C)} All 
+default a Savitzky-Golay filter was used to smooth the data. The data were 
+normalized between 0 and 1 ($method.norm = 'minm'$). \\textbf{C)} All 
 Cqs were calculated with \\textsl{th}.\\textsl{cyc} function. The Cq for the raw data was 
 $17.25 \\pm 0.5$ (at $r = 2575$) and $17.1 \\pm 0.1$ (at $r = 0.1$) for 
 the pre-processed data. Our results indicate that the dispersion of the Cq 
@@ -61,7 +61,7 @@ and \\emph{(F)} \\emph{zscore-normalization}."
 fig5_scap <- "Comparison of the normalization functions from \\textsl{CPP}"
 
 fig6_cap <- "Amplification standard curve simulation and regression 
-analysis. \\emph{(A)} AmpSim was used to synthesize a qPCR experiment of 
+analysis. \\emph{(A)} \\textsl{AmpSim} was used to synthesize a qPCR experiment of 
 six dilutions (three replicates per dilution) standard samples. The Cqs 
 were determined by the $SDM$ method (solid black vertical lines). 
 \\emph{(B)} effcalc was used to automatically perform a linear regression. 
@@ -85,7 +85,7 @@ efficiency approximately at 87.3~\\%."
 fig7_scap <- "Calculation of the amplification efficiency."
 
 fig8_cap <- "Imputation of missing values in amplification curve data. 
-\\emph{(A)} Raw data were generated using the AmpSim 
+\\emph{(A)} Raw data were generated using the \\textsl{AmpSim} 
 simulation function. \\emph{(B)} A missing value was introduced in the 
 transition phase. The missing value was imputed either by \\emph{(C)} 
 linear approximation or \\emph{(D)} a cubic spline approximation. The 
@@ -93,22 +93,21 @@ spline approximation nearly reconstituted the original curve."
 fig8_scap <- "Imputation of missing values in amplification curve data."
 
 fig9_cap <- "Cycle of quantification by the second derivative maximum 
-method. Raw data (\\textbullet) were generated using the AmpSim simulation 
+method. Raw data (\\textbullet) were generated using the \\textsl{AmpSim} simulation 
 function (see example main text). The inflection point is the point where 
 the slope is maximum and the curvature is zero. The first derivative of the 
 amplification curve has a first derivative maximum ($FDM$) at the 
 inflection point. The second derivative maximum method ($SDM$) needs to 
-differentiate a curve to the second order prior to quantification. The 
-second derivative exhibits a zero-crossing at the $FDM$. The function $y = 
-f(x)$ is numerically derived by five-point stencil. This method do not 
-require any assumptions regarding the function f. The function inder 
-calculates the approximate $SDM$. The $SDM$ might in addition be useful for 
-isothermal amplification processes. The $SDM$ is calculated from a derived 
-cubic spline. Similarly the first approximate derivative 
-maximum ($FDM$), second derivative minimum ($SDm$), and approximate second 
-derivative center ($SDC$, geometric mean of $SDM$ and $SDm$) are available. 
-$FDM$, $SDm$ and $SDC$ values can be used to further characterize the 
-amplification process."
+differentiate a curve to the second order prior to quantification. The second 
+derivative exhibits a zero-crossing at the $FDM$. The function $y = f(x)$ is 
+numerically derived by five-point stencil. This method do not require any 
+assumptions regarding the function $f$. \\textsl{inder} calculates the 
+approximate $SDM$. The $SDM$ might in addition be useful for isothermal 
+amplification processes. The $SDM$ is calculated from a derived cubic spline. 
+Similarly the first approximate derivative maximum ($FDM$), second derivative 
+minimum ($SDm$), and approximate second derivative center ($SDC$, geometric mean 
+of $SDM$ and $SDm$) are available. $FDM$, $SDm$ and $SDC$ values can be used to 
+further characterize the amplification process."
 fig9_scap <- "Cycle of quantification by the second derivative maximum 
 method."
 
@@ -117,8 +116,8 @@ Derivative Maximum) values with the \\textsl{diffQ2} function.
 \\emph{(A)} Plot the samples detected with EvaGreen and 
 \\emph{(B)} shows the same samples detected with the Hydrolysis probe for 
 MLC-2v. \\emph{(C)} Stripchart of the Cq values (\\textbullet) with the 
-median (\\emph{\\textendash}) and the median absolute deviation 
-(\\textendash~\\textendash). This result indicates, that the variance of 
+median (\\textcolor{red}{\\textendash}) and the median absolute deviation 
+(\\textcolor{blue}{\\textendash~\\textendash}). This result indicates, that the variance of 
 the derived from the detection with hydrolysis probes is higher than the 
 samples detected with EvaGreen. Note: the $inder$ parameter is set as 
 TRUE."
@@ -144,21 +143,22 @@ for the human gene \\textit{HPRT1}"
 
 fig12_cap <- "Signal analysis using the VIMCFX96\\_60 data set (96-well 
 plate cycler (Bio-Rad CFX96)). All cycles (ROI: 1 -- 40) were analyzed by 
-the MFIaggr function. The density plot (right upper panel) and 
+the \\textsl{MFIaggr} function. The density plot (right upper panel) and 
 quantile-quantile analysis (right lower panel) show no normal 
 distribution. Due to the sigmoidal curve structure is the density function 
 bimodal."
 fig12_scap <- "Signal analysis using the VIMCFX96\\_60 data set (96-well 
 plate cycler (Bio-Rad CFX96))."
 
-fig13_cap <- "Helicase Dependent Amplification (HDA) of Vimentin (Vim). 
-The VideoScan Platform was used to monitor the amplification. The HDA was 
-performed at 65 degree Celsius. Three concentrations of input DNA (D1, D2, 
-D3) were used. The amplification curves were smoothed by a moving average 
-(windowsize 3) and base-lined by a a robust linear regression by computing 
-MM-type regression estimator. The \\textsl{th}.\\textsl{cyc} function was used to determine 
-the time required to reach the threshold level of 0.05 (--)."
-fig13_scap <- "Helicase Dependent Amplification (HDA) of Vimentin (Vim)."
+fig13_cap <- "Helicase dependent amplification (HDA) of Vimentin (Vim). The 
+VideoScan Platform was used to monitor the amplification. The HDA was performed 
+at 65 degree Celsius. Three concentrations of input DNA (D1, D2, D3) were used. 
+The amplification curves were smoothed by a moving average (windowsize 3) and 
+base-lined by a a robust linear regression by computing MM-type regression 
+estimator. The \\textsl{th}.\\textsl{cyc} function was used to determine the 
+time required to reach the threshold level of 0.05 (--)." 
+
+fig13_scap <- "Helicase dependent amplification (HDA) of Vimentin (Vim)."
 
 fig14_cap <- "The plotCurves function. Plots many curves on one plot in 
 separate cells allowing quick assessment. Missing values were artificially 
@@ -166,11 +166,11 @@ introduced at random position to selected curves of the VIMCFX96\\_60 data
 set (solid black line). A colored box (topleft of each plot) indicates the 
 sample name and if the data contain missing values. The red rug indicates 
 the position of the missing values. The red lined shows the amplification 
-curve after unsupervised pre-processesing (using an instance of CPP)."
+curve after unsupervised pre-processing (using an instance of \\textsl{CPP})."
 fig14_scap <- "The plotCurves function."
 
-fig15_cap <- "Use of MFIaggr to test for heteroskedasticity using the 
-Breusch-Pagan test. The data were aggregated with the MFIaggr function and 
+fig15_cap <- "Use of \\textsl{MFIaggr} to test for heteroskedasticity using the 
+Breusch-Pagan test. The data were aggregated with the \\textsl{MFIaggr} function and 
 assigned to the object res. The standard deviation was transformed to the 
 variance. The plot shows the cycle dependent variance measured at 60 
 degree Celsius (annealing phase; A, B) and 69 degree Celsius (elongation 
@@ -179,20 +179,27 @@ curves were analyzed. Next the cycles 1 to 40 of the same amplification
 curve data were analyzed. The Breusch-Pagan confirmed the 
 heteroskedasticity in the amplification curve data. The VIMCFX96\\_60 and 
 VIMCFX96\\_69 data sets were used."
-fig15_scap <- "Use of MFIaggr to test for heteroskedasticity using the 
+fig15_scap <- "Use of \\textsl{MFIaggr} to test for heteroskedasticity using the 
 Breusch-Pagan test."
 
 fig16_cap <- "Function inder calculates numeric derivatives on smoothed 
 data, which results in data points not observable in reality. The rounder 
 function averages such result to the real values of cycle number. An 
-amplification curve was simulated with the AmpSim function."
+amplification curve was simulated with the \\textsl{AmpSim} function."
 
 fig16_scap <- "Use of rounder to average numeric derivatives to the real 
 values of cycle number."
 
-fig17_cap <- "FILL ME."
+fig17_cap <- "\\textsl{lm.coefs} a function to compute linear model 
+coefficients. The function is a convenient wrapper around few functions 
+performing normal (least squares) and robust linear regression. If the robust 
+linear regression is impossible, \\textsl{lm.coefs} will perform linear 
+regression using the least squares method. This function can be used to 
+calculate the background of an amplification curve. The coefficients of the 
+analysis can be used for a trend based correction of the entire data set."
 
-fig17_scap <- "FILL ME."
+fig17_scap <- "\\textsl{lm.coefs} a function to compute linear model 
+coefficients."
 
 fig18_cap <- "\\textsl{bg}.\\textsl{max} tries to estimate the range between the 
 background and the plateau phase of an amplification reaction. \\emph{(A)} in 
@@ -215,9 +222,59 @@ between raw data and pre-processed data."
 fig19_scap <- "Application of the \\textsl{bg}.\\textsl{max} function to detect 
 the start and end of an amplification reaction in a capillary convective PCR."
 
-fig20_cap <- "FILL ME."
+fig20_cap <- "Inspection of the reps384 data set. The reps384 data set was used 
+for the analysis of the impact of imputed missing values. Three areas of the 
+curve data were defined as ``Linear phase'' (red, cycle 1 -- 10), ``Exponential 
+phase'' (blue, cycle 11 -- 33), ``Plateau phase'' (green, cycle 34 -- 40)."
 
-fig20_scap <- "FILL ME."
+fig20_scap <- "Inspection of the reps384 data set."
+
+fig21_cap <- "Analysis and interpretation of real-time amplification curves. \\emph{(A)} The 
+fluorescence values are plotted against the cycle. The amplification curve  
+has a sigmoidal shape (\\textcolor{black}{\\textendash},~\\textcolor{red}{\\textendash}). Amplification 
+curve raw data are affected by many influences. This includes noise introduced 
+by the detection system and sensor errors. Measurements can occasionally contain 
+missing values (``NA'', \\textcolor{red}{\\textendash}) and outliers (orange 
+circle, \\textcolor{black}{\\textendash}). Outliers are often present in the first 
+cycle due to sensor adjustments. The signal difference between the background 
+phase (first cycles) and the plateau phase (last cycles) can be expressed as 
+signal-to-noise ratio (SNR). The SNR between different between samples (e.g., 
+\\textcolor{black}{\\textendash} and \\textcolor{black}{\\textendash}) can vary. For 
+interpretation it is better to compensate the differences. Negative samples 
+(\\textcolor{blue}{\\textendash}) need to be (automatically) identified. 
+\\emph{(B)} pre-processed raw data. NAs were imputed and the noise slightly 
+removed. The curves were adjusted to have the same baseline and plateau level. 
+The quantification point (Cq) of the positive reactions are determined in the 
+exponential phase (``Threshold method'' is used in this example). Negative 
+sample are automatically set to zero." 
+
+fig21_scap <- "Analysis and interpretation of real-time amplification curves."
+
+fig22_cap <- "Smoother and filter methods of the \\emph{chipPCR} package. 
+\\emph{(A)} Raw data were generated using the \\textsl{AmpSim} simulation 
+function. \\emph{(B)} The difference of the raw data to the smoothed data was 
+plotted. ``savgol'' (Savitzky-Golay Smoothing), ``lowess'' (locally-weighted 
+polynomial regression), ``mova3'' (moving average with window size of 3), 
+``smooth'' (cubic smoothing spline), ``spline'' (Interpolating cubic spline), 
+``supsmu'' (Friedman's SuperSmoother), ``whit1'' (weighted Whittaker smoothing 
+with a finite difference penalty of order 1), ``whit2'' (weighted Whittaker 
+smoothing with a finite difference penalty of order 2). The ``savgol'', 
+``smooth'', ``spline'' ``whit1'' , and ``whit2'' nearly preserved the original 
+curve. The other functions resulted in alteration in the transition phases of 
+the amplification curve. Optimized time series smoother, like the Kalman filter 
+\\cite{Tusell_2010}, are not yet integrated."
+
+fig22_scap <- "Smoother and filter methods of the \\emph{chipPCR} package."
+
+fig23_cap <- "Sample code for the analysis with the \\textsl{MFIaggr} function. 
+The VIMCFX96\\_60 data set (96-well plate cycler (Bio--Rad CFX96)) was used. 
+Either all a subset of cycles (ROI: 1 -- 10) or all cycles (ROI: 1 -- 40) (Figure~\\ref{figure:MFIaggr_all}) were 
+analyzed. The density plot (right upper panel) and quantile-quantile analysis 
+(right lower panel) show no normal distribution. Due to the sigmoidal curve 
+structure is the density function bimodal."
+
+fig23_scap <- "Signal analysis by the \\textsl{MFIaggr} function."
+
 
 ## ----load_data,message=FALSE,results='asis'------------------------------
 # Load chipPCR 
@@ -226,6 +283,133 @@ require(chipPCR)
 require(xtable)
 # Print table
 print(xtable(head(C60.amp[, 1L:5]), caption = "First five cycles of imported data."))
+
+## ----problems,warning=FALSE,message=FALSE,fig.show='hold',fig.cap=fig21_cap,fig.scap=fig21_scap,warning=FALSE,fig.width = 11, fig.height = 11----
+# Use AmpSim to generate an amplification curve with 40 cycles
+# and a different Cq.
+res.pos <- AmpSim(cyc = 1:40, noise = TRUE, b.eff = -12, nnl = 0.02)
+res.pos[5, 2] <- res.pos[5, 2] * 6
+
+res.low <- AmpSim(cyc = 1:40, noise = TRUE, b.eff = -20, bl = 0.5, 
+		  ampl = 0.58, Cq = 33)
+# Add missing value to res.low at cycle 31
+res.low[31, 2] <- NA
+
+res.neg <- AmpSim(cyc = 1:40, b.eff = -0.1, bl = 0.05, ampl = 0.4, Cq = 1, 
+		  noise = FALSE, nnl = 0.5)
+		      
+res.pos.CPP <- cbind(1:40, CPP(res.pos[, 1], res.pos[, 2], 
+		     bg.outliers = TRUE, smoother = TRUE, method = "smooth", 
+		      method.norm = "minm", method.reg = "lmrob")$y)
+		      
+res.low.NA <- cbind(1:40, CPP(res.low[, 1], res.low[, 2], smoother = TRUE, 
+		    method = "smooth", bg.outliers = TRUE, method.norm = "minm", 
+		    method.reg = "lmrob")$y)
+		      
+res.neg.exc <- cbind(1:40, amptester(res.neg[, 2]))
+
+par(mfrow = c(1,2), las = 0, bty = "n", cex.axis = 1.5, cex.lab = 1.5, 
+    font = 2, cex.main = 1.8, oma = c(1,1,1,1))
+plot(NA, NA, xlim = c(1,40), ylim = c(0, max(res.pos[, 2])), xlab = "Cycle", 
+     ylab = "Raw fluorescence")
+mtext("A", cex = 2, side = 3, adj = 0, font = 2)
+
+lines(res.pos, lwd = 2)
+lines(res.low, col = 2, lwd = 2)
+arrows(38, min(res.low[, 2], na.rm = TRUE), 38, max(res.low[, 2], 
+       na.rm = TRUE), code=3, lwd=3, angle=90, col="grey")
+text(38, max(res.low[, 2], na.rm = TRUE) * 0.7,"SNR", cex=1.2)
+
+arrows(29,0.42,31,0.51, lwd=2)
+text(29,0.38, "NA", cex=1.2)
+
+points(res.pos[5, 1], res.pos[5, 2], pch=21, cex=4, lwd=5, col="orange")
+text(res.pos[5, 1], res.pos[5, 2] * 1.2, "Outlier", cex=1.2)
+
+lines(res.neg, col = 4, lwd = 2)
+text(20, mean(res.neg[, 2]) *0.9, "No amplification", cex=1.2, col = 
+"blue")
+
+
+plot(NA, NA, xlim = c(1,40), ylim = c(0, max(res.pos[, 2])), xlab = "Cycle", 
+     ylab = "Pre-processed fluorescence")
+abline(h = 0.03, lty = 2, lwd = 2)
+mtext("B", cex = 2, side = 3, adj = 0, font = 2)
+
+lines(res.pos.CPP, lwd = 2)
+lines(res.low.NA, col = 2, lwd = 2)
+lines(res.neg.exc, col = 4, lwd = 2)
+
+legend(1, 1, c("Positive (outlier removed)", "Positive (scaled)", 
+       "Negative", "Threshold line nof Cq"), 
+       col = c("black", "red", "blue", "black"), lty = c(1,1,1,2), 
+       lwd = 2, bty = "n")
+lines(c(15.1,15.1), c(-1,0.03), lwd = 2, col = "black")
+text(14, 0.06, "Cq")
+lines(c(28.5,28.5), c(-1,0.03), lwd = 2, col = "red")
+text(27, 0.06, "Cq", col = "red")
+
+## ----AmpSim_GUI,eval = FALSE---------------------------------------------
+#  # Load the shiny package (chipPCR should already be loaded).
+#  # Run from a R console following commands.
+#  require(shiny)
+#  
+#  # Invoke the shiny AmpSim app in the default browser.
+#  runApp(paste(find.package("chipPCR")[1],"/AmpSim.gui", sep = ""))
+#  
+#  # Call shiny app AmpSim directly from gist
+#  runGist('https://gist.github.com/michbur/e1def41598f1d0c1e2e6')
+
+## ----AmpSim_random,warning=FALSE,message=FALSE,fig.show='hold',fig.cap=fig1_cap,fig.scap=fig1_scap----
+# Draw an empty plot for 40 cycles with user defined parameters.
+
+par(las = 0, bty = "n", oma = c(.5,.5,.5,.5))
+plot(NA, NA, xlim = c(1,40), ylim = c(0,1.1), xlab = "Cycle", ylab = "RFU")
+colors <- rainbow(8)
+
+# Create eight amplification curves. The approximate Cqs are synthesized 
+# as temporary Cqs by adding a random value to a starting Cq of 25. Note: 
+# ``noise'' is set TRUE with a level of nnl = 0.03. This adds some scatter 
+# to the amplification curves.
+
+sim <- sapply(1L:8, function(i) {
+  Cq.tmp <- 25 + rnorm(1) * 5
+  
+  tmp <- AmpSim(1:40, Cq = Cq.tmp, noise = TRUE, nnl = 0.03)
+  lines(tmp, col = colors[i], lwd = 2)
+  
+  # Add the approximate Cq values to the plot
+  text(3, 1 - i / 10, paste("Cq ", round(Cq.tmp, 2)), col = colors[i])
+})
+
+## ----humanrater_gui,eval = FALSE-----------------------------------------
+#  # Create a set of data to be analyzed by humanrater.
+#  # The function AmpSim will create amplification curves which follow a nearly
+#  # optimal sigmoidal curve shape or just noise.
+#  
+#  testdata <- data.frame(1:35,
+#                         AmpSim(Cq = 15, noise = TRUE)[, 2],
+#                         AmpSim(Cq = 25, noise = TRUE)[, 2],
+#                         rnorm(35),
+#                         AmpSim(Cq = 35, noise = TRUE)[, 2],
+#                         rnorm(35),
+#                         AmpSim(Cq = 45, noise = TRUE)[, 2])
+#  
+#  # Use testdata as input for humanrater and assign the results to the
+#  # object human.test.
+#  # check testdata for significance of amplification in two repeats.
+#  
+#  human.test1 <- humanrater(testdata, repeats = 2)
+
+## ----MFIaggr_intro,warning=FALSE,message=FALSE,fig.show='hold', fig.width = 6, fig.cap=fig23_cap,fig.scap=fig23_scap----
+par(las = 0, bty = "n", cex.axis = 1.2, cex.lab = 1.2, 
+    font = 2, cex.main = 1.2, oma = c(1,1,1,1))
+
+plot(MFIaggr(VIMCFX96_60[, 1], VIMCFX96_60[, 2:ncol(VIMCFX96_60)], 
+     llul = c(1,10)), CV = FALSE)
+
+# plot(MFIaggr(VIMCFX96_60[, 1], VIMCFX96_60[, 2:ncol(VIMCFX96_60)], 
+#      llul = c(1,40)), CV = FALSE)
 
 ## ----MFIaggr_all,fig.show='hold',fig.cap=fig12_cap,fig.scap=fig12_scap----
 plot(MFIaggr(VIMCFX96_60[, 1], VIMCFX96_60[, 2:ncol(VIMCFX96_60)], 
@@ -274,6 +458,47 @@ y[c(10, 22, 3, 25, 26, 15, 27, 23, 4), c(5, 7, 4, 2, 1)] <- NA
 # plots with pre-processed data and imputed missing values (red line).
 plotCurves(VIMCFX96_60[, 1], y, nrow = 2, type = "l", CPP = TRUE)
 
+## ----workflow,fig.show='hold',fig.cap=fig4_cap,fig.scap=fig4_scap,warning=FALSE----
+layout(matrix(c(1,2,3,3), 2, 2, byrow = TRUE), respect = TRUE)
+
+par(las = 0, bty = "n", oma = c(.5,.5,.5,.5))
+
+th.cyc.raw <- apply(VIMCFX96_60[, -1], 2, function(i) {
+  th.cyc(VIMCFX96_60[, 1], i, r = 2575)[1,1]})
+
+res.CPP <- apply(VIMCFX96_60[, -1], 2, function(i) {
+  CPP(VIMCFX96_60[, 1], i, trans = TRUE, 
+      method.norm = "minm")[["y.norm"]]})
+
+th.cyc.CPP <- apply(res.CPP, 2, function(i) {
+  th.cyc(VIMCFX96_60[, 1], i, r = 0.1)[1,1]})
+
+matplot(VIMCFX96_60[, -1], type = "l", pch = 19, col = 1, lty = 1, 
+        xlab = "Cycle", ylab = "Raw fluorescence", main = "Raw")
+abline(h = 2575, lty = 2)
+mtext("A", cex = 1.2, side = 3, adj = 0, font = 2)
+
+matplot(res.CPP, type = "l", pch = 19, col = 1, lty = 1, xlab = "Cycle", 
+        ylab = "Fluorescence", main = "CPP")
+abline(h = 0.1, lty = 2)
+mtext("B", cex = 1.2, side = 3, adj = 0, font = 2)
+
+boxplot(data.frame(Raw = th.cyc.raw, CPP = th.cyc.CPP), ylab = "Cq (Ct)", 
+        notch = TRUE)
+mtext("C", cex = 1.2, side = 3, adj = 0, font = 2)
+
+## ----fixNA_data,fig.show='hold',fig.cap=fig20_cap,fig.scap=fig20_scap,message=FALSE----
+library(qpcR)
+library(chipPCR)
+cols <- adjustcolor(2:4, 0.6)
+plot(NA, NA, xlim = c(1,45), ylim = c(min(reps384[, -1]), max(reps384[, -1])), 
+     col = 1, pch = 19, type = "b", xlab = "Cycle", ylab = "Fluorescence")
+rect(0.8, min(reps384[, -1]), 10.2, max(reps384[, -1]), border = NA, col = cols[1])
+rect(10.8, min(reps384[, -1]), 33.2, max(reps384[, -1]), border = NA, col = cols[2])
+rect(33.8, min(reps384[, -1]), 45, max(reps384[, -1]), border = NA, col = cols[3])
+
+apply(reps384[, -1], 2, function(i) lines(reps384[, 1], i))
+
 ## ----fixNA,fig.show='hold',fig.cap=fig8_cap,fig.scap=fig8_scap-----------
 # Simulation of an ideal amplification curve with 40 cycles
 # The other parameter of the AmpSim function are identical to
@@ -320,6 +545,135 @@ abliner()
 mtext("D", cex = 1.2, side = 3, adj = 0, font = 2)
 par(mfrow = c(1,1))
 
+## ----smoothing_intro,fig.show='hold',fig.cap=fig22_cap,fig.scap=fig22_scap,warning=FALSE,fig.width = 11, fig.height = 8----
+# Simulate and amplification curve with the AmpSim function
+tmp <- AmpSim(cyc = 1:35, bl = 0)
+
+par(las = 0, bty = "n", cex.axis = 1.5, cex.lab = 1.5, 
+    font = 2, cex.main = 1.8, oma = c(1,1,1,1), fig = c(0,1,0.55,1))
+plot(tmp, type = "b", col = 1, pch = 20, xlab = "", ylab = "RFU", 
+      main = "Raw data")
+mtext("A", cex = 2, side = 3, adj = 0, font = 2)
+
+# Apply all (parameter method = "all") smoothers/filter with the default 
+# setting to the amplification curve of the object tmp. Smoothers / Filters:
+# Savitzky-Golay smoothing filter
+# locally-weighted polynomial regression
+# moving average, windowsize 3
+# cubic spline smooth
+# standard cubic spline smooth
+# Friedman's SuperSmoother
+# weighted Whittaker smoothing with first order finite difference penalty
+# weighted Whittaker smoothing with a second order finite difference penalty
+res <- smoother(tmp[, 1], tmp[, 2], method = "all", CPP = FALSE)
+
+# Calculate the difference between the ideal curve (tmp) and the smoothed curves
+# (res) and assign the results to the object res.out
+res.out <- cbind(cycle = tmp[, 1], tmp[, 2] - res)
+
+# Plot the smoothed curves
+par(fig = c(0,1,0,0.65), new = TRUE)
+plot(NA, NA, type = "b", col = 2, pch = 15, xlim = c(1,35), ylim = c(-0.1,0.1),
+     xlab = "Cycle", ylab = "delta refMFI (raw - smoothed)",
+     main = "Smoothed / Filtered data")
+     
+mtext("B", cex = 2, side = 3, adj = 0, font = 2) 
+legend(1.5, 0.1, ncol = 2, colnames(res.out[, 2:9]), pch = 15:22, 
+       lwd = 2, col = c(2:9))
+
+# Plot the results.
+tmp <- sapply(2:9, function(i) {
+      lines(res.out[, 1], res.out[, i], type = "b", col = i, pch = i + 13)
+     }
+)
+
+## ----bgmax,fig.cap=fig18_cap,fig.scap=fig18_scap,fig.show='hold',message=FALSE,results='hide',fig.width = 11, fig.height = 8----
+par(las = 0, mfrow = c(2,1), bty = "n", oma = c(.5,.5,.5,.5))
+
+res <- AmpSim(cyc = 1:40, Cq = 25)
+plot(res, xlim = c(1,40), ylim = c(-0.1,1), xlab = "Cycles", 
+     ylab = "refMFI", 
+     main = "Background Range Estimation\n in Absence of Noise", 
+     type = "b", pch = 20)
+background <- bg.max(res[, 1], res[, 2])
+mtext("A", cex = 2, side = 3, adj = 0, font = 2)
+
+points(background[, 3], col = "red", type = "b", pch = 20)
+points(background[, 4], col = "blue", type = "b", pch = 20)
+abline(v = background@bg.start)
+text(background@bg.start, 0.2, "Background start", pos = 4)
+abline(v = background@bg.stop, col = "blue")
+text(background@bg.stop, 0.25, "Background stop", pos = 4, 
+     col = "blue")
+abline(v = background@amp.stop, col = "green")
+text(background@amp.stop, 0.3, "Plateau transition", pos = 4, 
+     col = "green")
+legend(4, 1, c("Raw data", "First derivative", "Second derivative"), 
+       pch = rep(20,3), col = c(1,2,4), bty = "n")
+
+res <- AmpSim(cyc = 1:40, Cq = 25, noise = TRUE)
+plot(res, xlim = c(1,40), ylim = c(-0.1,1), xlab = "Cycles", 
+     ylab = "refMFI", 
+     main = "Background Range Estimation\n in Presence of Noise", 
+     type = "b", pch = 20)
+mtext("B", cex = 2, side = 3, adj = 0, font = 2)
+background <- bg.max(res[, 1], res[, 2])
+
+points(background[, 3], col = "red", type = "b", pch = 20)
+points(background[, 4], col = "blue", type = "b", pch = 20)
+abline(v = background@bg.start)
+text(background@bg.start, 0.2, "Background start", pos = 4)
+abline(v = background@bg.stop, col = "blue")
+text(background@bg.stop, 0.25, "Background stop", pos = 4, col = "blue")
+abline(v = background@amp.stop, col = "green")
+text(background@amp.stop, 0.3, "Plateau transition", pos = 4, col = 
+       "green")
+legend(4, 1, c("Raw data", "First derivative", "Second derivative"), 
+       pch = rep(20,3), col = c(1,2,4), bty = "n")
+par(mfrow = c(1,1))
+
+## ----bgmax_ccPCR,fig.cap=fig19_cap,fig.scap=fig19_scap,fig.show='hold',message=FALSE,results='hide',warning=FALSE,fig.width = 11, fig.height = 11----
+# Set parameter for the plot.
+par(mfrow = c(2,1), las = 0, bty = "n")
+
+# Use of bg.max for time-dependent measurements. Amplification curves 
+# from the capillaryPCR data set were processed in a loop. The results of 
+#  bg.max are added to the plot. 
+
+colors <- rainbow(8)
+
+plot(NA, NA, xlim = c(0,75), ylim = c(-200,1300), xlab = "Time (min)", 
+     ylab = "Voltage (micro V)", main = "ccPCR - Raw data")
+mtext("A", cex = 1.5, side = 3, adj = 0)
+for (i in c(1,3,5,7)) {
+  x <- capillaryPCR[1L:750, i]
+  y <- capillaryPCR[1:750, i + 1]
+  res.bg <- summary(bg.max(x, y))
+  lines(x, y, type = "b", pch = 20, col = colors[i], cex = 0.5)
+  lines(c(res.bg[2], res.bg[2], res.bg[4], res.bg[4]), 
+        c(-150, -50, -150, -50), col = colors[i], lwd = 1.5)
+  text(10, 1200 - i * 50, 
+       paste("bg.start: ", res.bg[1], ", bg.stop: ", res.bg[2], 
+             ", amp.stop: ", res.bg[4]), col = colors[i], cex = 0.6)
+}
+
+plot(NA, NA, xlim = c(0,75), ylim = c(-200,1300), xlab = "Time (min)", 
+     ylab = "Voltage (micro V)", main = "ccPCR - Pre-processed")
+mtext("B", cex = 1.5, side = 3, adj = 0)
+for (i in c(1,3,5,7)) {
+  x <- capillaryPCR[1L:750, i]
+  y <- CPP(capillaryPCR[1L:750, i], capillaryPCR[1:750, i + 1], 
+           method = "mova", trans = TRUE, bg.range = c(1,105), 
+           bg.outliers = TRUE)[["y.norm"]]
+  res.bg <- summary(bg.max(x, y))
+  lines(x, y, type = "b", pch = 20, col = colors[i], cex = 0.5)
+  lines(c(res.bg[2], res.bg[2], res.bg[4], res.bg[4]), 
+        c(-150, -50, -150, -50), col = colors[i], lwd = 1.5)
+  text(10, 1200 - i * 50, 
+       paste("bg.start: ", res.bg[1], ", bg.stop: ", res.bg[2], 
+             ", amp.stop: ", res.bg[4]), col = colors[i], cex = 0.6)
+}
+
 ## ----normalization,fig.show='hold',fig.cap=fig5_cap,fig.scap=fig5_scap----
 par(mfrow = c(2,3), las = 0, bty = "n", oma = c(.5,.5,.5,.5))
 tmp <- VIMCFX96_60
@@ -341,7 +695,7 @@ plot(NA, NA, xlim = c(1,40), ylim = c(0, 1.15), xlab = "Cycle",
      ylab = "RFU", main = "MinMax-Normalization")
 mtext("C", cex = 1.2, side = 3, adj = 0, font = 2) 
 lin <- apply(tmp[, -1], 2, function(x) lines(tmp[, 1], CPP(tmp[, 1], x, 
-                                                           method.norm = "minmax")$y))
+                                                           method.norm = "minm")$y))
 
 plot(NA, NA, xlim = c(1,40), ylim = c(0, 1.15), xlab = "Cycle", 
      ylab = "RFU", main = "Max-Normalization")
@@ -398,6 +752,160 @@ summary(res)
 head(rd)
 # summary(rd)
 
+## ----SDM,fig.show='hold',fig.cap=fig9_cap,fig.scap=fig9_scap-------------
+# Use AmpSim to generate an amplification curve with 40 cycles
+# and an approximate Cq of 20 and assign it to the object isPCR.
+# isPCR is an object of the class "data.frame".
+isPCR <- AmpSim(cyc = 1:40, Cq = 20)
+
+# Invoke the inder function for the object isPCR to interpolate 
+# the derivatives of the simulated data as object res. The Nip 
+# parameter was set to 5. This leads to smoother curves. res is
+# an object of the class "der".
+res <- inder(isPCR, Nip = 5)
+
+# Plot the object res and add descriptions to the elements.
+
+par(las = 0, bty = "n", oma = c(.5,.5,.5,.5))
+
+plot(isPCR, xlab = "Cycle", ylab = "RFU", ylim = c(-0.15,1),
+     main = "", type = "b", pch = 20, lwd = 2)
+colors <- rainbow(4)
+# Add graphical elements for the derivatives and the calculated
+# Cq values FDM, SDM, SDm and SDC.
+
+lines(res[, "x"], res[, "d1y"], col = "blue", lwd = 2)
+lines(res[, "x"], res[, "d2y"], col = "red", lwd = 2)
+
+# Fetch the Cq values from res with the summary function
+summ <- summary(res, print = FALSE)
+
+abline(v = summ, col = colors, lwd = 2)
+text(15, 0.3, paste("FDM ~ ", round(summ["FDM"], 2)), 
+     cex = 1.1, col = colors[1])
+text(15, 0.2, paste("SDM ~ ", round(summ["SDM"], 2)), 
+     cex = 1.1, col = colors[2])
+text(15, - 0.1, paste("SDm ~ ", round(summ["SDm"], 2)), 
+     cex = 1.1, col = colors[3])
+text(15, 0.7, paste("SDC ~ ", round(summ["SDC"], 2)), 
+     cex = 1.1, col = colors[4])
+
+legend(1.1, 0.9, c("raw", "first derivative", "second derivative"), 
+       col = c(1,4,2), lty = c(2,1,1), bty = "n")
+
+# Summary of the object res.
+summ
+
+## ----inder,fig.show='hold',fig.cap=fig10_cap,fig.scap=fig10_scap,message=FALSE,results='hide'----
+# Plot all data from C127EGHP and calculate the SDM (Second Derivative 
+# Maximum) values with the diffQ2() function (Note: the inder parameter
+# is set as TRUE)
+# first plot the samples detected with EvaGreen and next the samples 
+# detected with the Hydrolysis probe
+require(MBmca)
+
+pointer <- function (x, pos = 1, w = 5, stat = TRUE){
+  xx <- pos + rep(seq(-0.1, 0.1, length.out = w), ceiling(length(x)/w))
+  yy <- sort(x)
+  points(xx[1:length(yy)], yy, pch = 19)
+  
+  if (stat == TRUE)
+    x.median <- median(x, na.rm = T)
+  x.mad <- mad(x, na.rm = T) * 2
+  param <- c(length= 0, code = 3, pch = 15, cex = 1.2)
+  arrows(xx[1] * 0.98, x.median, tail(xx, 1) * 1.02, 
+         x.median, param, lwd = 3, col = 2)
+  arrows(xx[1] * 1.01, x.median + x.mad, tail(xx, 1) * 0.99, 
+         x.median + x.mad, param, lwd = 2, lty = 2, col = 4)
+  arrows(xx[1] * 1.01, x.median - x.mad, tail(xx, 1) * 0.99, 
+         x.median - x.mad, param, lwd = 2, lty = 2, col = 4)
+}
+
+amp.liner <- function(range, input, colors = "black") {
+  sapply(range, function(i) {
+    lines(input[, 2], input[, i], col = colors, pch = 19)
+    tmpP <- mcaSmoother(input[, 2], input[, i])
+    SDM <- diffQ2(tmpP, inder = TRUE)[["xTm1.2.D2"]][1]
+    abline(v = SDM)
+    SDM
+  }
+  )
+}
+
+layout(matrix(c(1,3,2,3), 2, 2, byrow = TRUE), respect = TRUE)
+par(las = 0, bty = "n")
+plot(NA, NA, xlim = c(1,40), ylim = c(0,10), xlab = "Cycle", 
+     ylab = "Fluorescence", main = "EvaGreen")
+mtext("A", cex = 1.1, side = 3, adj = 0, font = 2)
+
+EG <- amp.liner(range = 3L:34, input = C127EGHP)
+
+plot(NA, NA, xlim = c(1,40), ylim = c(0,10), xlab = "Cycle", 
+     ylab = "Fluorescence", main = "Hydrolysis probe")
+mtext("B", cex = 1.1, side = 3, adj = 0, font = 2)
+
+HP <- amp.liner(range = 35L:66, input = C127EGHP)
+
+plot(NA, NA, xlim = c(0.8,2.2), ylim = c(13,14), xaxt = "n", 
+     xlab = "", ylab = "Cq (SDM, diffQ2)")
+text(c(1.05,2), c(13.05,13.05), c("EG", "HP"), cex = 1.2)
+mtext("C", cex = 1.1, side = 3, adj = 0, font = 2)
+pointer(EG, pos = 1, w = 8)
+pointer(HP, pos = 2, w = 8)
+
+## ----inder_fit,fig.cap=fig11_cap,fig.scap=fig11_scap,fig.show='hold',message=FALSE,results='hide'----
+fit.amp <- function(cyc, fluo, plot = FALSE) {
+  
+  ampl <- quantile(fluo, 0.999)
+  bl <- quantile(fluo, 0.001)
+  Cq <- round(mean(cyc))
+  b.eff <- 1
+  
+  fit <- nls(fluo ~ bl + ampl / (1 + exp(- (cyc - Cq) / b.eff)), 
+             start = list(Cq = Cq, b.eff = b.eff, ampl = ampl, 
+                          bl = bl)
+  )
+  
+  res.pred <- data.frame(cyc, predict(fit))
+  res <- inder(res.pred[, 1], res.pred[, 2])
+  if (plot) {
+    lines(res[, 1], res[, 4])
+  }
+  # SDM
+  summary(res)[2]
+}
+
+tmp <- C126EG595
+
+out <- apply(tmp[, -1], 2, function(x) fit.amp(tmp[, 1], x))
+
+layout(matrix(c(1,2,1,3), 2, 2, byrow = TRUE))
+
+plot(NA, NA, xlim = c(1,40), ylim = c(min(tmp[, 2L:97]), 
+                                      max(tmp[, 2L:97])), 
+                                      xlab = "Cycle", 
+                                      ylab = "Raw fluorescence")
+mtext("A", cex = 1.2, side = 3, adj = 0, font = 2)
+for (i in 2L:97) {
+  lines(tmp[, 1], tmp[, i], col = ifelse(out[i - 1] < 15.5, "red", 
+                                         "black"), lwd = 2)
+}
+abline(v = out)
+
+plot(NA, NA, xlab = "Cycle", ylab = "RFU''(Cycle)", main = "", 
+     xlim = c(0,40), ylim = c(-850, 850))
+abline(v = 15.5, lty = 2)
+invisible(apply(tmp[, -1], 2, function(x) {
+  fit.amp(tmp[, 1], x, plot = TRUE)
+}
+))
+mtext("B", cex = 1.2, side = 3, adj = 0, font = 2)
+
+hist(out, xlab = "Cq (SDM)", main = "", 
+     breaks = seq(14.8, 15.8, 0.05), col = rainbow(96))
+abline(v = 15.5, lty = 2)
+mtext("C", cex = 1.2, side = 3, adj = 0, font = 2)
+
 ## ----thcyc,warning=FALSE,message=FALSE,fig.show='hold',fig.cap=fig2_cap,fig.scap=fig2_scap----
 # Raw data from the VIMCFX96_69 data set.
 # Cycles x and Fluoresce values y
@@ -436,44 +944,45 @@ abline(h = res[2], col = 3)
 abline(v = res[1], col = 4)
 legend("topleft", paste("Cq (Ct) = ", round(res[1], 3)))
 
-## ----thcyc_ccPCR,fig.show='hold',fig.cap=fig3_cap,fig.scap=fig3_scap-----
+## ----thcyc_ccPCR,fig.show='hold',fig.cap=fig3_cap,fig.scap=fig3_scap,fig.height=8,fig.width=11----
 # Application of the th.cyc method to determine the Cq from a continuous
 # amplification reaction.
 par(las = 0, bty = "n", oma = c(.5,.5,.5,.5))
+       
 plot(NA, NA, xlim = c(0,80), ylim = c(0,1200), xlab = "Time (min)", 
-     ylab = "Voltage [micro V]", main = "ccPCR - Raw Data")
-
+     ylab = "Voltage [micro V]", main = "ccPCR - Pre-processed Data")
+mtext("B", cex = 2, side = 3, adj = 0)
 # Threshold level "r" (50 micro Volts)
 for (i in c(1,3,5,7)) {
-  y.tmp <- capillaryPCR[, i + 1] - mean(capillaryPCR[1L:150, i + 1])
-  Ct.tmp <- th.cyc(capillaryPCR[, i], y.tmp, r = 50, linear = FALSE)
+  y.tmp <- CPP(capillaryPCR[, i], capillaryPCR[, i + 1], trans = TRUE, bg.range = c(1,150))$y.norm
+  Ct.tmp <- th.cyc(capillaryPCR[, i], y.tmp, r = 80, linear = FALSE)
   abline(v = Ct.tmp[1])
-  text(Ct.tmp[1] * 1.1, 1200, paste(round(Ct.tmp[1], 1), "\nmin"))
+  text(Ct.tmp[1] * 1.125, 1200, paste(round(Ct.tmp[1], 1), "\nmin"), cex = 0.8)
   lines(capillaryPCR[, i], y.tmp, type = "b", pch = 20 - i) 
   points(Ct.tmp@input, col = "red", pch = 19)
 }
-abline(h = 50)
+abline(h = 80)
 legend("topleft", c("Run 1", "Run 2", "Run 3", "Control"), 
        pch = c(19, 17, 15, 13), lwd = 1.3, bty = "n")
 
 ## ----HDA,fig.show='hold',fig.cap=fig13_cap,fig.scap=fig13_scap,message=FALSE,warning=FALSE----
 par(mfrow = c(2,1), bty = "n")
-plot(NA, NA, xlim = c(0,5000), ylim = c(0,1), xlab = "Time (sec)", 
+plot(NA, NA, xlim = c(0,5000), ylim = c(0.45,0.8), xlab = "Time (sec)", 
      ylab = "Fluorescence", main = "HDA - Raw data")
 mtext("A", cex = 2, side = 3, adj = 0)
 lines(C85[, 2], C85[, 3], type = "b", col = 2, pch = 20)
 lines(C85[, 4], C85[, 5], type = "b", col = 4, pch = 20)
 lines(C85[, 6], C85[, 7], type = "b", col = 6, pch = 20)
-legend("topleft", c("D1, 1x", "D2, 1:10", "D3, 1:100"), col = c(2,4,6), 
-       pch = rep(20,3))
+legend("bottomright", c("D1, 1x", "D2, 1:10", "D3, 1:100"), col = c(2,4,6), 
+       pch = rep(20,3), bty = "n")
 
 plot(NA, NA, xlim = c(0,2000), ylim = c(0,0.4), xlab = "Time (sec)", 
      ylab = "Fluorescence", main = "HDA - Pre-processed data")
 mtext("B", cex = 2, side = 3, adj = 0)
 legend("topleft", c("D1, 1x", "D2, 1:10", "D3, 1:100"), col = c(2,4,6), 
-       pch = rep(20,3))
+       pch = rep(20,3), bty = "n")
 
-# Define the parameters for the pre-processesing by CPP and the th.cyc 
+# Define the parameters for the pre-processing by CPP and the th.cyc 
 # function.
 # smoothing method
 sm <- "mova"
@@ -597,7 +1106,7 @@ plot(effcalc(res.dil[, 1], res.dil[, 2]))
 print(xtable(effcalc(res.dil[, 1], res.dil[, 2]), 
       caption = "Output of the effcalc function.", label = "table:effcalc_output"))
 
-## ----effcalc_VIM_MLC,fig.show='hold',fig.cap=fig17_cap,fig.scap=fig17_scap----
+## ----effcalc_VIM_MLC,fig.show='hold',fig.cap=fig17_cap,fig.scap=fig17_scap,fig.height=11,fig.width=11----
 colors <- rep(rainbow(7), each = 2)
 par(mfrow = c(2,2))
 
@@ -621,7 +1130,7 @@ SDM.mlc2v <- sapply(18L:31, function(i) {
 }
 )
 
-#create vector of dillutions
+#create vector of dilutions
 dil <- sort(rep(10^(0L:-6), 2), TRUE)
 
 res <- cbind(dil, SDM.vim, SDM.mlc2v)
@@ -631,306 +1140,6 @@ mtext("C", cex = 1.2, side = 3, adj = 0, font = 2)
 
 plot(effcalc(res[, 1], res[, 3]))
 mtext("D", cex = 1.2, side = 3, adj = 0, font = 2)
-
-## ----AmpSim_GUI,eval = FALSE---------------------------------------------
-#  # Load the shiny package (chipPCR should already be loaded).
-#  # Run from a R console following commands.
-#  require(shiny)
-#  
-#  # Invoke the shiny AmpSim app in the default browser.
-#  runApp(paste(find.package("chipPCR")[1],"/AmpSim.gui", sep = ""))
-#  
-#  # Call shiny app AmpSim directly from gist
-#  runGist('https://gist.github.com/michbur/e1def41598f1d0c1e2e6')
-
-## ----AmpSim_random,warning=FALSE,message=FALSE,fig.show='hold',fig.cap=fig1_cap,fig.scap=fig1_scap----
-# Draw an empty plot for 40 cycles with user defined parameters.
-
-par(las = 0, bty = "n", oma = c(.5,.5,.5,.5))
-plot(NA, NA, xlim = c(1,40), ylim = c(0,1.1), xlab = "Cycle", ylab = "RFU")
-colors <- rainbow(8)
-
-# Create eight amplification curves. The approximate Cqs are synthesized 
-# as temporary Cqs by adding a random value to a starting Cq of 25. Note: 
-# ``noise'' is set TRUE with a level of nnl = 0.03. This adds some scatter 
-# to the amplification curves.
-
-sim <- sapply(1L:8, function(i) {
-  Cq.tmp <- 25 + rnorm(1) * 5
-  
-  tmp <- AmpSim(1:40, Cq = Cq.tmp, noise = TRUE, nnl = 0.03)
-  lines(tmp, col = colors[i], lwd = 2)
-  
-  # Add the approximate Cq values to the plot
-  text(3, 1 - i / 10, paste("Cq ", round(Cq.tmp, 2)), col = colors[i])
-})
-
-## ----workflow,fig.show='hold',fig.cap=fig4_cap,fig.scap=fig4_scap,warning=FALSE----
-layout(matrix(c(1,2,3,3), 2, 2, byrow = TRUE), respect = TRUE)
-
-par(las = 0, bty = "n", oma = c(.5,.5,.5,.5))
-
-th.cyc.raw <- apply(VIMCFX96_60[, -1], 2, function(i) {
-  th.cyc(VIMCFX96_60[, 1], i, r = 2575)[1,1]})
-
-res.CPP <- apply(VIMCFX96_60[, -1], 2, function(i) {
-  CPP(VIMCFX96_60[, 1], i, trans = TRUE, 
-      method.norm = "minmax")[["y.norm"]]})
-
-th.cyc.CPP <- apply(res.CPP, 2, function(i) {
-  th.cyc(VIMCFX96_60[, 1], i, r = 0.1)[1,1]})
-
-matplot(VIMCFX96_60[, -1], type = "l", pch = 19, col = 1, lty = 1, 
-        xlab = "Cycle", ylab = "Raw fluorescence", main = "Raw")
-abline(h = 2575, lty = 2)
-mtext("A", cex = 1.2, side = 3, adj = 0, font = 2)
-
-matplot(res.CPP, type = "l", pch = 19, col = 1, lty = 1, xlab = "Cycle", 
-        ylab = "Fluorescence", main = "CPP")
-abline(h = 0.1, lty = 2)
-mtext("B", cex = 1.2, side = 3, adj = 0, font = 2)
-
-boxplot(data.frame(Raw = th.cyc.raw, CPP = th.cyc.CPP), ylab = "Cq (Ct)", 
-        notch = TRUE)
-mtext("C", cex = 1.2, side = 3, adj = 0, font = 2)
-
-## ----SDM,fig.show='hold',fig.cap=fig9_cap,fig.scap=fig9_scap-------------
-# Use AmpSim to generate an amplification curve with 40 cycles
-# and an approximate Cq of 20 and assign it to the object isPCR.
-# isPCR is an object of the class "data.frame".
-isPCR <- AmpSim(cyc = 1:40, Cq = 20)
-
-# Invoke the inder function for the object isPCR to interpolate 
-# the derivatives of the simulated data as object res. The Nip 
-# parameter was set to 5. This leads to smoother curves. res is
-# an object of the class "der".
-res <- inder(isPCR, Nip = 5)
-
-# Plot the object res and add descriptions to the elements.
-
-par(las = 0, bty = "n", oma = c(.5,.5,.5,.5))
-
-plot(isPCR, xlab = "Cycle", ylab = "RFU", ylim = c(-0.15,1),
-     main = "", type = "b", pch = 20, lwd = 2)
-colors <- rainbow(4)
-# Add graphical elements for the dervatives and the calculated
-# Cq values FDM, SDM, SDm and SDC.
-
-lines(res[, "x"], res[, "d1y"], col = "blue", lwd = 2)
-lines(res[, "x"], res[, "d2y"], col = "red", lwd = 2)
-
-# Fetch the Cq values from res with the summary function
-summ <- summary(res, print = FALSE)
-
-abline(v = summ, col = colors, lwd = 2)
-text(15, 0.3, paste("FDM ~ ", round(summ["FDM"], 2)), 
-     cex = 1.1, col = colors[1])
-text(15, 0.2, paste("SDM ~ ", round(summ["SDM"], 2)), 
-     cex = 1.1, col = colors[2])
-text(15, - 0.1, paste("SDm ~ ", round(summ["SDm"], 2)), 
-     cex = 1.1, col = colors[3])
-text(15, 0.7, paste("SDC ~ ", round(summ["SDC"], 2)), 
-     cex = 1.1, col = colors[4])
-
-legend(1.1, 0.9, c("raw", "first derivative", "second derivative"), 
-       col = c(1,4,2), lty = c(2,1,1), bty = "n")
-
-# Summary of the object res.
-summ
-
-## ----inder,fig.show='hold',fig.cap=fig10_cap,fig.scap=fig10_scap,message=FALSE,results='hide'----
-# Plot all data from C127EGHP and calculate the SDM (Second Derivative 
-# Maximum) values with the diffQ2() function (Note: the inder parameter
-# is set as TRUE)
-# first plot the samples detected with EvaGreen and next the samples 
-# detected with the Hydrolysis probe
-
-pointer <- function (x, pos = 1, w = 5, stat = TRUE){
-  xx <- pos + rep(seq(-0.1, 0.1, length.out = w), ceiling(length(x)/w))
-  yy <- sort(x)
-  points(xx[1:length(yy)], yy, pch = 19)
-  
-  if (stat == TRUE)
-    x.median <- median(x, na.rm = T)
-  x.mad <- mad(x, na.rm = T) * 2
-  param <- c(length= 0, code = 3, pch = 15, cex = 1.2)
-  arrows(xx[1] * 0.98, x.median, tail(xx, 1) * 1.02, 
-         x.median, param, lwd = 3)
-  arrows(xx[1] * 1.01, x.median + x.mad, tail(xx, 1) * 0.99, 
-         x.median + x.mad, param, lwd = 2, lty = 2)
-  arrows(xx[1] * 1.01, x.median - x.mad, tail(xx, 1) * 0.99, 
-         x.median - x.mad, param, lwd = 2, lty = 2)
-}
-
-amp.liner <- function(range, input, colors = "black") {
-  sapply(range, function(i) {
-    lines(input[, 2], input[, i], col = colors, pch = 19)
-    tmpP <- mcaSmoother(input[, 2], input[, i])
-    SDM <- diffQ2(tmpP, inder = TRUE)[["xTm1.2.D2"]][1]
-    abline(v = SDM)
-    SDM
-  }
-  )
-}
-
-layout(matrix(c(1,3,2,3), 2, 2, byrow = TRUE), respect = TRUE)
-par(las = 0, bty = "n")
-plot(NA, NA, xlim = c(1,40), ylim = c(0,10), xlab = "Cycle", 
-     ylab = "Fluorescence", main = "EvaGreen")
-mtext("A", cex = 1.1, side = 3, adj = 0, font = 2)
-
-EG <- amp.liner(range = 3L:34, input = C127EGHP)
-
-plot(NA, NA, xlim = c(1,40), ylim = c(0,10), xlab = "Cycle", 
-     ylab = "Fluorescence", main = "Hydrolysis probe")
-mtext("B", cex = 1.1, side = 3, adj = 0, font = 2)
-
-HP <- amp.liner(range = 35L:66, input = C127EGHP)
-
-plot(NA, NA, xlim = c(0.8,2.2), ylim = c(13,14), xaxt = "n", 
-     xlab = "", ylab = "Cq (SDM, diffQ2)")
-text(c(1.05,2), c(13.05,13.05), c("EG", "HP"), cex = 1.2)
-mtext("C", cex = 1.1, side = 3, adj = 0, font = 2)
-pointer(EG, pos = 1, w = 8)
-pointer(HP, pos = 2, w = 8)
-
-## ----inder_fit,fig.cap=fig11_cap,fig.scap=fig11_scap,fig.show='hold',message=FALSE,results='hide'----
-fit.amp <- function(cyc, fluo, plot = FALSE) {
-  
-  ampl <- quantile(fluo, 0.999)
-  bl <- quantile(fluo, 0.001)
-  Cq <- round(mean(cyc))
-  b.eff <- 1
-  
-  fit <- nls(fluo ~ bl + ampl / (1 + exp(- (cyc - Cq) / b.eff)), 
-             start = list(Cq = Cq, b.eff = b.eff, ampl = ampl, 
-                          bl = bl)
-  )
-  
-  res.pred <- data.frame(cyc, predict(fit))
-  res <- inder(res.pred[, 1], res.pred[, 2])
-  if (plot) {
-    lines(res[, 1], res[, 4])
-  }
-  # SDM
-  summary(res)[2]
-}
-
-tmp <- C126EG595
-
-out <- apply(tmp[, -1], 2, function(x) fit.amp(tmp[, 1], x))
-
-layout(matrix(c(1,2,1,3), 2, 2, byrow = TRUE))
-
-plot(NA, NA, xlim = c(1,40), ylim = c(min(tmp[, 2L:97]), 
-                                      max(tmp[, 2L:97])), xlab = "Cycle", ylab = "Raw fluorescence")
-mtext("A", cex = 1.2, side = 3, adj = 0, font = 2)
-for (i in 2L:97) {
-  lines(tmp[, 1], tmp[, i], col = ifelse(out[i - 1] < 15.5, "red", 
-                                         "black"), lwd = 2)
-}
-abline(v = out)
-
-plot(NA, NA, xlab = "Cycle", ylab = "RFU''(Cycle)", main = "", 
-     xlim = c(0,40), ylim = c(-850, 850))
-
-invisible(apply(tmp[, -1], 2, function(x) {
-  fit.amp(tmp[, 1], x, plot = TRUE)
-}
-))
-mtext("B", cex = 1.2, side = 3, adj = 0, font = 2)
-
-hist(out, xlab = "Cq (SDM)", main = "", 
-     breaks = seq(14.8, 15.8, 0.05), col = rainbow(96))
-abline(v = 15.5, lty = 2)
-mtext("C", cex = 1.2, side = 3, adj = 0, font = 2)
-
-## ----bgmax,fig.cap=fig18_cap,fig.scap=fig18_scap,fig.show='hold',message=FALSE,results='hide'----
-par(las = 0, mfrow = c(2,1), bty = "n", oma = c(.5,.5,.5,.5))
-
-res <- AmpSim(cyc = 1:40, Cq = 25)
-plot(res, xlim = c(1,40), ylim = c(-0.1,1), xlab = "Cycles", 
-     ylab = "refMFI", 
-     main = "Background Range Estimation\n in Absence of Noise", 
-     type = "b", pch = 20)
-background <- bg.max(res[, 1], res[, 2])
-mtext("A", cex = 2, side = 3, adj = 0, font = 2)
-
-points(background[, 3], col = "red", type = "b", pch = 20)
-points(background[, 4], col = "blue", type = "b", pch = 20)
-abline(v = background@bg.start)
-text(background@bg.start, 0.2, "Background start", pos = 4)
-abline(v = background@bg.stop, col = "blue")
-text(background@bg.stop, 0.25, "Background stop", pos = 4, 
-     col = "blue")
-abline(v = background@amp.stop, col = "green")
-text(background@amp.stop, 0.3, "Plateau transition", pos = 4, 
-     col = "green")
-legend(4, 1, c("Raw data", "First derivative", "Second derivative"), 
-       pch = rep(20,3), col = c(1,2,4), bty = "n")
-
-res <- AmpSim(cyc = 1:40, Cq = 25, noise = TRUE)
-plot(res, xlim = c(1,40), ylim = c(-0.1,1), xlab = "Cycles", 
-     ylab = "refMFI", 
-     main = "Background Range Estimation\n in Presence of Noise", 
-     type = "b", pch = 20)
-mtext("B", cex = 2, side = 3, adj = 0, font = 2)
-background <- bg.max(res[, 1], res[, 2])
-
-points(background[, 3], col = "red", type = "b", pch = 20)
-points(background[, 4], col = "blue", type = "b", pch = 20)
-abline(v = background@bg.start)
-text(background@bg.start, 0.2, "Background start", pos = 4)
-abline(v = background@bg.stop, col = "blue")
-text(background@bg.stop, 0.25, "Background stop", pos = 4, col = "blue")
-abline(v = background@amp.stop, col = "green")
-text(background@amp.stop, 0.3, "Plateau transition", pos = 4, col = 
-       "green")
-legend(4, 1, c("Raw data", "First derivative", "Second derivative"), 
-       pch = rep(20,3), col = c(1,2,4), bty = "n")
-par(mfrow = c(1,1))
-
-## ----bgmax_ccPCR,fig.cap=fig19_cap,fig.scap=fig19_scap,fig.show='hold',message=FALSE,results='hide'----
-# Set parameter for the plot.
-par(mfrow = c(2,1), las = 0, bty = "n")
-
-# Use of bg.max for time-dependent measurements. Amplification curves 
-# from the capillaryPCR data set were processed in a loop. The results of 
-#  bg.max are added to the plot. 
-
-colors <- rainbow(8)
-
-plot(NA, NA, xlim = c(0,75), ylim = c(-200,1300), xlab = "Time (min)", 
-     ylab = "Voltage (micro V)", main = "ccPCR - Raw data")
-mtext("A", cex = 1.5, side = 3, adj = 0)
-for (i in c(1,3,5,7)) {
-  x <- capillaryPCR[1L:750, i]
-  y <- capillaryPCR[1:750, i + 1]
-  res.bg <- summary(bg.max(x, y))
-  lines(x, y, type = "b", pch = 20, col = colors[i], cex = 0.5)
-  lines(c(res.bg[2], res.bg[2], res.bg[4], res.bg[4]), 
-        c(-150, -50, -150, -50), col = colors[i], lwd = 1.5)
-  text(10, 1200 - i * 50, 
-       paste("bg.start: ", res.bg[1], ", bg.stop: ", res.bg[2], 
-             ", amp.stop: ", res.bg[4]), col = colors[i], cex = 0.6)
-}
-
-plot(NA, NA, xlim = c(0,75), ylim = c(-200,1300), xlab = "Time (min)", 
-     ylab = "Voltage (micro V)", main = "ccPCR - Pre-processed")
-mtext("B", cex = 1.5, side = 3, adj = 0)
-for (i in c(1,3,5,7)) {
-  x <- capillaryPCR[1L:750, i]
-  y <- CPP(capillaryPCR[1L:750, i], capillaryPCR[1:750, i + 1], 
-           method = "mova", trans = TRUE, bg.range = c(1,105), 
-           bg.outliers = TRUE)[["y.norm"]]
-  res.bg <- summary(bg.max(x, y))
-  lines(x, y, type = "b", pch = 20, col = colors[i], cex = 0.5)
-  lines(c(res.bg[2], res.bg[2], res.bg[4], res.bg[4]), 
-        c(-150, -50, -150, -50), col = colors[i], lwd = 1.5)
-  text(10, 1200 - i * 50, 
-       paste("bg.start: ", res.bg[1], ", bg.stop: ", res.bg[2], 
-             ", amp.stop: ", res.bg[4]), col = colors[i], cex = 0.6)
-}
 
 ## ----summ.datasets,echo=FALSE,results='asis'-----------------------------
 load("datdf.RData")

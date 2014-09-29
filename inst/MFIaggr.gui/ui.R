@@ -19,16 +19,14 @@ shinyUI(pageWithSidebar(
                  min = 1, step = 1),
     
     downloadButton("download.result", "Download MFIaggr results (with graphics)"),
-    downloadButton("download.table", "Download MFIaggr results (.csv)")
+    br(),
+    downloadButton("download.table", "Download MFIaggr results (.csv)"),
+    br(),
+    p("Lost? Use button below to see an example:"),
+    actionButton("run.example", "Run example")
   ),
   mainPanel(
-    tabsetPanel(
-      tabPanel("Input data", tableOutput("input.data")),
-      tabPanel("Results with graphics", plotOutput("refMFI.plot"), 
-               verbatimTextOutput("refMFI.summary")),
-      tabPanel("Results - table", tableOutput("refMFI.table")),
-      tabPanel("All curves plot", plotOutput("allp.plot"))
-    )
+    uiOutput("dynamic.tabset") 
   )
 )
 )

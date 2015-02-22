@@ -11,9 +11,7 @@
 Analysis of the amplification efficiency
 }
 \description{
- effcalc is used for a fast calculation of the amplification efficiency of
- a dilution. \code{effcalc} returns an object of the class 
- list.
+ effcalc calculates the amplification efficiency of a dilution.
 }
 \usage{
 \S4method{effcalc}{numeric,numeric}(x, y, logx = TRUE, RSD = FALSE, rob = FALSE,
@@ -28,7 +26,7 @@ Analysis of the amplification efficiency
   \item{x}{ is the column of a data frame for the concentration 
 	    (dilution). }
   
-  \item{y}{ are multiple columns of fluorescence values from a 
+  \item{y}{ are multiple columns of Cq values from a 
   \code{data.frame} (e.g., [, c(1:n)]). }
   
   \item{logx}{ is a logical parameter used to convert the concentration 
@@ -46,7 +44,7 @@ Analysis of the amplification efficiency
 }
 
 \value{
-  \code{\linkS4class{eff}} object.
+  an object of the class \code{\linkS4class{eff}}.
 }
 
 \author{
@@ -74,8 +72,7 @@ Sept. 2005. ISSN 0006-3592. doi: 10.1002/bit.20555. PMID: 15986490.
 M. Guescini, D. Sisti, M. B. Rocchi, L. Stocchi, and V. Stocchi. A new 
 real-time PCR method to overcome significant quantitative inaccuracy due to 
 slight amplification inhibition. \emph{BMC Bioinformatics}, 9(1):326, July 
-2008. ISSN 1471-2105. doi: 10.1186/1471-2105-9-326. \url{http: 
-//www.biomedcentral.com/1471-2105/9/326/abstract}. PMID: 18667053.
+2008. ISSN 1471-2105. doi: 10.1186/1471-2105-9-326. PMID: 18667053.
 
 A. Tichopad, M. Dilger, G. Schwarz, and M. W. Pfaffl. Standardized 
 determination of real-time PCR efficiency from a single reaction set-up. 

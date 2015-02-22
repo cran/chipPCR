@@ -300,14 +300,14 @@ setMethod("qqnorm", signature(y = "refMFI"), function(y, main = "Normal Q-Q Plot
                                                       ylab = "Sample Quantiles",
                                                       plot.it = TRUE, datax = FALSE, ...) {
   qqnorm(unlist(slot(y, "qqnorm.data")), main = main, xlab = xlab,
-         ylab = ylab, plot.it = plot.it, datax = datax)
+         ylab = ylab, plot.it = plot.it, datax = datax, ...)
 })
 
 setMethod("qqline", signature(y = "refMFI"), function(y, datax = FALSE, 
                                                       distribution = qnorm,
                                                       probs = c(0.25, 0.75), qtype = 7, ...) {
   qqline(unlist(slot(y, "qqnorm.data")), datax = datax, distribution = distribution,
-         probs = probs, qtype = qtype)
+         probs = probs, qtype = qtype, ...)
 })
 
 
@@ -332,79 +332,185 @@ setMethod("summary", signature(object = "refMFI"),
 setMethod("plot", signature(x = "refMFI"), function(x, CV = FALSE, type = "p", 
                                                     pch = 19, length = 0.05, 
                                                     col = "black") {
-  # store the default plot parameters  
-  default.par <- par("fig")
-  
   res <- slot(x, ".Data")
   res.dens <- slot(x, "density")
-  qqnorm.data <- unlist(slot(x, "qqnorm.data"))
   llul <- rownames(slot(x, "qqnorm.data"))
   stats <- slot(x, "stats")
   ncol.y <- ncol(slot(x, "qqnorm.data"))
   
+  default.par <- par(no.readonly = TRUE)
+  
   #Plot the Coefficient of Variance
   layout(matrix(c(1,2,1,3), 2, 2, byrow = TRUE))
   
-  main.title <- paste0("ROI samples: ", format(ncol.y, nsmall = 3), "\n",
-                       "ROI mean: ", format(stats[1], nsmall = 3), " +- ", 
-                       format(stats[4], nsmall = 2), "\n",
-                       "ROI median: ", format(stats[2], nsmall = 3), " +- ", 
+  error.plot.text <- paste0("ROI samples: ", format(ncol.y, nsmall = 3), "\n",
+                       "ROI mean : SD\n", format(stats[1], nsmall = 3), " \u00b1 ", 
+                       format(stats[3], nsmall = 2), "\n",
+                       "ROI median : MAD\n", format(stats[2], nsmall = 3), " \u00b1 ", 
                        format(stats[4], nsmall = 2))
   
+  density.plot.text <- paste("ROI cycles: ", 
+                             llul[1], " to ", llul[2], 
+                             "\n", "bw ", 
+                             round(res.dens[["bw"]], 3), 
+                             "; ", "N = ", res.dens[["n"]])
+  
+  
+  par(mar=c(7.8, 4.1, 4.1, 2.1))
   if (CV) {
-    plot(res[, 1], res[, 4], xlab = "Cycle", ylab = "CV", 
+    plot(res[, 1], res[, 4], xlab = "", ylab = "CV", 
          type = type, pch = pch, col = col,
-         main = main.title)
-    
-    # Add a range for the ROI
-    abline(v = llul, col = "lightgrey", lwd = 1.25)
-    #Plot the location with error bars.
-    
-    # "Calculate" the Quantile-Quantile plots and density plots
-    # and plot the results
-    
-    plot(res.dens, xlab = "RFU", main = paste0("Cycle ", 
-                                               llul[1], " to ", llul[2], 
-                                               "\n", "bw ", 
-                                               round(res.dens$bw, 3), 
-                                               "\n", "N ", res.dens$n
-    )
-    )
+         main = "Error plot")
     
   } else {
     plot(res[, 1], res[, 2], ylim = c(min(res[, 2] - res[, 3]), 
                                       max(res[, 2] + res[, 3])), 
-         xlab = "Cycle", ylab = "MFI", 
+         xlab = "", ylab = "MFI", 
          type = type, pch = pch, col = col,
-         main = main.title)
+         main = "Error plot")
     
-    abline(v = llul, col = "lightgrey")
-    
+    #Plot the location with error bars.
     arrows(res[, 1], res[, 2] + res[, 3], res[, 1], 
            res[, 2] - res[, 3], angle = 90, code = 3, 
            length = length, col = col)
     deviation.measure <- strsplit(colnames(res)[3], "(", fixed = TRUE)[[1]][2]
     deviation.measure <- substr(deviation.measure, 1, nchar(deviation.measure) - 1)
-    mtext(paste0("Deviation: ", deviation.measure), 4)
-    
-    
-    plot(res.dens, xlab = "RFU", main = paste("ROI cycle ", 
-                                              llul[1], " to ", llul[2], 
-                                              "\n", "bw ", 
-                                              round(res.dens[["bw"]], 3), 
-                                              "\n", "N ", res.dens[["n"]]
-    )
-    )
-    
+    mtext(paste0("Deviation: ", deviation.measure), 4, cex = 0.75)
   }
-  # Analysis of the quantiles
-  qqnorm(x)
-  mtext(paste0("\nBreusch-Pagan Test p-value: ", format(stats["heter.p"], digits = 4)),
-        cex = 0.75)
-  qqline(x)
   
-  # Restore default graphic parameters
-  par(fig = default.par, new = FALSE)
+  # Add a range for the ROI
+  abline(v = llul, col = "lightgrey", lwd = 1.25)
+  
+  
+  mtext(error.plot.text, side = 1, line = 6.8, cex = 0.75)
+  mtext("Cycle", side = 1, line = 2, cex = 0.8)
+
+  par(mar=c(4.1, 4.1, 4.1, 2.1))
+  
+  # "Calculate" the Quantile-Quantile plots and density plots
+  # and plot the results
+  plot(res.dens, xlab = "", main = "Density", col = col)
+  mtext("RFU", side = 1, line = 2, cex = 0.8)
+  mtext(density.plot.text, side = 1, line = 4.85, cex = 0.75)
+  
+  # Analysis of the quantiles
+  qqnorm(x, xlab = "", pch = pch, col = col)
+  mtext("Theoretical Quantiles", side = 1, line = 2, cex = 0.8)
+  mtext(paste0("\nBreusch-Pagan Test p-value: ", format(stats["heter.p"], digits = 4)),
+        side = 1, line = 3, cex = 0.75)
+  qqline(x, col = col)
+  
+  par(default.par)
+})
+
+#combo plot
+setMethod("plot", signature(x = "refMFI", y = "refMFI"), function(x, y, CV = FALSE, type = "p", 
+                                                    pch = 19, length = 0.05, 
+                                                    col = "black") {
+  res <- list(slot(x, ".Data"), slot(y, ".Data"))
+  res.dens <- list(slot(x, "density"), slot(y, "density"))
+  llul <- list(rownames(slot(x, "qqnorm.data")), rownames(slot(y, "qqnorm.data")))
+  stats <- list(slot(x, "stats"), slot(y, "stats"))
+  ncol.y <- list(ncol(slot(x, "qqnorm.data")), ncol(slot(y, "qqnorm.data")))
+  
+  default.par <- par(no.readonly = TRUE)
+  
+  #Plot the Coefficient of Variance
+  layout(matrix(c(1,2,1,3), 2, 2, byrow = TRUE))
+  
+  error.plot.text <- paste0(
+    #"samples: ", format(ncol.y[[1]], nsmall = 3), "; ",
+    #format(ncol.y[[2]], nsmall = 3), "\n",
+    "ROI mean : SD:\n A ", format(stats[[1]][1], nsmall = 3), " \u00b1 ", 
+    format(stats[[1]][3], nsmall = 2), "\n B ",
+    format(stats[[2]][1], nsmall = 3), " \u00b1 ", 
+    format(stats[[2]][3], nsmall = 2), "\n",
+    "ROI median : MAD:\n A ", format(stats[[1]][2], nsmall = 3), " \u00b1 ", 
+    format(stats[[1]][4], nsmall = 2), "\n B ",
+    format(stats[[2]][2], nsmall = 3), " \u00b1 ", 
+    format(stats[[2]][4], nsmall = 2))
+  
+  density.plot.text <- paste("ROI cycle ", 
+                             llul[[1]][1], " to ", llul[[1]][2], "; ",
+                             llul[[2]][1], " to ", llul[[2]][2],
+                             "\n", "bw ", 
+                             round(res.dens[[1]][["bw"]], 3), "; ", 
+                             round(res.dens[[2]][["bw"]], 3),
+                             "\n", "N = ", res.dens[[1]][["n"]], "; ", 
+                             res.dens[[2]][["n"]])
+  
+  
+  par(mar=c(7.9, 4.1, 4.1, 2.1))
+  if (CV) {
+    plot(res[[1]][, 1], res[[1]][, 4], xlab = "", ylab = "CV", 
+         type = type, pch = pch, col = col,
+         main = "Error plot", 
+         xlim = range(res[[1]][, 1], res[[2]][, 1]),
+         ylim = range(res[[1]][, 4], res[[2]][, 4])) 
+    points(res[[2]][, 1], res[[2]][, 2], pch = pch, col = adjustcolor(col, alpha.f = 0.25))
+    
+  } else {
+    plot(res[[1]][, 1], res[[1]][, 2], 
+         ylim = c(min(c(res[[1]][, 2] - res[[1]][, 3], res[[2]][, 2] - res[[2]][, 3])), 
+                  max(c(res[[1]][, 2] + res[[1]][, 3], res[[2]][, 2] + res[[2]][, 3]))),
+         xlim = range(res[[1]][, 1], res[[2]][, 1]),
+         xlab = "", ylab = "MFI", 
+         type = type, pch = pch, col = col,
+         main = "Error plot")
+    points(res[[2]][, 1], res[[2]][, 2], pch = pch, col = adjustcolor(col, alpha.f = 0.25))
+    #Plot the location with error bars.
+    arrows(res[[1]][, 1], res[[1]][, 2] + res[[1]][, 3], res[[1]][, 1], 
+           res[[1]][, 2] - res[[1]][, 3], angle = 90, code = 3, 
+           length = length, col = col)
+    
+    arrows(res[[2]][, 1], res[[2]][, 2] + res[[2]][, 3], res[[2]][, 1], 
+           res[[2]][, 2] - res[[2]][, 3], angle = 90, code = 3, 
+           length = length, col = adjustcolor(col, alpha.f = 0.25))
+    
+    deviation.measure <- strsplit(colnames(res[[1]])[3], "(", fixed = TRUE)[[1]][2]
+    deviation.measure <- substr(deviation.measure, 1, nchar(deviation.measure) - 1)
+    mtext(paste0("Deviation: ", deviation.measure), 4, cex = 0.75)
+  }
+  
+  
+  # Add a range for the ROI
+  abline(v = llul[[1]], col = "lightgrey", lwd = 1.25)
+  abline(v = llul[[2]], col = "lightgrey", lwd = 1.25, lty = 6)
+  mtext(error.plot.text, side = 1, line = 7.2, cex = 0.75)
+  mtext("Cycle", side = 1, line = 2, cex = 0.8)
+  
+  #add legend
+  legend("topleft", c("A", "B"), pch = c(pch, pch), lty = c(1, 1), 
+         col = c(col, adjustcolor(col, alpha.f = 0.25)),
+         bg = "white")
+  
+  par(mar=c(4.1, 4.1, 4.1, 2.1))
+  
+  # "Calculate" the Quantile-Quantile plots and density plots
+  # and plot the results
+  plot(res.dens[[1]], xlab = "", main = "Density", col = col,
+       xlim = range(c(res.dens[[1]][["x"]], res.dens[[2]][["x"]])),
+       ylim = range(c(res.dens[[1]][["y"]], res.dens[[2]][["y"]])))
+  lines(res.dens[[2]], col = adjustcolor(col, alpha.f = 0.25))
+  mtext("RFU", side = 1, line = 2, cex = 0.8)
+  mtext(density.plot.text, side = 1, line = 4.85, cex = 0.75)
+  
+  # Analysis of the quantiles
+  qqnorm1 <- qqnorm(x, plot.it = FALSE)
+  qqnorm2 <- qqnorm(y, plot.it = FALSE)
+  plot(qqnorm1[["x"]], qqnorm1[["y"]], xlim = range(c(qqnorm1[["x"]], qqnorm2[["x"]])),
+         ylim = range(c(qqnorm1[["y"]], qqnorm2[["y"]])), col = col, xlab = "",
+         pch = pch, ylab = "Sample Quantiles")
+  points(qqnorm2[["x"]], qqnorm2[["y"]], col = adjustcolor(col, alpha.f = 0.25),
+         pch = pch)
+  mtext("Theoretical Quantiles", side = 1.5, line = 2, cex = 0.75)
+  mtext(paste0("\nBreusch-Pagan Test p-value: A ", 
+               format(stats[[1]]["heter.p"], digits = 4), "; B ",
+               format(stats[[2]]["heter.p"], digits = 4)),
+        side = 1, line = 3, cex = 0.75)
+  qqline(x, col = col)
+  qqline(y, col = adjustcolor(col, alpha.f = 0.25))
+  par(default.par)
 })
 
 
@@ -443,7 +549,7 @@ setMethod("summary", signature(object = "eff"), function(object) {
 setMethod("plot", signature(x = "eff"), function(x, xlab = "log10(Concentration)", 
                                                  ylab = "Cq", 
                                                  main = "Efficiency Plot", 
-                                                 trend = TRUE, res.fit = TRUE, CI = FALSE, 
+                                                 trend = TRUE, res.fit = "topright", CI = FALSE, 
                                                  level = 0.95, type = "p", 
                                                  pch = 19, er.length = 0.05, 
                                                  col = "black") {
@@ -477,15 +583,6 @@ setMethod("plot", signature(x = "eff"), function(x, xlab = "log10(Concentration)
   # Calculate goodness of fit
   Rsquared <- round(summary(lm.res)[["r.squared"]], 3)
   
-  
-  # Add "legend" with amplification efficiency, goodness of fit to plot
-  # ToDo: expression(italic(R)^2 == Rsquared) for ... "R^2 = ", Rsquared ...?
-  if (res.fit) {
-    main <- paste0("Efficiency = ", AE, " %", "\n",
-                   "R^2 = ", Rsquared, "\n",
-                   "r = ", round(cortest$estimate, 3), sign.out, "\n"
-    )
-  }
   # Plot the Coefficient of Variance
   plot(res[, 1], res[, 2], ylim = c(min(res[, 2] - res[, 3]), 
                                     max(res[, 2] + res[, 3])), xlab = xlab, 
@@ -516,6 +613,14 @@ setMethod("plot", signature(x = "eff"), function(x, xlab = "log10(Concentration)
   if (trend) {
     abline(lm.res)
   }
+  
+  # Add "legend" with amplification efficiency, goodness of fit to plot
+  # ToDo: expression(italic(R)^2 == Rsquared) for ... "R^2 = ", Rsquared ...?
+  if (!is.null(res.fit))
+    legend(res.fit, paste0("Efficiency = ", AE, " %", "\n",
+                              "R^2 = ", Rsquared, "\n",
+                              "r = ", round(cortest[["estimate"]], 3), sign.out, "\n"),
+           bty = "n")
   
   #   # Restore default graphic parameters
   #   par(default.par)

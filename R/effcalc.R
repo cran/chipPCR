@@ -2,6 +2,18 @@ effcalc <- function(x, y, logx = TRUE, RSD = FALSE, rob = FALSE, level = 0.95) {
   testxy(x, y, txt.x = "Enter Concentration", txt.y = "Enter Cq data", 
          length = FALSE)
   
+  if(!is.matrix(y)) 
+    y <- as.matrix(y)
+  
+  # Removing all NA Cq rows
+  i <- apply(y, 1, function(yrow) all(is.na(yrow)))
+  if (TRUE %in% i) {
+    x <- x[!i]
+    y <- y[!i, ]
+    warning(
+      sprintf("Row %i was removed because it does not contain Cq data.\n",
+              which(i == TRUE)))
+  }
   
   if (logx) {
     x.tmp <- log10(x)
@@ -18,8 +30,8 @@ effcalc <- function(x, y, logx = TRUE, RSD = FALSE, rob = FALSE, level = 0.95) {
   }
   
   if (ncol(data.frame(y)) > 1) {
-    y.m <- apply(y, 1, loc.fct)
-    y.sd <- apply(y, 1, dev.fct)
+    y.m <- apply(y, 1, function(x) loc.fct(x, na.rm = TRUE))
+    y.sd <- apply(y, 1, function(x) dev.fct(x, na.rm = TRUE))
   } else {
     y.m <- y
     y.sd <- rep(0, length(y))
@@ -40,7 +52,7 @@ effcalc <- function(x, y, logx = TRUE, RSD = FALSE, rob = FALSE, level = 0.95) {
   res <- res[which(is.finite(res[, 1])), ]
   
   if (nrow(res) < 2) {
-    stop("Can not perform calculation. At least two
+    stop("Cannot perform calculation. At least two
 	  dilutions required.")
   }
   if (nrow(res) == 2) {
@@ -76,10 +88,10 @@ effcalc <- function(x, y, logx = TRUE, RSD = FALSE, rob = FALSE, level = 0.95) {
   
   cortest[["data.name"]] <- paste0("~ `", names(res)[2], "` and ", names(res)[1])
   
-# TO DO: change call to nicer format  
-#   lm.res[["call"]] <- paste0("lm(formula = ", 
-#                              paste0("`", names(res)[2], "` ~ ", names(res)[1]),
-#                              ", data = res)")
+  # TO DO: change call to nicer format  
+  #   lm.res[["call"]] <- paste0("lm(formula = ", 
+  #                              paste0("`", names(res)[2], "` ~ ", names(res)[1]),
+  #                              ", data = res)")
   
   new("eff", .Data = data.matrix(res),
       amplification.efficiency = AE,

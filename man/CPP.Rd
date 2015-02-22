@@ -12,7 +12,7 @@ Curve Pre-processor
 }
 
 \description{
-The function \code{\link[chipPCR]{CPP}} encompasses a set of functions to 
+\code{\link[chipPCR]{CPP}} encompasses a set of functions to 
 pre-process an amplification curve. The pre-processing includes options to 
 normalize curve data, to remove background, to remove outliers
 in the background range and to test if an amplification is significant.
@@ -108,13 +108,12 @@ replacement.  The mean is used by default.
 }
 
 \details{
-The function \code{\link[chipPCR]{CPP}} uses the function 
-\code{\link[chipPCR]{bg.max}} to estimate automatically the start of the 
+\code{\link[chipPCR]{CPP}} uses the \code{\link[chipPCR]{bg.max}} function to estimate automatically the start of the 
 amplification process. In the background range there is often noise which 
 makes it harder to determine a meaningful background value. Therefore 
 \code{\link[chipPCR]{CPP}} can optionally remove outliers by finding the 
 value with largest difference from the mean as provided by the 
-\code{\link[outliers]{rm.outlier}} function. The functions also tries to 
+\code{\link[outliers]{rm.outlier}} function. This function also tries to 
 prevent calculations of non amplified signals. 
 
 The slope of the background range is often unequal to 
@@ -152,7 +151,7 @@ for (i in 3:5) {
 	type = "b", pch = 20)
 }
 
-legend(50, 0.5, c("55 deg Celsius", "60 deg Celsius", "65 deg Celsius"), 
+legend(50, 0.5, c("55 degrees Celsius", "60 degrees Celsius", "65 degrees Celsius"), 
 	col = c(1,2,3), pch = rep(20,3))
 
 # Use CPP to pre-process the data by removing the missing value and 
@@ -166,59 +165,8 @@ for (i in 3:5) {
   lines(C17[2:50, 1], y.cpp, col = i - 2, 
 	type = "b", pch = 20)
 }
-legend(50, 1, c("55 deg Celsius", "60 deg Celsius", "65 deg Celsius"), 
+legend(50, 1, c("55 degrees Celsius", "60 degrees Celsius", "65 degrees Celsius"), 
 	col = c(1,2,3), pch = rep(20,3))
-par(mfrow = c(1,1))
-
-# Example for dB analysis
-# qPCR analysis using the VIMCFX96_60 and the VIMCFX96_69 data sets from a 
-# 96-well plate cycler (Bio-Rad CFX96, EvaGreen detection) experiment. 
-# The dB values during the annealing (60 Celsius) and elongation (69 Celsius) 
-# phase were determined by calling dB from CPP. The annealing phase values 
-# were plotted against the elongation phase values and analyzed by 
-# linear regression (lm, stats) and correlation test (cor.test, stats). Next, we 
-# computed the interquartile range using IQR (stats) with the default settings. 
-# The IQR at 60 Celsius was ~ 0.28 dB and ~ 0.21 dB at 69 Celsius.
-
-par(mfrow = c(1,2), las = 0, bty = "n", cex.axis = 1.5, cex.lab = 1.5, 
-     font = 2, cex.main = 1.1, oma = c(1,1,1,1))
-
-pointer <- function (x, pos = 1, w = 5){
-	    xx <- pos + rep(seq(-0.1, 0.1, length.out = w), 
-				  ceiling(length(x)/w))
-	    yy <- sort(x)
-	    points(xx[1:length(yy)], yy, pch = 19)
-	    points(pos, mean(x, na.rm = TRUE), col = 2, pch = 15, cex = 1.5)
-	  }
-	  
-T60 <- cbind(apply(VIMCFX96_60[, c(2L:97)], 2, 
-		    function(x) CPP(VIMCFX96_60[, 1], x, qnL = 0.03)$dB))
-T69 <- cbind(apply(VIMCFX96_69[, c(2L:97)], 2, 
-		    function(x) CPP(VIMCFX96_69[, 1], x, qnL = 0.03)$dB))
-		    
-res <- list(T60 = T60, T69 = T69)
-
-plot(T60, T69, xlab = "dB @ 60 deg. Celsius", 
-      ylab = "dB @ 69 deg. Celsius")
-mtext("A", cex = 2, side = 3, adj = 0, font = 2) 
-res.lm <- lm(T69 ~ T60)
-abline(res.lm)
-
-summary(res.lm)
-cor.test(T60, T69)
-
-boxplot(res, ylab = "dB", ylim = c(1.45, 3.5))
-  pointer(T60, 1, 6)
-  pointer(T69, 2, 6)
-  
-mtext("B", cex = 2, side = 3, adj = 0, font = 2) 
-
-wcx <- wilcox.test(T60, T69)
-lines(c(1,2), c(3.2,3.2))
-text(1.5, 3.3, paste("p :", wcx$p.value))
-
-IQR(T60)
-IQR(T69)
 par(mfrow = c(1,1))
 }
 

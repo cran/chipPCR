@@ -91,8 +91,7 @@ MFIaggr <- function(x, y, cyc = 1, fluo = 2:ncol(x), RSD = FALSE,
 
   # Calcuate robust und non-robust location and dispersion
   # parameters of the ROI and apply the results to stats
-  
-  y.roi <- na.omit(unlist(y[llul, ]))
+  y.roi <- na.omit(unlist(y[llul[1]:llul[2], ]))
   
   mean.roi <- mean(y.roi)
   median.roi <- median(y.roi)
@@ -122,7 +121,7 @@ MFIaggr <- function(x, y, cyc = 1, fluo = 2:ncol(x), RSD = FALSE,
   #res is the an object of the type data.frame containing the 
   #temperature, location, deviation and coefficient of variance.
   new("refMFI", .Data = res, density = res.dens, 
-      qqnorm.data = y[llul, ], stats = stats, summ.lm = summ.lm)  
+      qqnorm.data = as.data.frame(y[llul, ]), stats = stats, summ.lm = summ.lm)  
 }
 
 setGeneric("MFIaggr")

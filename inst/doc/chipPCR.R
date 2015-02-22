@@ -3,133 +3,132 @@ library(knitr)
 opts_chunk$set(fig.lp="figure:",tidy=TRUE, tidy.opts=list(width.cutoff=60))
 
 fig1_cap <- "The amplification curves were generated with the 
-\\textsl{AmpSim} function. All Cqs are unique due to the use of random 
-value, which were added to the starting Cq of 25. The parameter $noise = 
-0.03$ adds some scatter to the amplification curve data."
+\\textsl{AmpSim} function. All Cqs are unique since random 
+values were added to the starting Cq of 25. The parameter $noise = 
+0.03$ adds some scatter to the data used for plotting the amplification curves."
+
 fig1_scap <- "Simulation of a qPCR experiment using \\textsl{AmpSim} 
 function."
 
 
-fig2_cap <- "Working principle of \\textsl{th}.\\textsl{cyc}.
+fig2_cap <- "Working principle of the \\textsl{th}.\\textsl{cyc} function.
 The function provides two modes (\\textbf{A)} is the linear 
-regression. \\textbf{B)} Quadratic regression) for the calculation of the 
-Cq. In both cases is the highest R squared value determining how many left 
-and right neighbors above and the below the used defined threshold level 
-are use."
-fig2_scap <- "Working principle of \\textsl{th}.\\textsl{cyc}."
+regression. \\textbf{B)} Quadratic regression for the calculation of the 
+Cq. In both cases the highest R squared value determines how
+many left and right neighbors are used above and the below the defined threshold level ."
 
-fig3_cap <- "Application of \\textsl{th}.\\textsl{cyc} for the analysis of 
+fig2_scap <- "Working principle of the \\textsl{th}.\\textsl{cyc} function."
+
+fig3_cap <- "Application of the \\textsl{th}.\\textsl{cyc} function for the analysis of 
 ccPCR data. The \\textsl{CPP} function was used to pre-process the data. 
-Susequently, the data were analyzed using the \\textsl{th}.\\textsl{cyc} function 
-using the linear regression mode. The threshold level ($r = 50$) was 
-identical for all data. The Cq (Ct) are given in minutes. The range used 
+Subsequently, the data were analyzed using the \\textsl{th}.\\textsl{cyc} function 
+in the linear regression mode. The threshold level ($r = 50$) was 
+identical for all data. The Cq is shown in minutes. The range used 
 for the calculation of the Cq is indicated in red. Negative curves are 
 automatically excluded from the analysis if the 90\\% percentile is lower 
 or equal to the threshold level ($r$)."
-fig3_scap <- "Application of \\textsl{th}.\\textsl{cyc} for the analysis 
+fig3_scap <- "Application of the \\textsl{th}.\\textsl{cyc} function for the analysis 
 of ccPCR data."
 
-fig4_cap <- "Application of the \\textsl{CPP} and 
-\\textsl{th}.\\textsl{cyc} functions.
-\\textbf{A)} The raw data of the VIMCFX96\\_60 data set were 
-plotted without pre-processing. \\textbf{B)} All amplification curve data 
-were pre-processed with the CPP function. The parameter $trans$ was set to 
-$TRUE$, which lead to a linear trend correction and base-lining. By 
-default a Savitzky-Golay filter was used to smooth the data. The data were 
-normalized between 0 and 1 ($method.norm = 'minm'$). \\textbf{C)} All 
-Cqs were calculated with \\textsl{th}.\\textsl{cyc} function. The Cq for the raw data was 
-$17.25 \\pm 0.5$ (at $r = 2575$) and $17.1 \\pm 0.1$ (at $r = 0.1$) for 
-the pre-processed data. Our results indicate that the dispersion of the Cq 
-values was slightly lower."
+fig4_cap <- "Application of the \\textsl{CPP} and \\textsl{th}.\\textsl{cyc} 
+functions. \\textbf{A)} The raw data of the VIMCFX96\\_60 dataset were 
+\\textbf{B)} pre-processed with the \\textsl{CPP} function and finally plotted. 
+The parameter $trans$ was set to $TRUE$, which leads to a linear trend correction 
+and base-lining. By default a Savitzky-Golay filter was used to smooth the data. 
+The data were normalized between 0 and 1 ($method.norm = 'minm'$). \\textbf{C)} 
+All Cqs were calculated with \\textsl{th}.\\textsl{cyc} function. The Cq for the 
+raw data was $17.25 \\pm 0.5$ (at $r = 2575$) and $17.1 \\pm 0.1$ (at $r = 0.1$) 
+for the pre-processed data. Our results indicate that the dispersion of the Cq 
+values was slightly lower for the pre-processed data."
 fig4_scap <- "Application of the \\textsl{CPP} and 
 \\textsl{th}.\\textsl{cyc} functions."
 
 
-fig5_cap <- "Comparison of the normalization functions from \\textsl{CPP}.
-The VIMCFX96\\_60 data set (96-well plate cycler, Bio-Rad 
-CFX96, EvaGreen detection) was used. \\emph{(A)} Raw data of all 
-amplification curves. The signals are superimposed to circa 2200 RFU and 
-the inter-sample baseline and plateau shift is high. Note the positive 
-trend (\\textcolor{red}{\\textendash}, fitted with an ordinary least 
-squares method) in the background range of cycles 1 to 15. All subsequent 
-plots were processed with the CPP function. By default, the curves are 
-base-lined, smoothed (Savitzky-Golay smoother) and the slop corrected by a 
-linear regression ($trans = TRUE$). \\emph{(B)} base-lined raw data, 
-\\emph{(C)} \\emph{Min-Max normalization}, \\emph{(D)} \\emph{Max 
-normalization}, \\emph{(E)} \\emph{lugn-normalization} with a cut off 3\\% 
+fig5_cap <- "Comparison of the normalization methods with the \\textsl{CPP} 
+function. The VIMCFX96\\_60 dataset (96-well plate cycler, Bio-Rad CFX96, 
+EvaGreen detection) was used. \\emph{(A)} Plot of raw data for all amplification 
+curves. The signals are superimposed to circa 2200 RFU and the inter-sample 
+baseline and plateau shift is high. Note the positive trend 
+(\\textcolor{red}{\\textendash}, fitted with an ordinary least squares method) 
+in the background range of cycles 1 to 15. All subsequent plots were processed 
+with the \\textsl{CPP} function. By default, the curves are base-lined, smoothed 
+(Savitzky-Golay smoother) and the slope corrected by a linear regression ($trans 
+= TRUE$). \\emph{(B)} base-lined raw data, \\emph{(C)} \\emph{Min-Max 
+normalization}, \\emph{(D)} \\emph{Max normalization}, \\emph{(E)} 
+\\emph{lugn-normalization} with a cut off 3\\% 
 and \\emph{(F)} \\emph{zscore-normalization}."
-fig5_scap <- "Comparison of the normalization functions from \\textsl{CPP}"
 
-fig6_cap <- "Amplification standard curve simulation and regression 
-analysis. \\emph{(A)} \\textsl{AmpSim} was used to synthesize a qPCR experiment of 
-six dilutions (three replicates per dilution) standard samples. The Cqs 
-were determined by the $SDM$ method (solid black vertical lines). 
-\\emph{(B)} effcalc was used to automatically perform a linear regression. 
-The regression curve (\\textendash) was plotted as the decadic logarithm of 
-input concentration versus the Cq. The 95\\% confidence interval is shown 
-be the light-blue solid lines."
+fig5_scap <- "Comparison of the normalization methods with the \\textsl{CPP} function."
+
+fig6_cap <- "Amplification standard curve simulation and regression analysis. 
+\\emph{(A)} \\textsl{AmpSim} was used to synthesize a qPCR experiment of six 
+dilutions (three replicates per dilution) standard samples. The Cqs were 
+determined by the $SDM$ method (solid black vertical lines). \\emph{(B)} \\textsl{effcalc} 
+was used to automatically perform a linear regression (decadic logarithm 
+of input concentration versus the Cq). The 95\\% confidence interval is shown be 
+the light-blue solid lines."
 fig6_scap <- "Amplification standard curve simulation and regression 
 analysis."
 
 fig7_cap <- "Calculation of the amplification efficiency.
-Data of a VideoScan HCU dilution experiment (C54 data set) 
+Data of a VideoScan HCU dilution experiment (C54 dataset) 
 were analyzed. \\emph{(A)} Visualization of the raw data. One of the three 
 dilutions contains a missing value due to a sensor error. \\emph{(B, top 
-panel)} The CPP function was used to baseline, to remove the missing value 
-(\\textcolor{red}{\\textendash}) and to smooth 
+panel)} The \\textsl{CPP} function was used to baseline, remove the missing value 
+(\\textcolor{red}{\\textendash}) and smooth 
 (\\textcolor{black}{\\textendash}, \\textcolor{red}{\\textendash}, 
 \\textcolor{green}{\\textendash}) the raw data. \\emph{(B, bottom panel)}. 
-The Cqs ($SDM$) of the pre-processed data were calculated by diffQ2 (see 
-main text) and analyzed with \\textsl{effcalc}. The amplification 
-efficiency approximately at 87.3~\\%."
+The Cqs ($SDM$ by the \\textsl{diffQ} function) were then determined. An amplification 
+efficiency of 87.3~\\% was calculated with the \\textsl{effcalc} function."
+
 fig7_scap <- "Calculation of the amplification efficiency."
 
-fig8_cap <- "Imputation of missing values in amplification curve data. 
+fig8_cap <- "Imputation of missing values in the data for generating amplification curves. 
 \\emph{(A)} Raw data were generated using the \\textsl{AmpSim} 
 simulation function. \\emph{(B)} A missing value was introduced in the 
 transition phase. The missing value was imputed either by \\emph{(C)} 
 linear approximation or \\emph{(D)} a cubic spline approximation. The 
 spline approximation nearly reconstituted the original curve."
-fig8_scap <- "Imputation of missing values in amplification curve data."
+fig8_scap <- "Imputation of missing values in the data for generating amplification curves."
 
-fig9_cap <- "Cycle of quantification by the second derivative maximum 
-method. Raw data (\\textbullet) were generated using the \\textsl{AmpSim} simulation 
-function (see example main text). The inflection point is the point where 
+fig9_cap <- "Quantification cycle (Cq) by the second derivative maximum 
+method. Raw data (\\textbullet) were generated by the \\textsl{AmpSim} 
+function. The inflection point is the point where 
 the slope is maximum and the curvature is zero. The first derivative of the 
 amplification curve has a first derivative maximum ($FDM$) at the 
 inflection point. The second derivative maximum method ($SDM$) needs to 
 differentiate a curve to the second order prior to quantification. The second 
 derivative exhibits a zero-crossing at the $FDM$. The function $y = f(x)$ is 
-numerically derived by five-point stencil. This method do not require any 
-assumptions regarding the function $f$. \\textsl{inder} calculates the 
-approximate $SDM$. The $SDM$ might in addition be useful for isothermal 
-amplification processes. The $SDM$ is calculated from a derived cubic spline. 
-Similarly the first approximate derivative maximum ($FDM$), second derivative 
+numerically derived by the five-point stencil. This method is
+assumption free regarding the function $f$. \\textsl{inder} calculates the 
+approximate $SDM$. The $SDM$ is calculated from a derived cubic spline. 
+Similarly, the first approximate derivative maximum ($FDM$), second derivative 
 minimum ($SDm$), and approximate second derivative center ($SDC$, geometric mean 
 of $SDM$ and $SDm$) are available. $FDM$, $SDm$ and $SDC$ values can be used to 
 further characterize the amplification process."
-fig9_scap <- "Cycle of quantification by the second derivative maximum 
+
+fig9_scap <- "Quantification cycle (Cq) by the second derivative maximum 
 method."
 
-fig10_cap <-  "Plot all data from C127EGHP and calculate the $SDM$ (Second 
+fig10_cap <- "Plot of all data from C127EGHP and calculate the $SDM$ (Second 
 Derivative Maximum) values with the \\textsl{diffQ2} function.
 \\emph{(A)} Plot the samples detected with EvaGreen and 
 \\emph{(B)} shows the same samples detected with the Hydrolysis probe for 
-MLC-2v. \\emph{(C)} Stripchart of the Cq values (\\textbullet) with the 
+\\textsl{MLC-2v}. \\emph{(C)} Stripchart of the Cq values (\\textbullet) with the 
 median (\\textcolor{red}{\\textendash}) and the median absolute deviation 
-(\\textcolor{blue}{\\textendash~\\textendash}). This result indicates, that the variance of 
-the derived from the detection with hydrolysis probes is higher than the 
-samples detected with EvaGreen. Note: the $inder$ parameter is set as 
-TRUE."
-fig10_scap <- "Plot all data from C127EGHP and calculate the $SDM$ (Second 
+(\\textcolor{blue}{\\textendash~\\textendash}). 
+This result indicates, that the variance derived from detection with hydrolysis
+probes is higher than for the samples detected with EvaGreen. Note: the $inder$ parameter is set as TRUE."
+  
+fig10_scap <- "Plot of all data from C127EGHP and calculate the $SDM$ (Second 
 Derivative Maximum) values with the \\textsl{diffQ2} function."
 
-fig11_cap <-  "Amplification curve profiles from the Bio-Rad iQ5 thermo 
+fig11_cap <- "Amplification curve profiles from the Bio-Rad iQ5 thermo 
 cycler 
 for the human gene \\textit{HPRT1}.
-\\emph{(A)} The \\textsl{C126EG595} data set was used with 
+\\emph{(A)} The \\textsl{C126EG595} dataset was used with 
 96 replicates of equal starting numbers of template molecules. Vertical 
-lines represent the Cq ($SDM$ method) determined with inder method on 
+lines represent the Cq ($SDM$ method) determined by the $inder$ method on 
 amplification curves fitted with a 5-parameter curve function. Curves with 
 Cqs less than 14.5 are indicated in red (\\textcolor{red}{\\textendash}). 
 \\emph{(B)} Second derivatives of the amplification curves. Note that 
@@ -139,141 +138,161 @@ similar. \\emph{(C)} Histogram (class width = 0.05 Cq) of the Cq values
 curves had a Cq less than 15.5 (N = 16)."
 fig11_scap <- "Amplification curve profiles from the Bio-Rad iQ5 thermo 
 cycler 
-for the human gene \\textit{HPRT1}"
+for the human gene \\textit{HPRT1}."
 
-fig12_cap <- "Signal analysis using the VIMCFX96\\_60 data set (96-well 
+fig12_cap <- "Signal analysis using the VIMCFX96\\_60 dataset (96-well 
 plate cycler (Bio-Rad CFX96)). All cycles (ROI: 1 -- 40) were analyzed by 
 the \\textsl{MFIaggr} function. The density plot (right upper panel) and 
 quantile-quantile analysis (right lower panel) show no normal 
-distribution. Due to the sigmoidal curve structure is the density function 
-bimodal."
-fig12_scap <- "Signal analysis using the VIMCFX96\\_60 data set (96-well 
+distribution. Owing to the sigmoidal structure of the curve, the density function can be considered bimodal."
+
+fig12_scap <- "Signal analysis using the VIMCFX96\\_60 dataset (96-well 
 plate cycler (Bio-Rad CFX96))."
 
-fig13_cap <- "Helicase dependent amplification (HDA) of Vimentin (Vim). The 
-VideoScan Platform was used to monitor the amplification. The HDA was performed 
-at 65 degree Celsius. Three concentrations of input DNA (D1, D2, D3) were used. 
-The amplification curves were smoothed by a moving average (windowsize 3) and 
-base-lined by a a robust linear regression by computing MM-type regression 
-estimator. The \\textsl{th}.\\textsl{cyc} function was used to determine the 
-time required to reach the threshold level of 0.05 (--)." 
+fig13_cap <- "Helicase-dependent amplification (HDA) of \\textsl{vimentin} (\textit{vim}) in the 
+VideoScan Platform. The HDA was performed at 65 degrees Celsius. Three 
+concentrations of input DNA (D1, D2, D3) were used. The amplification curves 
+were smoothed by a moving average (windowsize 3) and base-lined by a robust 
+linear regression by computing MM-type regression estimator. The 
+\\textsl{th}.\\textsl{cyc} function was used to determine the time required to 
+reach the threshold level of 0.05 (--) arbitrary fluorescence units." 
 
-fig13_scap <- "Helicase dependent amplification (HDA) of Vimentin (Vim)."
+fig13_scap <- "Helicase-dependent amplification (HDA) of \\textsl{vimentin} (\textit{vim})."
 
-fig14_cap <- "The plotCurves function. Plots many curves on one plot in 
-separate cells allowing quick assessment. Missing values were artificially 
-introduced at random position to selected curves of the VIMCFX96\\_60 data 
-set (solid black line). A colored box (topleft of each plot) indicates the 
-sample name and if the data contain missing values. The red rug indicates 
-the position of the missing values. The red lined shows the amplification 
-curve after unsupervised pre-processing (using an instance of \\textsl{CPP})."
-fig14_scap <- "The plotCurves function."
+fig14_cap <- "The \\textsl{plotCurves} function. Notice: The function plots many 
+curves on one plot in separate cells allowing for quick assessment. Missing 
+values were artificially introduced at random positions to selected curves of the 
+VIMCFX96\\_60 data set (solid black line). A colored box (topleft of each plot) 
+indicates the sample name and if the data contain missing values. The red rug 
+indicates the position of the missing values. The red lined shows the 
+amplification curve after unsupervised pre-processing (using an instance of 
+\\textsl{CPP})."
+fig14_scap <- "The \\textsl{plotCurves} function."
 
-fig15_cap <- "Use of \\textsl{MFIaggr} to test for heteroskedasticity using the 
-Breusch-Pagan test. The data were aggregated with the \\textsl{MFIaggr} function and 
-assigned to the object res. The standard deviation was transformed to the 
-variance. The plot shows the cycle dependent variance measured at 60 
-degree Celsius (annealing phase; A, B) and 69 degree Celsius (elongation 
-phase, C, D). First cycles 1 to 10 of 96 qPCR replicate amplification 
-curves were analyzed. Next the cycles 1 to 40 of the same amplification 
-curve data were analyzed. The Breusch-Pagan confirmed the 
-heteroskedasticity in the amplification curve data. The VIMCFX96\\_60 and 
-VIMCFX96\\_69 data sets were used."
-fig15_scap <- "Use of \\textsl{MFIaggr} to test for heteroskedasticity using the 
-Breusch-Pagan test."
+fig15_cap <- "Use of \\textsl{MFIaggr} to test for heteroskedacity. The data were 
+aggregated with the \\textsl{MFIaggr} function and assigned to the object $res$. 
+The standard deviation was transformed to the variance. The plot shows the cycle 
+dependent variance measured at 60 degrees Celsius (annealing phase; A, B) and 69 
+degrees Celsius (elongation phase, C, D) of 96 qPCR replicate amplification 
+curves. The first cycles 1 to 10 and next the cycles 1 to 40 were analyzed. The 
+Breusch-Pagan test of the \\textsl{MFIaggr} confirmed the heteroskedasticity in the 
+amplification curve data. The VIMCFX96\\_60 and VIMCFX96\\_69 datasets were 
+used."
 
-fig16_cap <- "Function inder calculates numeric derivatives on smoothed 
+fig15_scap <- "Use of \\textsl{MFIaggr} to test for heteroskedasticity."
+
+fig16_cap <- "The \\textsl{inder} function calculates numeric derivatives on smoothed 
 data, which results in data points not observable in reality. The rounder 
 function averages such result to the real values of cycle number. An 
 amplification curve was simulated with the \\textsl{AmpSim} function."
 
-fig16_scap <- "Use of rounder to average numeric derivatives to the real 
+fig16_scap <- "Application of rounder to average numeric derivatives to the real 
 values of cycle number."
 
-fig17_cap <- "\\textsl{lm.coefs} a function to compute linear model 
-coefficients. The function is a convenient wrapper around few functions 
-performing normal (least squares) and robust linear regression. If the robust 
-linear regression is impossible, \\textsl{lm.coefs} will perform linear 
-regression using the least squares method. This function can be used to 
-calculate the background of an amplification curve. The coefficients of the 
-analysis can be used for a trend based correction of the entire data set."
+fig17_cap <- "\\textsl{lm.coefs} a function to compute coefficients for linear 
+models. The function is a wrapper for functions to perform normal (least 
+squares) and robust linear regression. If the computation of the robust linear regression fails, 
+then \\textsl{lm.coefs} performs a linear regression using the least squares 
+method. lmrob, MM-type estimators for linear regression; rq, quantile regression 
+fit; least, least squares linear regression; rfit, Rank-based estimates of 
+regression coefficients. m, slope; n, asymmetry."
 
-fig17_scap <- "\\textsl{lm.coefs} a function to compute linear model 
-coefficients."
+fig17_scap <- "\\textsl{lm.coefs} a function to compute coefficients for linear 
+models."
 
 fig18_cap <- "\\textsl{bg}.\\textsl{max} tries to estimate the range between the 
 background and the plateau phase of an amplification reaction. \\emph{(A)} in 
 absence and \\emph{(B)} presence of noise. The data were simulated with the 
 \\textsl{AmpSim} function."
 
-fig18_scap <- "\\textsl{bg}.\\textsl{max} to estimate the range between the 
+fig18_scap <- "\\textsl{bg}.\\textsl{max} tries to estimate the range between the 
 background and the plateau phase of an amplification reaction"
 
-fig19_cap <- "Application of the 
-\\textsl{bg}.\\textsl{max} function. Amplification curve data from a capillary 
-convective PCR were used \\emph{(A)} as raw data and \\emph{(B)} 
-pre-processed (smoothed (moving average, window size 3), base-lined and trend 
-corrected (robust MM-estimator)) with the CPP function. The output of the was 
-used by \\textsl{bg}.\\textsl{max} to detected the start and the end of the 
-amplification reaction. The start and end were reliably estimated (range 
-between ``bg.stop'' and ``amp.stop''). There was no significant difference 
-between raw data and pre-processed data."
+fig19_cap <- "Application of the \\textsl{bg}.\\textsl{max} function. 
+Amplification curve data from a capillary convective PCR were used \\emph{(A)} 
+as raw data and \\emph{(B)} pre-processed (smoothed (moving average, window size 
+3), base-lined and trend corrected (robust MM-estimator)) with the \\textsl{CPP} 
+function. The output of the \\textsl{CPP} function was used by 
+\\textsl{bg}.\\textsl{max} to detected the start and the end of the 
+amplification reaction. The start and end were reliably estimated (range between 
+``bg.stop'' and ``amp.stop''). There was no significant difference between raw 
+and pre-processed data."
 
 fig19_scap <- "Application of the \\textsl{bg}.\\textsl{max} function to detect 
 the start and end of an amplification reaction in a capillary convective PCR."
 
-fig20_cap <- "Inspection of the reps384 data set. The reps384 data set was used 
+fig20_cap <- "Inspection of the reps384 dataset. The reps384 dataset was used 
 for the analysis of the impact of imputed missing values. Three areas of the 
 curve data were defined as ``Linear phase'' (red, cycle 1 -- 10), ``Exponential 
 phase'' (blue, cycle 11 -- 33), ``Plateau phase'' (green, cycle 34 -- 40)."
 
-fig20_scap <- "Inspection of the reps384 data set."
+fig20_scap <- "Inspection of the reps384 dataset."
 
-fig21_cap <- "Analysis and interpretation of real-time amplification curves. \\emph{(A)} The 
-fluorescence values are plotted against the cycle. The amplification curve  
-has a sigmoidal shape (\\textcolor{black}{\\textendash},~\\textcolor{red}{\\textendash}). Amplification 
-curve raw data are affected by many influences. This includes noise introduced 
-by the detection system and sensor errors. Measurements can occasionally contain 
-missing values (``NA'', \\textcolor{red}{\\textendash}) and outliers (orange 
-circle, \\textcolor{black}{\\textendash}). Outliers are often present in the first 
-cycle due to sensor adjustments. The signal difference between the background 
-phase (first cycles) and the plateau phase (last cycles) can be expressed as 
-signal-to-noise ratio (SNR). The SNR between different between samples (e.g., 
-\\textcolor{black}{\\textendash} and \\textcolor{black}{\\textendash}) can vary. For 
-interpretation it is better to compensate the differences. Negative samples 
-(\\textcolor{blue}{\\textendash}) need to be (automatically) identified. 
-\\emph{(B)} pre-processed raw data. NAs were imputed and the noise slightly 
-removed. The curves were adjusted to have the same baseline and plateau level. 
-The quantification point (Cq) of the positive reactions are determined in the 
-exponential phase (``Threshold method'' is used in this example). Negative 
-sample are automatically set to zero." 
+fig21_cap <- "Analysis and interpretation of real-time amplification curves. 
+\\emph{(A)} Before procession: The fluorescence values are plotted against the cycle, which results 
+in sigmoidal shaped amplification curves 
+(\\textcolor{black}{\\textendash},~\\textcolor{red}{\\textendash}). Measurements may 
+occasionally contain missing values (``NA'', \\textcolor{red}{\\textendash}) and 
+outliers (orange circle, \\textcolor{black}{\\textendash}), due to noise 
+introduced by the detection system or sensor errors. Outliers are often 
+present in the first cycle due to sensor adjustments. The signal difference 
+between the background phase (first cycles) and the plateau phase (last cycles) 
+is quantifiable as signal-to-noise ratio (SNR). The SNR between different 
+samples (e.g., \\textcolor{black}{\\textendash} and 
+\\textcolor{black}{\\textendash}) can vary. For interpretation it is recommended 
+to normalize the data. Negative samples (\\textcolor{blue}{\\textendash}) need 
+to be identified automatically. \\emph{(B)} Pre-processed raw data, where NAs 
+were imputed and the noise slightly removed. The curves were adjusted to have 
+the same baseline and plateau level. The quantification cycles (Cq) of the 
+positive reactions are determined in the exponential phase (``threshold method'' 
+is used in this example). Negative samples are automatically set to zero." 
 
 fig21_scap <- "Analysis and interpretation of real-time amplification curves."
 
 fig22_cap <- "Smoother and filter methods of the \\emph{chipPCR} package. 
 \\emph{(A)} Raw data were generated using the \\textsl{AmpSim} simulation 
 function. \\emph{(B)} The difference of the raw data to the smoothed data was 
-plotted. ``savgol'' (Savitzky-Golay Smoothing), ``lowess'' (locally-weighted 
+plotted. ``savgol'' (Savitzky-Golay smoothing), ``lowess'' (locally-weighted 
 polynomial regression), ``mova3'' (moving average with window size of 3), 
 ``smooth'' (cubic smoothing spline), ``spline'' (Interpolating cubic spline), 
 ``supsmu'' (Friedman's SuperSmoother), ``whit1'' (weighted Whittaker smoothing 
 with a finite difference penalty of order 1), ``whit2'' (weighted Whittaker 
 smoothing with a finite difference penalty of order 2). The ``savgol'', 
 ``smooth'', ``spline'' ``whit1'' , and ``whit2'' nearly preserved the original 
-curve. The other functions resulted in alteration in the transition phases of 
+curve. The other functions resulted in alterations in the transition phases of 
 the amplification curve. Optimized time series smoother, like the Kalman filter 
-\\cite{Tusell_2010}, are not yet integrated."
+\\citep{Tusell_2010}, are not yet integrated in this package."
 
 fig22_scap <- "Smoother and filter methods of the \\emph{chipPCR} package."
 
-fig23_cap <- "Sample code for the analysis with the \\textsl{MFIaggr} function. 
-The VIMCFX96\\_60 data set (96-well plate cycler (Bio--Rad CFX96)) was used. 
-Either all a subset of cycles (ROI: 1 -- 10) or all cycles (ROI: 1 -- 40) (Figure~\\ref{figure:MFIaggr_all}) were 
-analyzed. The density plot (right upper panel) and quantile-quantile analysis 
-(right lower panel) show no normal distribution. Due to the sigmoidal curve 
-structure is the density function bimodal."
+fig23_cap <- "Sample for analysis using the \\textsl{MFIaggr} function. 
+The VIMCFX96\\_60 dataset (96-well plate cycler (Bio--Rad CFX96)) was used. 
+Either all or a subset of the cycles (ROI: 1 -- 10) or all cycles (ROI: 1 -- 40) 
+(Figure~\\ref{figure:MFIaggr_all}) were analyzed. The density plot (right upper 
+panel) and quantile-quantile analysis (right lower panel) show no normal 
+distribution. Due to the sigmoidal structure of the curve, the density function 
+can be considered bimodal."
 
 fig23_scap <- "Signal analysis by the \\textsl{MFIaggr} function."
+
+fig24_cap <- "Analysis of two PCR conditions with the \\textsl{MFIaggr} function. 
+The VIMCFX96\\_60 and VIMCFX96\\_69 datasets (96-well plate cycler (Bio--Rad 
+CFX96)) were used. A subset of cycles (ROI: 2 -- 10) was analyzed for a qPCR 
+measured during the annealing phase and elongation phase. The density 
+plot (right upper panel) and quantile-quantile analysis (right lower panel) show 
+no normal distribution. The measurements during the annealing phase and 
+elongation phase show a similar distribution but differ in their mean fluorescence intensity (MFI) levels."
+
+fig24_scap <- "Analysis of two PCR condition with the \\textsl{MFIaggr} function."
+
+fig25_cap <- "Calculation of the amplification efficiency (AE) from a qPCR 
+experiment. DNA of \\textsl{vimentin} (\\emph{A}) and \\textsl{MLC-2v} (\\emph{B}) was diluted and 
+amplified in a Roche Light Cycler 1.5 (C60.amp dataset). Cqs ($SDM$) were 
+calculated by the \\textsl{inder} function and analyzed with \\textsl{effcalc}. 
+The AE was (\\emph{C}) 95.1~\\% for \\textsl{vimentin} and  
+(\\emph{D}) 94.1~\\%  for \\textsl{MLC-2v}."
+
+fig25_scap <- "Calculation of the amplification efficiency for the C60.amp dataset."
 
 
 ## ----load_data,message=FALSE,results='asis'------------------------------
@@ -284,9 +303,9 @@ require(xtable)
 # Print table
 print(xtable(head(C60.amp[, 1L:5]), caption = "First five cycles of imported data."))
 
-## ----problems,warning=FALSE,message=FALSE,fig.show='hold',fig.cap=fig21_cap,fig.scap=fig21_scap,warning=FALSE,fig.width = 11, fig.height = 11----
-# Use AmpSim to generate an amplification curve with 40 cycles
-# and a different Cq.
+## ----problems,warning=FALSE,message=FALSE,fig.show='hold',fig.cap=fig21_cap,fig.scap=fig21_scap,warning=FALSE,fig.width = 11, fig.height = 8----
+# Use AmpSim to generate amplification curves with 40 cycles
+# and different Cq's.
 res.pos <- AmpSim(cyc = 1:40, noise = TRUE, b.eff = -12, nnl = 0.02)
 res.pos[5, 2] <- res.pos[5, 2] * 6
 
@@ -354,13 +373,13 @@ text(27, 0.06, "Cq", col = "red")
 #  # Run from a R console following commands.
 #  require(shiny)
 #  
-#  # Invoke the shiny AmpSim app in the default browser.
+#  # Invoke the shiny AmpSim app in the default web browser.
 #  runApp(paste(find.package("chipPCR")[1],"/AmpSim.gui", sep = ""))
 #  
-#  # Call shiny app AmpSim directly from gist
+#  # Alternatively call shiny app AmpSim from gist
 #  runGist('https://gist.github.com/michbur/e1def41598f1d0c1e2e6')
 
-## ----AmpSim_random,warning=FALSE,message=FALSE,fig.show='hold',fig.cap=fig1_cap,fig.scap=fig1_scap----
+## ----AmpSim_random,warning=FALSE,message=FALSE,fig.show='hold',fig.cap=fig1_cap,fig.scap=fig1_scap,fig.width = 11, fig.height = 8----
 # Draw an empty plot for 40 cycles with user defined parameters.
 
 par(las = 0, bty = "n", oma = c(.5,.5,.5,.5))
@@ -384,7 +403,7 @@ sim <- sapply(1L:8, function(i) {
 
 ## ----humanrater_gui,eval = FALSE-----------------------------------------
 #  # Create a set of data to be analyzed by humanrater.
-#  # The function AmpSim will create amplification curves which follow a nearly
+#  # The function AmpSim creates amplification curves which follow a nearly
 #  # optimal sigmoidal curve shape or just noise.
 #  
 #  testdata <- data.frame(1:35,
@@ -401,7 +420,7 @@ sim <- sapply(1L:8, function(i) {
 #  
 #  human.test1 <- humanrater(testdata, repeats = 2)
 
-## ----MFIaggr_intro,warning=FALSE,message=FALSE,fig.show='hold', fig.width = 6, fig.cap=fig23_cap,fig.scap=fig23_scap----
+## ----MFIaggr_intro,warning=FALSE,message=FALSE,fig.show='hold', fig.cap=fig23_cap,fig.scap=fig23_scap,fig.width = 11, fig.height = 8----
 par(las = 0, bty = "n", cex.axis = 1.2, cex.lab = 1.2, 
     font = 2, cex.main = 1.2, oma = c(1,1,1,1))
 
@@ -411,11 +430,17 @@ plot(MFIaggr(VIMCFX96_60[, 1], VIMCFX96_60[, 2:ncol(VIMCFX96_60)],
 # plot(MFIaggr(VIMCFX96_60[, 1], VIMCFX96_60[, 2:ncol(VIMCFX96_60)], 
 #      llul = c(1,40)), CV = FALSE)
 
+## ----MFIaggr_conditions,warning=FALSE,message=FALSE,fig.show='hold', fig.cap=fig24_cap,fig.scap=fig24_scap,fig.width = 11, fig.height = 8----
+par(las = 0, bty = "n", cex.axis = 1.2, cex.lab = 1.2, 
+    font = 2, cex.main = 1.2, oma = c(1,1,1,1))
+
+plot(x = MFIaggr(VIMCFX96_60, fluo = c(2L:10)), y = MFIaggr(VIMCFX96_69, fluo = c(2L:10)))
+
 ## ----MFIaggr_all,fig.show='hold',fig.cap=fig12_cap,fig.scap=fig12_scap----
 plot(MFIaggr(VIMCFX96_60[, 1], VIMCFX96_60[, 2:ncol(VIMCFX96_60)], 
              llul = c(1,40)), CV = FALSE)
 
-## ----MFIaggr_heteroskedasticity,fig.show='hold',fig.cap=fig15_cap,fig.scap=fig15_scap----
+## ----MFIaggr_heteroskedasticity,fig.show='hold',fig.cap=fig15_cap,fig.scap=fig15_scap,fig.width = 11, fig.height = 8----
 par(mfrow = c(2,2), bty = "n")
 # Create a helper function "hsk.test" to analyze the heteroskedasticity
 # and the variance.
@@ -449,7 +474,7 @@ hsk.test(VIMCFX96_69[, 1], VIMCFX96_69[, 2:ncol(VIMCFX96_69)], llul =
            c(1,40), main = "ROI Cycle 1 to 40\nElongation phase") 
 mtext("D", cex = 2, side = 3, adj = 0)
 
-## ----plotCurves,fig.show='hold',fig.cap=fig14_cap,fig.scap=fig14_scap,warning=FALSE----
+## ----plotCurves,fig.show='hold',fig.cap=fig14_cap,fig.scap=fig14_scap,warning=FALSE,fig.width = 11, fig.height = 8----
 y <- VIMCFX96_60[, 2L:9]
 # Introduce some missing values.
 y[c(10, 22, 3, 25, 26, 15, 27, 23, 4), c(5, 7, 4, 2, 1)] <- NA
@@ -458,7 +483,7 @@ y[c(10, 22, 3, 25, 26, 15, 27, 23, 4), c(5, 7, 4, 2, 1)] <- NA
 # plots with pre-processed data and imputed missing values (red line).
 plotCurves(VIMCFX96_60[, 1], y, nrow = 2, type = "l", CPP = TRUE)
 
-## ----workflow,fig.show='hold',fig.cap=fig4_cap,fig.scap=fig4_scap,warning=FALSE----
+## ----workflow,fig.show='hold',fig.cap=fig4_cap,fig.scap=fig4_scap,warning=FALSE,fig.width = 11, fig.height = 8----
 layout(matrix(c(1,2,3,3), 2, 2, byrow = TRUE), respect = TRUE)
 
 par(las = 0, bty = "n", oma = c(.5,.5,.5,.5))
@@ -487,7 +512,7 @@ boxplot(data.frame(Raw = th.cyc.raw, CPP = th.cyc.CPP), ylab = "Cq (Ct)",
         notch = TRUE)
 mtext("C", cex = 1.2, side = 3, adj = 0, font = 2)
 
-## ----fixNA_data,fig.show='hold',fig.cap=fig20_cap,fig.scap=fig20_scap,message=FALSE----
+## ----fixNA_data,fig.show='hold',fig.cap=fig20_cap,fig.scap=fig20_scap,message=FALSE,fig.width = 11, fig.height = 8----
 library(qpcR)
 library(chipPCR)
 cols <- adjustcolor(2:4, 0.6)
@@ -593,7 +618,7 @@ par(las = 0, mfrow = c(2,1), bty = "n", oma = c(.5,.5,.5,.5))
 res <- AmpSim(cyc = 1:40, Cq = 25)
 plot(res, xlim = c(1,40), ylim = c(-0.1,1), xlab = "Cycles", 
      ylab = "refMFI", 
-     main = "Background Range Estimation\n in Absence of Noise", 
+     main = "Background Range Estimation\n in the Absence of Noise", 
      type = "b", pch = 20)
 background <- bg.max(res[, 1], res[, 2])
 mtext("A", cex = 2, side = 3, adj = 0, font = 2)
@@ -614,7 +639,7 @@ legend(4, 1, c("Raw data", "First derivative", "Second derivative"),
 res <- AmpSim(cyc = 1:40, Cq = 25, noise = TRUE)
 plot(res, xlim = c(1,40), ylim = c(-0.1,1), xlab = "Cycles", 
      ylab = "refMFI", 
-     main = "Background Range Estimation\n in Presence of Noise", 
+     main = "Background Range Estimation\n in the Presence of Noise", 
      type = "b", pch = 20)
 mtext("B", cex = 2, side = 3, adj = 0, font = 2)
 background <- bg.max(res[, 1], res[, 2])
@@ -632,12 +657,12 @@ legend(4, 1, c("Raw data", "First derivative", "Second derivative"),
        pch = rep(20,3), col = c(1,2,4), bty = "n")
 par(mfrow = c(1,1))
 
-## ----bgmax_ccPCR,fig.cap=fig19_cap,fig.scap=fig19_scap,fig.show='hold',message=FALSE,results='hide',warning=FALSE,fig.width = 11, fig.height = 11----
+## ----bgmax_ccPCR,fig.cap=fig19_cap,fig.scap=fig19_scap,fig.show='hold',message=FALSE,results='hide',warning=FALSE,fig.width = 11, fig.height = 8----
 # Set parameter for the plot.
 par(mfrow = c(2,1), las = 0, bty = "n")
 
 # Use of bg.max for time-dependent measurements. Amplification curves 
-# from the capillaryPCR data set were processed in a loop. The results of 
+# from the capillaryPCR dataset were processed in a loop. The results of 
 #  bg.max are added to the plot. 
 
 colors <- rainbow(8)
@@ -674,7 +699,7 @@ for (i in c(1,3,5,7)) {
              ", amp.stop: ", res.bg[4]), col = colors[i], cex = 0.6)
 }
 
-## ----normalization,fig.show='hold',fig.cap=fig5_cap,fig.scap=fig5_scap----
+## ----normalization,fig.show='hold',fig.cap=fig5_cap,fig.scap=fig5_scap,fig.width = 11, fig.height = 8----
 par(mfrow = c(2,3), las = 0, bty = "n", oma = c(.5,.5,.5,.5))
 tmp <- VIMCFX96_60
 
@@ -715,7 +740,7 @@ mtext("F", cex = 1.2, side = 3, adj = 0, font = 2)
 lin <- apply(tmp[, -1], 2, function(x) lines(tmp[, 1], CPP(tmp[, 1], x, 
                                                            method.norm = "zscore")$y))
 
-## ----lmcoef,fig.show='hold',fig.cap=fig17_cap,fig.scap=fig17_scap--------
+## ----lmcoef,fig.show='hold',fig.cap=fig17_cap,fig.scap=fig17_scap,fig.width = 11, fig.height = 8----
 par(bty = "n")
 plot(VIMCFX96_69[, 1], VIMCFX96_69[, 2], type = "l", xlab = "Cycle", 
      ylab = "Fluorescence")
@@ -731,7 +756,7 @@ for (i in 1:4) {
 legend("right", c("Data", "lmrob", "rq", "least", "rfit"), lty = 1, 
        col = 1:5, cex = 0.95)
 
-## ----rounder_show,warning=FALSE,message=FALSE,fig.show='hold',fig.cap=fig16_cap,fig.scap=fig16_scap----
+## ----rounder_show,warning=FALSE,message=FALSE,fig.show='hold',fig.cap=fig16_cap,fig.scap=fig16_scap,fig.width = 11, fig.height = 8----
 # Simulate an amplification curve with 40 cycles using the AmpSim 
 # function.
 isPCR <- AmpSim(cyc = 1:40)
@@ -752,7 +777,7 @@ summary(res)
 head(rd)
 # summary(rd)
 
-## ----SDM,fig.show='hold',fig.cap=fig9_cap,fig.scap=fig9_scap-------------
+## ----SDM,fig.show='hold',fig.cap=fig9_cap,fig.scap=fig9_scap,fig.width = 11,fig.height = 8----
 # Use AmpSim to generate an amplification curve with 40 cycles
 # and an approximate Cq of 20 and assign it to the object isPCR.
 # isPCR is an object of the class "data.frame".
@@ -790,7 +815,7 @@ text(15, - 0.1, paste("SDm ~ ", round(summ["SDm"], 2)),
 text(15, 0.7, paste("SDC ~ ", round(summ["SDC"], 2)), 
      cex = 1.1, col = colors[4])
 
-legend(1.1, 0.9, c("raw", "first derivative", "second derivative"), 
+legend(1.1, 0.9, c("Raw data", "First derivative", "Second derivative"), 
        col = c(1,4,2), lty = c(2,1,1), bty = "n")
 
 # Summary of the object res.
@@ -853,7 +878,7 @@ mtext("C", cex = 1.1, side = 3, adj = 0, font = 2)
 pointer(EG, pos = 1, w = 8)
 pointer(HP, pos = 2, w = 8)
 
-## ----inder_fit,fig.cap=fig11_cap,fig.scap=fig11_scap,fig.show='hold',message=FALSE,results='hide'----
+## ----inder_fit,fig.cap=fig11_cap,fig.scap=fig11_scap,fig.show='hold',message=FALSE,fig.width = 11,fig.height = 8,results='hide'----
 fit.amp <- function(cyc, fluo, plot = FALSE) {
   
   ampl <- quantile(fluo, 0.999)
@@ -906,8 +931,8 @@ hist(out, xlab = "Cq (SDM)", main = "",
 abline(v = 15.5, lty = 2)
 mtext("C", cex = 1.2, side = 3, adj = 0, font = 2)
 
-## ----thcyc,warning=FALSE,message=FALSE,fig.show='hold',fig.cap=fig2_cap,fig.scap=fig2_scap----
-# Raw data from the VIMCFX96_69 data set.
+## ----thcyc,warning=FALSE,message=FALSE,fig.show='hold',fig.cap=fig2_cap,fig.scap=fig2_scap,fig.width = 11, fig.height = 8----
+# Raw data from the VIMCFX96_69 dataset.
 # Cycles x and Fluoresce values y
 x <- VIMCFX96_69[, 1]
 y <- VIMCFX96_69[, 2]
@@ -944,7 +969,7 @@ abline(h = res[2], col = 3)
 abline(v = res[1], col = 4)
 legend("topleft", paste("Cq (Ct) = ", round(res[1], 3)))
 
-## ----thcyc_ccPCR,fig.show='hold',fig.cap=fig3_cap,fig.scap=fig3_scap,fig.height=8,fig.width=11----
+## ----thcyc_ccPCR,fig.show='hold',fig.cap=fig3_cap,fig.scap=fig3_scap,fig.width = 11, fig.height = 8----
 # Application of the th.cyc method to determine the Cq from a continuous
 # amplification reaction.
 par(las = 0, bty = "n", oma = c(.5,.5,.5,.5))
@@ -965,7 +990,7 @@ abline(h = 80)
 legend("topleft", c("Run 1", "Run 2", "Run 3", "Control"), 
        pch = c(19, 17, 15, 13), lwd = 1.3, bty = "n")
 
-## ----HDA,fig.show='hold',fig.cap=fig13_cap,fig.scap=fig13_scap,message=FALSE,warning=FALSE----
+## ----HDA,fig.show='hold',fig.cap=fig13_cap,fig.scap=fig13_scap,message=FALSE,warning=FALSE,fig.width = 11, fig.height = 8----
 par(mfrow = c(2,1), bty = "n")
 plot(NA, NA, xlim = c(0,5000), ylim = c(0.45,0.8), xlab = "Time (sec)", 
      ylab = "Fluorescence", main = "HDA - Raw data")
@@ -997,7 +1022,7 @@ xr <- 3L:200
 lrg <- "least"
 
 # threshold level for the th.cyc function
-r <- 0.05
+r <- 0.025
 # Calculate in a loop the Cq values (Cycle threshold method) and add the
 # calculated time (in minutes) to the plot.
 for (i in c(2,4,6)) {
@@ -1013,7 +1038,7 @@ for (i in c(2,4,6)) {
 # Show the fluorescence value, which defines the threshold.
 abline(h = r, lty = 2)
 
-## ----AmpSim_effcalc,fig.show='hold',fig.cap=fig6_cap,fig.scap=fig6_scap,message=FALSE----
+## ----AmpSim_effcalc,fig.show='hold',fig.cap=fig6_cap,fig.scap=fig6_scap,fig.width = 11,fig.height = 8,message=FALSE----
 
 # Load MBmca package (v. 0.0.3-3 or later)
 require(MBmca)
@@ -1062,13 +1087,13 @@ for (i in 1L:18) {
 }
 
 # Assign the calculated Cqs to the corresponding concentrations.
-tmp <- data.frame(dilution[1:6], Cq.out[1:6], Cq.out[7:12],  Cq.out[13:18])
+tmp <- data.frame(dilution[1:6], Cq.out[1:6], Cq.out[7:12], Cq.out[13:18])
 
 # Determine the amplification efficiency by using the effcalc function.
 plot(effcalc(tmp[, 1], tmp[, 2:4]), CI = TRUE)
 mtext("B", cex = 1.1, side = 3, adj = 0, font = 2) 
 
-## ----CPP_C54,fig.show='hold',fig.cap=fig7_cap,fig.scap=fig7_scap---------
+## ----CPP_C54,fig.show='hold',fig.cap=fig7_cap,fig.scap=fig7_scap,fig.width = 11,fig.height = 8,message=FALSE----
 require(MBmca)
 par(las = 0, bty = "n", oma = c(.5,.5,.5,.5))
 par(fig = c(0,0.5,0,1), new = TRUE)
@@ -1100,13 +1125,13 @@ Cq.D3 <- diffQ2(D3, inder = TRUE)[["xTm1.2.D2"]][1]
 
 res.dil <- data.frame(dilution, rbind(Cq.D1, Cq.D2, Cq.D3))
 par(fig = c(0.5,1,0,0.5), new = TRUE)
-plot(effcalc(res.dil[, 1], res.dil[, 2]))
+plot(effcalc(res.dil[, 1], res.dil[, 2]), res.fit = NULL)
 
 ## ----effcalc_output,echo=FALSE,results='asis',message=FALSE--------------
 print(xtable(effcalc(res.dil[, 1], res.dil[, 2]), 
       caption = "Output of the effcalc function.", label = "table:effcalc_output"))
 
-## ----effcalc_VIM_MLC,fig.show='hold',fig.cap=fig17_cap,fig.scap=fig17_scap,fig.height=11,fig.width=11----
+## ----effcalc_VIM_MLC,fig.show='hold',fig.cap=fig25_cap,fig.scap=fig25_scap,fig.width = 11, fig.height = 8----
 colors <- rep(rainbow(7), each = 2)
 par(mfrow = c(2,2))
 
@@ -1151,7 +1176,7 @@ tmp <- apply(datdf, 1, function(i) {
   if(grepl("_", safe.name, fixed = TRUE)) {
     safe.name <- sub("_", ".", i, fixed = TRUE)
   }
-  cat("\\item Data set: ", safe.name, "\n\\begin{itemize}\n\\item Data set type: ", 
+  cat("\\item Dataset: ", safe.name, "\n\\begin{itemize}\n\\item Dataset type: ", 
       i[3], "\n\\item Description: ", i[2], "\n\\item Number of variables: ", i[4], 
       "\n\\item Number of measurements: ", i[5], "\n\\end{itemize}\n")
 })

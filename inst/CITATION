@@ -1,0 +1,10 @@
+citHeader("To cite chipPCR in publications, please use:")
+
+citEntry(entry = "Manual",
+  author = "Stefan Roediger and Michal Burdukiewicz",
+  title = "chipPCR: Toolkit of helper functions to pre-process amplification data",
+  year = "2014",
+  note = "R package version 0.0.8-4",
+  url = "http://CRAN.R-project.org/package=chipPCR",
+  textVersion = "Roediger S and Burdukiewicz M (2014). chipPCR: Toolkit of helper functions to pre-process amplification data. R package version 0.0.8-4, <URL: http://CRAN.R-project.org/package=chipPCR>."
+)

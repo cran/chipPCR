@@ -9,7 +9,7 @@ Interface
 \code{MFIaggr.gui} is a Graphical User Interface based on the \code{shiny} 
 package. The core if this GUI is based on the Comparison of the 
 \code{\link[chipPCR]{MFIaggr}} function. The cycle dependent variance can
-be analyzed intuitively. A report generation is possible from this GUI.
+be analyzed intuitively. This GUI dynamically generates reports.
 }
 \usage{
 MFIaggr.gui()
@@ -23,13 +23,14 @@ Any ad-blocking software may be cause of malfunctions.
 }
 
 \examples{
-\donttest{
-# Run from a R console following commands
-require(shiny)
 
+# The code chunk below will fail if the web browser is not installed. if on UNIX platform try:
+# as.vector(Sys.getenv("R_BROWSER"))
+require(shiny)
 # Invoke the shiny AmpSim app in the default browser
-runApp(paste0(find.package("chipPCR")[1],"/MFIaggr.gui"))
-}
+if(interactive())
+  runApp(paste0(find.package("chipPCR")[1],"/MFIaggr.gui"))
+
 }
 
 \seealso{

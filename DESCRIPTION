@@ -1,9 +1,9 @@
 Package: chipPCR
 Type: Package
 Title: Toolkit of Helper Functions to Pre-Process Amplification Data
-Version: 0.0.8-6
+Version: 0.0.8-8
 LazyData: true
-Date: 2015-02-22
+Date: 2015-03-12
 Authors@R: c(
     person("Stefan", "Roediger", 
 	   email = "stefan.roediger@hs-lausitz.de",
@@ -21,10 +21,10 @@ Suggests: drc, knitr, markdown, MBmca (>= 0.0.3-4), qpcR, RDML, xtable
 VignetteBuilder: knitr
 Imports: lmtest, MASS, outliers, ptw, quantreg, Rfit, robustbase,
         shiny, signal
-Packaged: 2015-02-22 21:31:06 UTC; tux
+Packaged: 2015-03-12 15:02:07 UTC; ripley
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2015-02-23 00:25:22
+Date/Publication: 2015-03-12 16:03:48
 Author: Stefan Roediger [cre, aut],
   Michal Burdukiewicz [aut],
   Konstantin A. Blagodatskikh [ctb]

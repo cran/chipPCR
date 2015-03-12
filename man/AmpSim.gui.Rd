@@ -27,10 +27,10 @@ Any ad-blocking software may be cause of malfunctions.
 # The code chunk below will fail if the web browser is not installed. if on UNIX platform try:
 # as.vector(Sys.getenv("R_BROWSER"))
 # Invoke the shiny AmpSim app in the default browser
-require(shiny)
-if(interactive())
-  runApp(paste0(find.package("chipPCR")[1],"/AmpSim.gui"))
-
+\dontrun{
+#do not execute using example(), it breaks the sequence of the plots in shiny app
+AmpSim.gui()
+}
 }
 
 \seealso{

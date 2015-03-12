@@ -2,6 +2,12 @@ C126EG595
 C126EG685
 C127EGHP
 C17
+C316.amp
+C316.melt.hr
+C316.melt.lr
+C317.amp
+C317.melt.hr
+C317.melt.lr
 C67
 C81
 C85
@@ -11,6 +17,8 @@ Eff1000
 Eff625
 Eff750
 Eff875
+LAMP
+RPA
 VIMCFX96_60
 VIMCFX96_69
 VIMCFX96_meltcurve

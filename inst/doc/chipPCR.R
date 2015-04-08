@@ -89,6 +89,7 @@ simulation function. \\emph{(B)} A missing value was introduced in the
 transition phase. The missing value was imputed either by \\emph{(C)} 
 linear approximation or \\emph{(D)} a cubic spline approximation. The 
 spline approximation nearly reconstituted the original curve."
+
 fig8_scap <- "Imputation of missing values in the data for generating amplification curves."
 
 fig9_cap <- "Quantification cycle (Cq) by the second derivative maximum 
@@ -569,6 +570,90 @@ plot(res.NA.spline, xlab = "Cycles", ylab = "refMFI", type = "b",
 abliner()
 mtext("D", cex = 1.2, side = 3, adj = 0, font = 2)
 par(mfrow = c(1,1))
+
+## ----fixNA_simulation,echo=TRUE,eval=FALSE-------------------------------
+#  # Evaluation of fixNA by introducing missing values and comparing efficiency measures
+#  # for imputed and raw data
+#  
+#  library(qpcR)
+#  library(chipPCR)
+#  
+#  linear_range <- 1L:10
+#  exponential_range <- 11L:33
+#  plateau_range <- 34L:45
+#  
+#  raw.eff <- t(sapply(2L:ncol(reps384), function(i) {
+#    fit.raw <- pcrfit(reps384, cyc = 1, fluo = i)
+#    c(cpD2.raw = efficiency(fit.raw, type = "cpD2", plot = FALSE)[["cpD2"]],
+#      Cy0.raw = efficiency(fit.raw, type = "Cy0", plot = FALSE)[["Cy0"]],
+#      background = mean(reps384[1L:5, i]))
+#  }))
+#  
+#  #calculate raw efficiency measures
+#  raw.df <- as.vector(apply(raw.eff, 2, function(i)
+#    c(mean(i), sd(i))))
+#  
+#  #reformat raw data
+#  raw.df <- cbind(data.frame("none", 0, "-"), t(raw.df))
+#  colnames(raw.df) <- c("Imputation", "NA.number", "Phase",
+#                        "cpD2.mean", "cpD2.sd",
+#                        "Cy0.mean", "Cy0.sd",
+#                        "background.mean", "background.sd")
+#  
+#  #helper function introducing NA into data, fixing them and calculating efficiency
+#  gen.fix <- function(number_points, phase, spline){
+#    #copy raw data
+#    temp_dat <- reps384[, -1]
+#  
+#    #introduce NA(s)
+#    for(i in 1L:ncol(temp_dat))
+#      temp_dat[sample(phase, 1), i] <- NA
+#  
+#    #impute missing values using fixNA
+#    fixed_dat <- sapply(1L:ncol(temp_dat), function(i)
+#      fixNA(reps384[, 1], temp_dat[, i], spline = spline))
+#  
+#    #compute efficiency measures
+#    t(sapply(2L:ncol(fixed_dat), function(i) {
+#      fit.fix <- pcrfit(cbind(reps384[, 1], fixed_dat), cyc = 1, fluo = i)
+#      c(cpD2.fix = efficiency(fit.fix, type = "cpD2", plot = FALSE)[["cpD2"]],
+#        Cy0.fix = efficiency(fit.fix, type = "Cy0", plot = FALSE)[["Cy0"]],
+#        background = mean(fixed_dat[1L:5, i]))
+#    }))
+#  }
+#  
+#  #calculate results for linear imputation
+#  res.linear <- lapply(c(1, 3), function(number_of_points)
+#    lapply(list(linear_range, exponential_range, plateau_range), function(phase)
+#      apply(gen.fix(number_of_points, phase, FALSE), 2, function(i)
+#        c(mean(i), sd(i)))))
+#  linear.df <- data.frame(num = unlist(lapply(c(1, 3), rep, 3)),
+#                          region = rep(c("linear", "exponential", "plateau"), 2),
+#                          do.call(rbind, lapply(unlist(res.linear, recursive = FALSE), as.vector)))
+#  
+#  
+#  #calculate results for spline imputation
+#  res.spline <- lapply(c(1, 3), function(number_of_points)
+#    lapply(list(linear_range, exponential_range, plateau_range), function(phase)
+#      apply(gen.fix(number_of_points, phase, TRUE), 2, function(i)
+#        c(mean(i), sd(i)))))
+#  spline.df <- data.frame(num = unlist(lapply(c(1, 3), rep, 3)),
+#                          region = rep(c("linear", "exponential", "plateau"), 2),
+#                          do.call(rbind, lapply(unlist(res.linear, recursive = FALSE), as.vector)))
+#  
+#  #join and format results
+#  sim.res <- cbind(unlist(lapply(c("linear", "spline"), rep, 6)),
+#                   rbind(linear.df, spline.df))
+#  colnames(sim.res) <- c("Imputation", "NA.number", "Phase",
+#                         "cpD2.mean", "cpD2.sd",
+#                         "Cy0.mean", "Cy0.sd",
+#                         "background.mean", "background.sd")
+#  
+#  #join simulation results with results for raw data
+#  fixNA.evaluation <- rbind(raw.df, sim.res)
+#  xtable(fixNA.evaluation[, c(1L:7)], digit = 4)
+#  
+#  xtable(fixNA.evaluation[, c(1L:3, 8L:9)], digit = 4)
 
 ## ----smoothing_intro,fig.show='hold',fig.cap=fig22_cap,fig.scap=fig22_scap,warning=FALSE,fig.width = 11, fig.height = 8----
 # Simulate and amplification curve with the AmpSim function

@@ -12,7 +12,9 @@
 An S4 class containing the output \code{\link[chipPCR]{MFIaggr}} function. 
 refMFI means referenced Mean Fluorescence Intensity (Roediger et al. 2013)
 }
-
+\value{
+A class for a \code{matrix} of amplifications curve data from a qPCR experiment.
+}
 \section{Slots}{
   \describe{
     \item{\code{.Data}:}{\code{"matrix"} containing the "Cycle", 

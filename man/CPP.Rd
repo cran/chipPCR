@@ -10,7 +10,10 @@
 \title{
 Curve Pre-processor
 }
-
+\value{
+A \code{list} where each element represents the pre-process data and parameters 
+for the background region (BG) of a qPCR experiment.
+}
 \description{
 \code{\link[chipPCR]{CPP}} encompasses a set of functions to 
 pre-process an amplification curve. The pre-processing includes options to 
@@ -142,6 +145,7 @@ Robust linear regression: \code{\link{lm.coefs}}
 # Function to pre-process an amplification curve.
 # Take a subset of the C17 data frame.
 data(C17)
+default.par <- par(no.readonly = TRUE)
 par(mfrow = c(2,1))
 plot(NA, NA, xlab = "Time [sec]", ylab = "refMFI", 
      main = "HDA Raw Data", 
@@ -167,7 +171,8 @@ for (i in 3:5) {
 }
 legend(50, 1, c("55 degrees Celsius", "60 degrees Celsius", "65 degrees Celsius"), 
 	col = c(1,2,3), pch = rep(20,3))
-par(mfrow = c(1,1))
+
+par(default.par)
 }
 
 \keyword{ background }

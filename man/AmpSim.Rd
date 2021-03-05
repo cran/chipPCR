@@ -4,6 +4,10 @@
 \title{
 Amplification curve simulator
 }
+\value{
+A \code{list} where one element represents the cycle (cyc) and one represents 
+the fluorescence (fluo) of a simulated qPCR experiment.
+}
 \description{
 This function is a simple simulator of an amplification reaction based on a 
 5-parameter Richards function. This simplified approach was chosen because it 
@@ -74,7 +78,7 @@ Real-Time Detection of Biomolecules and Autoimmune Antibodies. S. Roediger,
 P. Schierack, A. Boehm, J. Nitschke, I. Berger, U. Froemmel, C. Schmidt, M. 
 Ruhland, I. Schimke, D. Roggenbuck, W. Lehmann and C. Schroeder. 
 \emph{Advances in Biochemical Bioengineering/Biotechnology}. 133:33--74, 2013.
-\url{http://www.ncbi.nlm.nih.gov/pubmed/22437246}
+
 
 Ritz, C., Spiess, A.-N.: qpcR: an R package for sigmoidal model
 selection in quantitative real-time polymerase chain reaction analysis.
@@ -93,6 +97,7 @@ Stefan Roediger, Michal Burdukiewicz
 # Use an in-silico dilution of the template be adjusting 
 # the Cq parameter. A change of 3.32 cycles corresponds 
 # approximately to a 10-fold dilution.
+default.par <- par(no.readonly = TRUE)
 par(mfrow = c(2,1))
 plot(NA, NA, xlim = c(1,40), ylim = c(0.01,2), xlab = "Cycles", 
      ylab = "Fluorescence", main = "In-silco Dilution Experiment")
@@ -133,7 +138,7 @@ for (j in 1:3){
 		   nnl.method = method[j]), type = "b", col = i, pch = 20)
    }
 }
-par(mfrow = c(1,1))
+par(default.par)
 }
 
 \keyword{ simulation }

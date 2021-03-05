@@ -49,6 +49,7 @@ DNA amplification in a capillary tube by natural convection with a single
 isothermal heater. Biotech. 50, 52-57.
 }
 \examples{
+default.par <- par(no.readonly = TRUE)
 # First example
 data(capillaryPCR)
 plot(NA, NA, xlim = c(0,80), ylim = c(0,1300), xlab = "Time [min]", 
@@ -207,8 +208,7 @@ for (i in 1:length(span)) {
 text(10,300, "D)", cex = 3)
 legend(25,200,  paste("span : ", f), pch = 20, lwd = 2, col = 1:length(span))
 
-par(mfrow = c(1,1), cex = 1)
-  
+par(default.par)
 }
 \keyword{ datasets }
 \keyword{ capillary }

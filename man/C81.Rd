@@ -2,10 +2,10 @@
 \alias{C81}
 \docType{data}
 \title{
-Helicase Dependent Amplification of pCNG1 using the VideoScan Platform
+Helicase Dependent Amplification of pCNG1 using the 'VideoScan' Platform
 }
 \description{
-A Helicase Dependent Amplification (HDA) of pCNG1 was performed. The VideoScan 
+A Helicase Dependent Amplification (HDA) of pCNG1 was performed. The 'VideoScan' 
 Platform (Roediger et al. (2013)) was used to monitor the amplification. The 
 HDA was performed at 65 degrees Celsius. Two concentrations of input DNA were 
 used.
@@ -23,7 +23,7 @@ used.
 }
 \details{
 
-To perform an isothermal amplification in VideoScan, standard conditions for 
+To perform an isothermal amplification in 'VideoScan', standard conditions for 
 the IsoAmp(R) III Universal tHDA Kit (Biohelix) were used. The reaction was 
 composed of reaction mix A)10 micro L A. bidest, 1.25 micro L 10xbuffer, 
 0.75 micro L primer(150 nM final), 0.5 micro L template plasmid. Preincubation: 
@@ -31,7 +31,7 @@ This mixture was incubated for 2 min at 95 degree. Celsius and immediately
 placed on ice. Reaction mix B) 5 micro L A. bidest., 1.25 micro L 10x buffer, 
 2 micro L NaCl, 1.25 micro L MgSO4, 1.75 micro L dNTPs, 0.25 micro L EvaGreen, 
 1 micro L enzyme mix. The mix was covered with 50 micro L mineral oil. The 
-fluorescence measurement in VideoScan HCU started directly after adding 
+fluorescence measurement in 'VideoScan' 'HCU' started directly after adding 
 buffer B at 65 degrees Celsius. A 1x (D1) and a 1:10 dilution (D2) were tested.
 Temperature profile (after Preincubation):
 - 60 seconds at 65 degrees Celsius 
@@ -47,7 +47,7 @@ Real-Time Detection of Biomolecules and Autoimmune Antibodies. S. Roediger,
 P. Schierack, A. Boehm, J. Nitschke, I. Berger, U. Froemmel, C. Schmidt, 
 M. Ruhland, I. Schimke, D. Roggenbuck, W. Lehmann and C. Schroeder.
 \emph{Advances in Biochemical Bioengineering/Biotechnology}. 133:33--74, 2013.
-\url{http://www.ncbi.nlm.nih.gov/pubmed/22437246}
+
 }
 \examples{
 data(C81)
@@ -61,7 +61,6 @@ plot(NA, NA, xlim = c(0, 120), ylim = c(0, 1.2), xlab = "Time [min]",
   points(C81[, 2]/60, C81[, 3], type = "b", col = 1, pch = 20)
   points(C81[, 4]/60, C81[, 5], type = "b", col = 2, pch = 20)
 legend(2000, 0.4, c("D1", "D2"), col = c(1,2), pch = rep(20,2))
-
 }
 \keyword{ datasets }
 \keyword{ HDA }

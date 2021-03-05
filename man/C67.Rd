@@ -28,7 +28,7 @@ iQ5 thermocycler step (71 seconds / step).}
   }
 }
 \details{
-To perform an isothermal amplification in VideoScan, standard conditions 
+To perform an isothermal amplification in 'VideoScan', standard conditions 
 for the IsoAmp(R) III Universal tHDA Kit (Biohelix) were used. The reaction 
 was composed of 12.5 micro L buffer A containing 1.25 micro L 10x reaction 
 buffer, 150 nM primer (forward and reverse), 0.75  micro L template 
@@ -57,10 +57,10 @@ P. Schierack, A. Boehm, J. Nitschke, I. Berger, U. Froemmel, C. Schmidt,
 M. Ruhland, I. Schimke, D. Roggenbuck, W. Lehmann and C. Schroeder.
 \emph{Advances in Biochemical Bioengineering/Biotechnology}. 133:33--74, 
 2013.
-\url{http://www.ncbi.nlm.nih.gov/pubmed/22437246}
+
 }
 \examples{
 data(C67)
-## maybe str(C67) ; plot(C67) ...
+matplot(C67[, -c(1,2)], type = "l", xlab = "Time [sec]", ylab = "RFU")
 }
 \keyword{datasets}

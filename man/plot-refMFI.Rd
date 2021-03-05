@@ -46,6 +46,9 @@ This function is a relative of the MFIerr function from the MBmca package
 function is built from three subplots. If \code{y} parameter is
 not absent, it is plotted in lighter color than \code{x}.
 }
+\value{
+No return value, called for side effects.
+}
 \author{
 Stefan Roediger, Michal Burdukiewicz
 }

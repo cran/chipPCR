@@ -9,7 +9,10 @@
 \description{
 An S4 class containing the output \code{\link[chipPCR]{inder}} function.
 }
-
+\value{
+A class for a \code{matrix} of derivatives from amplifications curve 
+data of a qPCR experiment.
+}
 \section{Slots}{
   \describe{
     \item{\code{.Data}:}{\code{"matrix"} is a matrix containing smoothed data as well as

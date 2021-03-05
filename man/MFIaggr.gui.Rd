@@ -5,6 +5,9 @@
 Multiple Comparison of the Cycle Dependent Variance - Graphical User 
 Interface
 }
+\value{
+No return value, called for side effects.
+}
 \description{
 \code{MFIaggr.gui} is a Graphical User Interface based on the \code{shiny} 
 package. The core if this GUI is based on the Comparison of the 

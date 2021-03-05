@@ -4,6 +4,9 @@
 \title{
 Amplification Curve Simulation Graphical User Interface
 }
+\value{
+No return value, called for side effects
+}
 \description{
 Launches graphical user interface that allows simulating and analyzing 
 amplification reactions. This function will open the GUI in a webpage

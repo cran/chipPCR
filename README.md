@@ -1,4 +1,5 @@
-![chipPCR](https://github.com/michbur/chipPCR/blob/master/vignettes/logo.png)
+[![published in: Bioinformatics](https://img.shields.io/badge/published%20in-Bioinformatics-ff69b4.svg?style=flat)](https://doi.org/10.1093/bioinformatics/btv205)
+[![R-CMD-check](https://github.com/PCRuniversum/chipPCR/workflows/R-CMD-check/badge.svg)](https://github.com/PCRuniversum/chipPCR/actions)
 
 The chipPCR package is a toolkit of functions to preprocess 
 amplification curve data. Amplification data can be obtained from 
@@ -24,31 +25,14 @@ probes (TaqMan) were used.
 Installation
 ------------
 
-chipPCR is available [on CRAN](http://cran.r-project.org/web/packages/chipPCR/), so installation is as simple as:
+chipPCR is available [on CRAN](https://CRAN.R-project.org/package=chipPCR), so installation is as simple as:
 
 ```
 install.packages("chipPCR")
 ```
 
-You can install the latest development version of the code using the `devtools` R package.
+You can install the latest development version of the code directly from GitHub:
 
 ```
-# Install devtools, if you haven't already.
-install.packages("devtools")
-
-library(devtools)
-install_github("michbur/chipPCR")
+source("https://install-github.me/michbur/chipPCR")
 ```
-
-Problems with viginette
-------------
-
-Some distributions like Debian sid might fail to compile the package.
-
-Messages:
-```
-sh: 1: /usr/bin/texi2dvi: not found
-Calls: <Anonymous> -> texi2pdf -> texi2dvi
-```
-
-In this case try to install "texinfo" (apt-get install texinfo).

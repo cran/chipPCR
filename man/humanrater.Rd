@@ -4,6 +4,10 @@
 \title{
 humanrater, a graphical interface to rate curves
 }
+\value{
+A \code{data.frame} containing the classification and conformity of 
+amplification curves as determined by a human rater.
+}
 \description{
 \code{humanrater} allows rating a curve for a certain characteristic in the interactive,
 semi-blind manner. \code{humanrater} draws

@@ -2,7 +2,6 @@ importFrom(lmtest, bptest)
 importFrom(MASS, rlm)
 import("methods")
 importFrom(outliers, rm.outlier)
-importFrom(parallel, parLapplyLB)
 importFrom(ptw, whit1, whit2)
 importFrom(quantreg, rq)
 importFrom(Rfit, rfit)
@@ -10,6 +9,16 @@ importFrom(robustbase, lmrob)
 importFrom(robustbase, mc)
 importFrom(shiny, runApp)
 importFrom(signal, sgolayfilt)
+importFrom(graphics, abline, arrows, axis, layout, legend,
+           lines, matplot, mtext, par, points, polygon,
+           rect, rug, text)
+importFrom(grDevices, adjustcolor)
+importFrom(stats, coef, confint, cor, cor.test, lm, mad, median, na.omit,
+           predict, predict.lm, qnorm, quantile, rnorm,
+           rstudent, sd, shapiro.test, smooth.spline,
+           wilcox.test)
+importFrom(utils, head, tail)
+
 
 exportClasses(
     "amptest",

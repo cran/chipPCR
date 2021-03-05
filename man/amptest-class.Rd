@@ -15,7 +15,10 @@
 An S4 class containing the output \code{\link[chipPCR]{amptester}} 
 function.
 }
-
+\value{
+An object of \code{\linkS4class{amptest}} class containing result of the test as well as
+the original data.
+}
 \section{Slots}{
   \describe{
     \item{\code{.Data}:}{\code{"numeric"} is a vector containing the 

@@ -8,6 +8,10 @@
 \alias{show,th-method}
 
 \title{Class \code{"th"}}
+\value{
+A class for calculated results (Ct value and fluorescence) from amplifications 
+curve data of a qPCR experiment.
+}
 \description{
 An S4 class containing the output \code{\link[chipPCR]{th.cyc}} 
 function.

@@ -78,8 +78,11 @@ Stefan Roediger, Michal Burdukiewicz
 res <- AmpSim(cyc = c(1:40))
 # Introduce a missing value in the transition between 
 # the background and the exponential phase
-res.NA <-res
+res.NA <- res
 res.NA[18, 2] <- NA
+
+default.par <- par(no.readonly = TRUE)
+
 par(mfrow = c(2,2))
 plot(res, xlab = "Cycles", ylab = "Fluorescence", type = "b", pch = 20, 
      main = "Simulation without missing value")
@@ -105,7 +108,7 @@ plot(res.NA.spline, xlab = "Cycles", ylab = "Fluorescence", type = "b",
       during transition")
      abline(v = c(17.5, 18.5), col = "grey")
      abline(h = c(0.09, 0.14), col = "grey")     
-par(mfrow = c(1,1))
+par(default.par)
 }
 
 \keyword{ spline }

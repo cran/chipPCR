@@ -61,7 +61,7 @@ early exponential phase the signal changes drastically. First data are
 smoothed by Friedman's 'super smoother' (as found in 
 \code{\link[stats]{supsmu}}. Thereof the approximate first and second 
 derivative are calculated by a five-point stencil 
-\code{link[chipPCR]{inder}}. 
+\code{\link[chipPCR]{inder}}. 
 
 The difference of cycles at the maxima of the first and second approximate 
 derivative as well as a correction factor are used to estimate the range before 
@@ -73,8 +73,8 @@ overshot in the first cycles a default value of 3 is chosen.
 reaction.
 }
 \value{
-An object of \code{\linkS4class{bg}} class containing predicted background range as well
-as other parameters.
+An object of \code{\linkS4class{bg}} class containing predicted background range 
+as well as other parameters.
 }
 \author{
 Stefan Roediger, Michal Burdukiewicz
@@ -115,6 +115,7 @@ biology: a journal of computational molecular cell biology}, 12(8):
 
 \examples{
 # First example: Test for the background of an amplification reaction.
+default.par <- par(no.readonly = TRUE)
 par(mfrow = c(2,1))
 res <- AmpSim(cyc = 1:40, Cq = 25)
 background <- bg.max(res)
@@ -162,6 +163,7 @@ for (i in 1:length(e)) {
   abline(v = slot(res, "bg.stop"), col = i)
   abline(h = slot(res, "fluo"), col = i)
 }
+par(default.par)
 }
 \keyword{ background }
 \keyword{ range }

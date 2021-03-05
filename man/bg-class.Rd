@@ -6,6 +6,9 @@
 \alias{show,bg-method}
 
 \title{Class \code{"bg"}}
+\value{
+An object containing result of the \code{\link[chipPCR]{bg.max}} function.
+}
 \description{
 An S4 class containing the output \code{\link[chipPCR]{bg.max}} function.
 }

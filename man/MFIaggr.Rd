@@ -12,9 +12,7 @@ Multiple comparison of the cycle dependent variance of the fluorescence
 }
 \description{
  MFIaggr is used for a fast multiple comparison of the cycle dependent 
-variance of the fluorescence. A similar tool with different scope is 
-integrated in the \code{\link[MBmca]{MFIerror}} function (Roediger et al. 
-2013).
+variance of the fluorescence.
 }
 \usage{
 \S4method{MFIaggr}{numeric,numeric}(x, y, cyc = 1, fluo = 2:ncol(x), 
@@ -90,6 +88,7 @@ plot(MFIaggr(VIMCFX96_60, fluo = c(2, 4)))
 # were analyzed. The Breusch-Pagan confirmed the heteroskedasticity in the
 # amplification curve data.
 
+default.par <- par(no.readonly = TRUE)
 par(mfrow = c(1,2), bty = "n")
 res <- MFIaggr(VIMCFX96_60[, 1], VIMCFX96_60[, 2:ncol(VIMCFX96_60)], 
 	       llul = c(1,10))
@@ -108,7 +107,7 @@ plot(res[, 1], res[, 3]^2, xlab = "Cycle", ylab = "Variance of refMFI",
 abline(v = c(1,40), col = "grey", lty = 2, lwd = 2)
 legend("top", paste0("Breusch-Pagan test p-value: \n", format(summary(res)[5], 
        digits = 2)), bty = "n")
-par(mfrow = c(1,2))
+par(default.par)
 }
 
 \keyword{ deviation }

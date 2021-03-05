@@ -45,7 +45,8 @@ threshold should be used (Note: Experimental, not safe to use).
 }
 
 \value{
-An object of class \code{\linkS4class{th}}.}
+An object of class \code{\linkS4class{th}}.
+}
 
 \details{
 The Threshold Cycle (Ct) (Cq according to MIQE, see Bustin et al. 2009) is 

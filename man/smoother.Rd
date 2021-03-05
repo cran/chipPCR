@@ -62,7 +62,7 @@ upper and lower case names are accepted.
   }
   \item{CPP}{
 		  logical parameter which indicates if CPP (curve 
-pre-procssor) should be used.
+pre-processor) should be used.
   }
   \item{paralell}{
   	  should contain a cluster object, created by package \code{parallel} or 
@@ -100,10 +100,10 @@ polynomial regression) can be tuned by the parameters \code{f} and
 "mova" for moving average can be tuned by the parameter \code{movaww}. 
 \code{movaww} is the window size used for the moving average (see 
 \code{\link[stats]{filter}} for details). The parameter "savgol" for 
-Savitzky-Golay smoothing filter can be tuned by the parameter \code{p} (see 
-\code{\link[signal]{sgolayfilt}} for details). The parameter "smooth" for 
-cubic spline smooth can be tuned by the parameter \code{df.fact}. A 
-\code{df.fact} value of 1 will leave the raw data almost unaffected while a 
+Savitzky-Golay smoothing filter can be tuned by the parameter \code{p} and 
+\code{n} (see \code{\link[signal]{sgolayfilt}} for details). The parameter 
+"smooth" for cubic spline smooth can be tuned by the parameter \code{df.fact}. 
+A \code{df.fact} value of 1 will leave the raw data almost unaffected while a 
 value 0.5 will smooth the curve considerably. For further details refer to 
 the \code{\link[stats]{smooth.spline}} function. The parameter "spline" for 
 standard cubic spline smooth has currently no additional parameter. The 
@@ -143,20 +143,6 @@ legend(25, 0.8, c("Raw data", "savgol", "lowess", "mova 3", "mova 5",
 		  "smooth", "spline", "supsmu"), pch = 20, lwd = 2, 
 		  col = c(1:8))
 
-\dontrun{
-#on machines with multiple cores
-library(parallel)
-cl <- makeCluster(getOption("cl.cores", 2))
-tmp.smooths <- smoother(tmp, method = list("savgol",
-                                           "lowess",
-                                           mova = list(movaww = 3),
-                                           mova = list(movaww = 5),
-                                           "smooth",
-                                           "spline",
-                                           "supsmu"),
-                        parallel = TRUE)
-stopCluster(cl)
-}
 #else
 tmp.smooths <- smoother(tmp, method = list("savgol",
                                            "lowess",
@@ -169,7 +155,7 @@ for (i in 1:ncol(tmp.smooths))
   lines(tmp[, 1], tmp.smooths[, i], type = "b", pch = 20, lwd = 2, col = i 
 + 1)
 
-
+default.par <- par(no.readonly = TRUE)
 par(fig = c(0.15,0.6,0.45,0.99), new = TRUE)
 plot(tmp, main = "", xlab = "Cycles", ylab ="refMFI", 
      pch = 20, xlim = c(14,20), ylim = c(0,0.45))
@@ -214,6 +200,7 @@ double.smooth.add <- smoother(tmp, method = list("savgol", mova =
 list(movaww = 3)))
 #5. all smoothing methods, no additional arguments specified
 all.smooth <- smoother(tmp, method = list("all"))
+par(default.par)
 }
 
 \keyword{ smooth }

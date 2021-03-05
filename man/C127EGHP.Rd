@@ -38,7 +38,7 @@ Real-Time Detection of Biomolecules and Autoimmune Antibodies. S. Roediger,
 P. Schierack, A. Boehm, J. Nitschke, I. Berger, U. Froemmel, C. Schmidt, 
 M. Ruhland, I. Schimke, D. Roggenbuck, W. Lehmann and C. Schroeder.
 \emph{Advances in Biochemical Bioengineering/Biotechnology}. 133:33--74, 2013.
-\url{http://www.ncbi.nlm.nih.gov/pubmed/22437246}
+
 
 Mao, F., Leung, W.-Y., Xin, X., 2007. Characterization of EvaGreen and the 
 implication of its physicochemical properties for qPCR applications. 
@@ -49,6 +49,7 @@ str(C127EGHP)
 data(C127EGHP)
 tmp <- C127EGHP
 
+default.par <- par(no.readonly = TRUE)
 par(mfrow = c(2,1))
 plot(NA, NA, xlim = c(1,40), ylim = c(0,10), xlab = "Cycle", 
       ylab = "Fluorescence", main = "MLC-2v qPCR - EvaGreen")
@@ -61,7 +62,7 @@ plot(NA, NA, xlim = c(1,40), ylim = c(0,10), xlab = "Cycle",
   for (i in 35:66) {
     points(tmp[, 2], tmp[, i], type = "l", col = i)
   }
-par(mfrow = c(1,1))
+par(default.par)
 }
 \keyword{ datasets }
 \keyword{ qPCR }

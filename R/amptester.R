@@ -10,7 +10,7 @@ amptester <-
     if (!is.null(background))
       background <- as.integer(sort(background))
     
-    # fix possible missing vaues with fixNA (spline method)
+    # fix possible missing values with fixNA (spline method)
     y <- fixNA(1L:length(y), y)
     
     # FIRST TEST
@@ -41,7 +41,7 @@ amptester <-
     # SECOND TEST
     # Resids growth test (RGt)
     # test if fluorescence values in linear phase are stable. Whenever no amplification 
-    # occurs, fluorescence values quickly deviate from linear model. Their standarized
+    # occurs, fluorescence values quickly deviate from linear model. Their standardized
     # residuals will be strongly correlated with their value. For real amplification curves,
     # situation is much more stable. Noise (that means deviations from linear model) 
     # in  background do not correlate strongly with the changes in fluorescence. 
@@ -58,7 +58,7 @@ amptester <-
     # This test determines the R^2 by a linear regression. The R^2 are
     # determined from a run of circa 15 percent range of the data.
     # If a sequence of more than six R^2s is larger than 0.8 is found 
-    # thant is likely a nonlinear signal. This is a bit counterintuitive 
+    # that is likely a nonlinear signal. This is a bit counter intuitive 
     # because R^2 of nonlinear data should be low.
     
     ws <- ceiling((15 * length(y)) / 100)
@@ -80,9 +80,9 @@ amptester <-
     # Define the limits for the R^2 test
     res.LRt[res.LRt < 0.8] <- 0
     res.LRt[res.LRt >= 0.8] <- 1
-    # Seek for a sequence of at least six positve values (R^2 >= 0.8)
-    # The first five measurepoitns of the amplification curve are skipped
-    # beacuse most technologies and probetechnologies tend to overshot
+    # Seek for a sequence of at least six positive values (R^2 >= 0.8)
+    # The first five measurements of the amplification curve are skipped
+    # because most technologies and probe technologies tend to overshot
     # in the start (background) region.
     res.out <- sapply(5L:(length(res.LRt) - 6), function(i) {
       ifelse(sum(res.LRt[i:(i + 4)]) == 5, TRUE, FALSE)
@@ -95,7 +95,7 @@ amptester <-
     
     # FOURTH TEST (MANUAL)
     # Threshold test (THt)
-    # Manual test for positve amplification based on a fixed threshold
+    # Manual test for positive amplification based on a fixed threshold
     # value.
     if (manual) {
       signal <- median(y[-(background)]) - mad(y[-(background)])
@@ -125,7 +125,7 @@ amptester <-
     
     # FIFTH TEST
     # Signal level test (SLt)
-    # The meaninfulness can be tested by comparison of the signals
+    # The meaningfulness can be tested by comparison of the signals
     # 1) A robust "sigma" rule by median + 2 * mad 
     # 2) comparison of the signal/noise ratio. If less than 1.25 (25 percent) 
     # signal increase it is likely that nothing happened during the reaction.
@@ -148,18 +148,49 @@ amptester <-
       xy <- data.frame(predict(smooth.spline(1L:length(y), y)))
       sum(sapply(1L:(nrow(xy) - 1), 
                  function (i) {
-                   xy[i + 1, 1] - xy[i, 1] * xy[i + 1, 2] + xy[i, 2]
+                   (xy[i + 1, 1] - xy[i, 1]) * (xy[i + 1, 2] + xy[i, 2])
                  })
       )
     }
+    res.pco <- pco(y)
     
+    
+    # SEVENTH TEST - SlR
+    # Uses the inder function to find the approximated first derivative maximum, 
+    # second derivative minimum and the second derivative maximum. Next the raw  
+    # fluorescence at the approximated second derivative minimum and the second 
+    # derivative maximum are taken from the original data set. The fluorescence 
+    # intensities are normalized to the maximum fluorescence of this data. This 
+    # data is used for a linear regression. Where the slope is used.
     der.res <- summary(inder(1L:length(y), y), print = FALSE)
     
-    lm.dat <- data.frame(x = c(round(der.res[["SDM"]], 0), round(der.res[["SDm"]], 0)))
-    lm.dat <- cbind(lm.dat, y = y[lm.dat[, 1]])      
+    lm.dat <- data.frame(x = c(round(der.res[["SDM"]], 0), 
+			       round(der.res[["FDM"]], 0), 
+			       round(der.res[["SDm"]], 0)))
+    
+    lm.dat <- cbind(lm.dat, y = y[lm.dat[, 1]])
     lm.dat[["y"]] <- lm.dat[["y"]]/max(lm.dat[["y"]])
-    slope.ratio <- coef(lm(y ~ x, lm.dat))
-    res.pco <- pco(y)
+    lm.dat.model <- lm(y ~ x, lm.dat)
+    lm.dat.model.summary <- summary(lm.dat.model)
+    # slope.ratio.tmp <- coef(lm.dat.model)
+    slope.ratio.tmp <- lm.dat.model.summary[["coefficients"]][, 1]
+    
+    if(lm.dat.model.summary[["coefficients"]][2, 4] < 0.01) {
+	 slope.ratio <- slope.ratio.tmp
+	 } else {
+	   slope.ratio <- c("(Intercept)"=NA, "x"=NA)
+	   }
+    lm.dat.model.confint <- confint(lm.dat.model)
+    
+    # EIGHTH TEST
+    x <- 1L:length(y)
+    head.dat <- head(cbind(x=x, y=y), 4)
+    tail.dat <- tail(cbind(x=x, y=y), 4)
+    
+    res.head.tail <- rbind(head.dat, tail.dat)
+    
+    res.head.tail.linreg <- summary(lm(res.head.tail[, "y"] ~ res.head.tail[, "x"]))
+    res.head.tail.cor.test <- cor.test(res.head.tail[, "x"],  res.head.tail[, "y"])
     
     # Output of the different tests
     rgt.dec <- ifelse(rgt.dec == "positive", TRUE, FALSE)
@@ -175,5 +206,5 @@ amptester <-
         noiselevel = noiselevel,
         background = background,
         polygon = res.pco,
-        slope.ratio = slope.ratio[["x"]])
+        slope.ratio = as.numeric(slope.ratio[["x"]]))
   }

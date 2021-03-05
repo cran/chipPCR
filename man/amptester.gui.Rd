@@ -4,6 +4,10 @@
 \title{
 Amplification Test Graphical User Interface
 }
+\value{
+An object of \code{\linkS4class{amptest}} class containing result of the test as 
+well as the original data.
+}
 \description{
 \code{\link[chipPCR]{amptester.gui}} is a graphical user interface for the 
 \code{\link[chipPCR]{amptester}} function. This function can be used for a 

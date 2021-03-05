@@ -51,6 +51,9 @@ is a \code{\linkS4class{eff}} object.
   \item{col}{ \code{col} is a graphical parameter used to define the color of the points
   on the plot. }
 }
+\value{
+No return value, called for side effects.
+}
 \details{
 The plot being a result of this function is built from three subplots.
 }

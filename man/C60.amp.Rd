@@ -75,15 +75,16 @@ Real-Time Detection of Biomolecules and Autoimmune Antibodies. S. Roediger,
 P. Schierack, A. Boehm, J. Nitschke, I. Berger, U. Froemmel, C. Schmidt, M. 
 Ruhland, I. Schimke, D. Roggenbuck, W. Lehmann and C. Schroeder. 
 \emph{Advances in Biochemical Bioengineering/Biotechnology}. 133:33--74, 
-2013. \url{http://www.ncbi.nlm.nih.gov/pubmed/22437246}
+2013. 
 
 Mao, F., Leung, W.-Y., Xin, X., 2007. Characterization of EvaGreen and the 
 implication of its physicochemical properties for qPCR applications. 
 \emph{BMC Biotechnol}. 7, 76.
 }
 \examples{
-## data(C60.amp)
 str(C60.amp)
+matplot(C60.amp[, 1], C60.amp[, c(3,5,7)], type = "l",
+        xlab = "Cycle", ylab = "RFU")
 }
 \keyword{datasets}
 \keyword{Roche}

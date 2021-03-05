@@ -2,11 +2,11 @@
 \alias{C85}
 \docType{data}
 \title{
-Helicase Dependent Amplification of Vimentin using the VideoScan Platform
+Helicase Dependent Amplification of Vimentin using the 'VideoScan' Platform
 }
 \description{
 A Helicase Dependent Amplification (HDA) of Vimentin (Vim) was performed. The 
-VideoScan Platform (Roediger et al. (2013)) was used to monitor the 
+'VideoScan' Platform (Roediger et al. (2013)) was used to monitor the 
 amplification. The HDA was performed at 65 degrees Celsius. Three 
 concentrations of input DNA (D1, D2, D3) were used.
 }
@@ -25,7 +25,7 @@ concentrations of input DNA (D1, D2, D3) were used.
 }
 \details{
 
-To perform an isothermal amplification in VideoScan, standard conditions for 
+To perform an isothermal amplification in 'VideoScan', standard conditions for 
 the IsoAmp(R) III Universal tHDA Kit (Biohelix) were used. Primers and 
 templates are described in Roediger et al. (2013). The reaction was composed 
 of reaction mix A)10 micro L A. bidest, 1.25 micro L 10xbuffer, 0.75 micro L 
@@ -34,7 +34,7 @@ was incubated for 2 min at 95 degree. Celsius and immediately placed on ice.
 Reaction mix B) 5 micro L A. bidest., 1.25 micro L 10x buffer, 2 micro L NaCl, 
 1.25 micro L MgSO4, 1.75 micro L dNTPs, 0.25 micro L EvaGreen, 1 micro L 
 enzyme mix. The mix was covered with 50 micro L mineral oil. The fluorescence 
-measurement in VideoScan HCU started directly after adding buffer B at 65 
+measurement in 'VideoScan' 'HCU' started directly after adding buffer B at 65 
 degrees Celsius. A 1x (D1), a 1:10 dilution (D2) and a 1:100 (D3) dilution were 
 tested.
 Temperature profile (after Preincubation):
@@ -51,7 +51,7 @@ Real-Time Detection of Biomolecules and Autoimmune Antibodies. S. Roediger,
 P. Schierack, A. Boehm, J. Nitschke, I. Berger, U. Froemmel, C. Schmidt, 
 M. Ruhland, I. Schimke, D. Roggenbuck, W. Lehmann and C. Schroeder.
 \emph{Advances in Biochemical Bioengineering/Biotechnology}. 133:33--74, 2013.
-\url{http://www.ncbi.nlm.nih.gov/pubmed/22437246}
+
 }
 \examples{
 data(C85)
@@ -81,7 +81,7 @@ legend(1, 0.8, c("D1, raw", "D1, savgol", "D1, smooth", "D1, mova"),
 # Third example
 # Comparison of Lowess, Moving average and splines to smooth amplification 
 # curve data of
-# a HDA using the VideoScan HCU for amplification and monitoring.
+# a HDA using the 'VideoScan' 'HCU' for amplification and monitoring.
 
 xrange <- 2:2400
 plot(NA, NA, xlim = c(0,85), ylim = c(0.4, 0.8), xlab = "Time [min]", 

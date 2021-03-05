@@ -2,11 +2,11 @@
 \alias{C54}
 \docType{data}
 \title{
-qPCR Experiment for the amplification of MLC-2v using the VideoScan 
+qPCR Experiment for the amplification of MLC-2v using the 'VideoScan' 
 heating/cooling-unit
 }
 \description{
-qPCR Experiment for the amplification of MLC-2v using the VideoScan 
+qPCR Experiment for the amplification of MLC-2v using the 'VideoScan' 
 heating/cooling-unit
 }
 \usage{data(C54)}
@@ -20,10 +20,10 @@ heating/cooling-unit
   }
 }
 \details{
-The aim was to amplify MLC-2v in the VideoScan and to monitor with a 
+The aim was to amplify MLC-2v in the 'VideoScan' and to monitor with a 
 hydrolysis probe for MLC-2v. The primer sequences for MLC-2v were taken 
 from Roediger et al. (2013). The amplification was detected in solution of 
-the 1 HCU (see Roediger et al. 2013 for details). A 20 micro L PCR reaction 
+the '1 HCU' (see Roediger et al. 2013 for details). A 20 micro L PCR reaction 
 was composed of 250 nM primer (forward and reverse), 1x Maxima Probe qPCR 
 Master Mix (Fermentas), 1 micro L template (MLC-2v amplification product in 
 different dilutions), 50 nM hydrolysis probe probe for MLC-2v and A. 
@@ -43,7 +43,7 @@ Real-Time Detection of Biomolecules and Autoimmune Antibodies. S. Roediger,
 P. Schierack, A. Boehm, J. Nitschke, I. Berger, U. Froemmel, C. Schmidt, M. 
 Ruhland, I. Schimke, D. Roggenbuck, W. Lehmann and C. Schroeder. 
 \emph{Advances in Biochemical Bioengineering/Biotechnology}. 133:33--74, 
-2013. \url{http://www.ncbi.nlm.nih.gov/pubmed/22437246}
+2013. 
 }
 \examples{
 data(C54)
